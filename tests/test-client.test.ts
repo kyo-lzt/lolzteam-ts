@@ -3,6 +3,7 @@ import { ForumClient } from "../src/generated/forum/index.js";
 import { MarketClient } from "../src/generated/market/index.js";
 import {
 	AuthError,
+	ConfigError,
 	HttpError,
 	LolzteamError,
 	NetworkError,
@@ -340,6 +341,61 @@ describe("MarketClient", () => {
 		const init = mockFetch.mock.calls[0]?.[1] as RequestInit;
 		const headers = init.headers as Record<string, string>;
 		expect(headers.Authorization).toBe("Bearer market-token");
+	});
+});
+
+// ─── Proxy Validation ────────────────────────────────────────────────────────
+
+describe("Proxy validation", () => {
+	it("rejects invalid URL", () => {
+		expect(
+			() =>
+				new ForumClient({
+					token: "t",
+					proxy: { url: "not a url" },
+					retry: { maxRetries: 0 },
+				}),
+		).toThrow(ConfigError);
+	});
+
+	it("rejects unsupported scheme", () => {
+		expect(
+			() =>
+				new ForumClient({
+					token: "t",
+					proxy: { url: "ftp://proxy:8080" },
+					retry: { maxRetries: 0 },
+				}),
+		).toThrow(ConfigError);
+	});
+
+	it("rejects proxy URL with no host", () => {
+		expect(
+			() =>
+				new ForumClient({
+					token: "t",
+					proxy: { url: "http://" },
+					retry: { maxRetries: 0 },
+				}),
+		).toThrow(ConfigError);
+	});
+
+	it("accepts valid http proxy", () => {
+		const client = new ForumClient({
+			token: "t",
+			proxy: { url: "http://proxy:8080" },
+			retry: { maxRetries: 0 },
+		});
+		expect(client).toBeDefined();
+	});
+
+	it("accepts valid socks5 proxy", () => {
+		const client = new ForumClient({
+			token: "t",
+			proxy: { url: "socks5://proxy:1080" },
+			retry: { maxRetries: 0 },
+		});
+		expect(client).toBeDefined();
 	});
 });
 

@@ -34,7 +34,7 @@ export class MarketClient {
 	constructor(config: Omit<ClientConfig, "baseUrl"> & { baseUrl?: string }) {
 		const http = new HttpClient({
 			...config,
-			baseUrl: config.baseUrl ?? "https://api.lzt.market",
+			baseUrl: config.baseUrl ?? "https://prod-api.lzt.market",
 			rateLimit: config.rateLimit ?? { requestsPerMinute: 120 },
 		});
 		this.category = new CategoryApi(http);

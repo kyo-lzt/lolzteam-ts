@@ -62,6 +62,13 @@ export class NetworkError extends LolzteamError {
 	}
 }
 
+export class ConfigError extends LolzteamError {
+	constructor(message: string) {
+		super(message);
+		this.name = "ConfigError";
+	}
+}
+
 export function createHttpError(status: number, body: unknown, headers: Headers): HttpError {
 	if (status === 429) {
 		return new RateLimitError(body, headers);

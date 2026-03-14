@@ -44,7 +44,7 @@ export class ForumClient {
 	constructor(config: Omit<ClientConfig, "baseUrl"> & { baseUrl?: string }) {
 		const http = new HttpClient({
 			...config,
-			baseUrl: config.baseUrl ?? "https://api.lolz.live",
+			baseUrl: config.baseUrl ?? "https://prod-api.lolz.live",
 			rateLimit: config.rateLimit ?? { requestsPerMinute: 300 },
 		});
 		this.oAuth = new OAuthApi(http);

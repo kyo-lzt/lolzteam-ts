@@ -1,5 +1,5 @@
 import { applyAuth } from "./auth.js";
-import { LolzteamError, NetworkError, createHttpError } from "./errors.js";
+import { ConfigError, LolzteamError, NetworkError, createHttpError } from "./errors.js";
 import { createProxyDispatcher } from "./proxy.js";
 import { RateLimiter } from "./rate-limiter.js";
 import { withRetry } from "./retry.js";
@@ -50,6 +50,18 @@ export class HttpClient {
 		}
 
 		if (config.proxy) {
+			let parsed: URL;
+			try {
+				parsed = new URL(config.proxy.url);
+			} catch {
+				throw new ConfigError(`invalid proxy URL: ${config.proxy.url}`);
+			}
+			if (!["http:", "https:", "socks5:"].includes(parsed.protocol)) {
+				throw new ConfigError(`unsupported proxy scheme: ${parsed.protocol.replace(":", "")}`);
+			}
+			if (!parsed.hostname) {
+				throw new ConfigError("proxy URL has no host");
+			}
 			this.dispatcherReady = createProxyDispatcher(config.proxy.url).then((d) => {
 				this.dispatcher = d;
 			});

@@ -23,14 +23,14 @@ const apis: ApiConfig[] = [
 		schemaPath: join(ROOT, "schemas/forum.json"),
 		outputDir: join(ROOT, "src/generated/forum"),
 		clientName: "ForumClient",
-		defaultBaseUrl: "https://api.lolz.live",
+		defaultBaseUrl: "https://prod-api.lolz.live",
 		defaultRateLimit: 300,
 	},
 	{
 		schemaPath: join(ROOT, "schemas/market.json"),
 		outputDir: join(ROOT, "src/generated/market"),
 		clientName: "MarketClient",
-		defaultBaseUrl: "https://api.lzt.market",
+		defaultBaseUrl: "https://prod-api.lzt.market",
 		defaultRateLimit: 120,
 	},
 ];
@@ -38,7 +38,13 @@ const apis: ApiConfig[] = [
 function generateApi(config: ApiConfig): void {
 	console.log(`Generating ${config.clientName}...`);
 
-	const rawSpec = JSON.parse(readFileSync(config.schemaPath, "utf-8")) as Record<string, unknown>;
+	let rawSpec: Record<string, unknown>;
+	try {
+		rawSpec = JSON.parse(readFileSync(config.schemaPath, "utf-8")) as Record<string, unknown>;
+	} catch (error) {
+		const message = error instanceof Error ? error.message : String(error);
+		throw new Error(`Failed to parse schema ${config.schemaPath}: ${message}`);
+	}
 	const result = parseSpec(rawSpec);
 
 	mkdirSync(config.outputDir, { recursive: true });
