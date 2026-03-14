@@ -1261,7 +1261,13 @@ export interface ThreadsListParams {
 	thread_tag_id?: number;
 	page?: number;
 	limit?: number;
-	order?: "post_date" | "last_post_date" | "reply_count" | "reply_count_asc" | "first_post_likes" | "vote_count";
+	order?:
+		| "post_date"
+		| "last_post_date"
+		| "reply_count"
+		| "reply_count_asc"
+		| "first_post_likes"
+		| "vote_count";
 	direction?: "asc" | "desc";
 	thread_create_date?: number;
 	thread_update_date?: number;
@@ -4446,7 +4452,100 @@ export interface UsersEditBody {
 	short_link?: string;
 	language_id?: 1 | 2;
 	gender?: "" | "male" | "female";
-	timezone?: "Pacific/Midway" | "Pacific/Honolulu" | "Pacific/Marquesas" | "America/Anchorage" | "America/Los_Angeles" | "America/Santa_Isabel" | "America/Tijuana" | "America/Denver" | "America/Chihuahua" | "America/Phoenix" | "America/Chicago" | "America/Belize" | "America/Mexico_City" | "Pacific/Easter" | "America/New_York" | "America/Havana" | "America/Bogota" | "America/Caracas" | "America/Halifax" | "America/Goose_Bay" | "America/Asuncion" | "America/Santiago" | "America/Cuiaba" | "America/La_Paz" | "America/St_Johns" | "America/Argentina/Buenos_Aires" | "America/Argentina/San_Luis" | "America/Argentina/Mendoza" | "Atlantic/Stanley" | "America/Godthab" | "America/Montevideo" | "America/Sao_Paulo" | "America/Miquelon" | "America/Noronha" | "Atlantic/Cape_Verde" | "Atlantic/Azores" | "Europe/London" | "Africa/Casablanca" | "Atlantic/Reykjavik" | "Europe/Amsterdam" | "Africa/Algiers" | "Africa/Windhoek" | "Africa/Tunis" | "Europe/Athens" | "Africa/Johannesburg" | "Europe/Kaliningrad" | "Asia/Amman" | "Asia/Beirut" | "Africa/Cairo" | "Asia/Jerusalem" | "Asia/Gaza" | "Asia/Damascus" | "Europe/Moscow" | "Europe/Minsk" | "Africa/Nairobi" | "Asia/Tehran" | "Asia/Dubai" | "Asia/Yerevan" | "Asia/Baku" | "Indian/Mauritius" | "Asia/Kabul" | "Asia/Yekaterinburg" | "Asia/Tashkent" | "Asia/Kolkata" | "Asia/Kathmandu" | "Asia/Novosibirsk" | "Asia/Dhaka" | "Asia/Almaty" | "Asia/Rangoon" | "Asia/Krasnoyarsk" | "Asia/Bangkok" | "Asia/Irkutsk" | "Asia/Hong_Kong" | "Asia/Singapore" | "Australia/Perth" | "Asia/Yakutsk" | "Asia/Tokyo" | "Asia/Seoul" | "Australia/Adelaide" | "Australia/Darwin" | "Asia/Vladivostok" | "Asia/Magadan" | "Australia/Brisbane" | "Australia/Sydney" | "Pacific/Noumea" | "Pacific/Norfolk" | "Asia/Anadyr" | "Pacific/Auckland" | "Pacific/Fiji" | "Pacific/Chatham" | "Pacific/Tongatapu" | "Pacific/Apia" | "Pacific/Kiritimati";
+	timezone?:
+		| "Pacific/Midway"
+		| "Pacific/Honolulu"
+		| "Pacific/Marquesas"
+		| "America/Anchorage"
+		| "America/Los_Angeles"
+		| "America/Santa_Isabel"
+		| "America/Tijuana"
+		| "America/Denver"
+		| "America/Chihuahua"
+		| "America/Phoenix"
+		| "America/Chicago"
+		| "America/Belize"
+		| "America/Mexico_City"
+		| "Pacific/Easter"
+		| "America/New_York"
+		| "America/Havana"
+		| "America/Bogota"
+		| "America/Caracas"
+		| "America/Halifax"
+		| "America/Goose_Bay"
+		| "America/Asuncion"
+		| "America/Santiago"
+		| "America/Cuiaba"
+		| "America/La_Paz"
+		| "America/St_Johns"
+		| "America/Argentina/Buenos_Aires"
+		| "America/Argentina/San_Luis"
+		| "America/Argentina/Mendoza"
+		| "Atlantic/Stanley"
+		| "America/Godthab"
+		| "America/Montevideo"
+		| "America/Sao_Paulo"
+		| "America/Miquelon"
+		| "America/Noronha"
+		| "Atlantic/Cape_Verde"
+		| "Atlantic/Azores"
+		| "Europe/London"
+		| "Africa/Casablanca"
+		| "Atlantic/Reykjavik"
+		| "Europe/Amsterdam"
+		| "Africa/Algiers"
+		| "Africa/Windhoek"
+		| "Africa/Tunis"
+		| "Europe/Athens"
+		| "Africa/Johannesburg"
+		| "Europe/Kaliningrad"
+		| "Asia/Amman"
+		| "Asia/Beirut"
+		| "Africa/Cairo"
+		| "Asia/Jerusalem"
+		| "Asia/Gaza"
+		| "Asia/Damascus"
+		| "Europe/Moscow"
+		| "Europe/Minsk"
+		| "Africa/Nairobi"
+		| "Asia/Tehran"
+		| "Asia/Dubai"
+		| "Asia/Yerevan"
+		| "Asia/Baku"
+		| "Indian/Mauritius"
+		| "Asia/Kabul"
+		| "Asia/Yekaterinburg"
+		| "Asia/Tashkent"
+		| "Asia/Kolkata"
+		| "Asia/Kathmandu"
+		| "Asia/Novosibirsk"
+		| "Asia/Dhaka"
+		| "Asia/Almaty"
+		| "Asia/Rangoon"
+		| "Asia/Krasnoyarsk"
+		| "Asia/Bangkok"
+		| "Asia/Irkutsk"
+		| "Asia/Hong_Kong"
+		| "Asia/Singapore"
+		| "Australia/Perth"
+		| "Asia/Yakutsk"
+		| "Asia/Tokyo"
+		| "Asia/Seoul"
+		| "Australia/Adelaide"
+		| "Australia/Darwin"
+		| "Asia/Vladivostok"
+		| "Asia/Magadan"
+		| "Australia/Brisbane"
+		| "Australia/Sydney"
+		| "Pacific/Noumea"
+		| "Pacific/Norfolk"
+		| "Asia/Anadyr"
+		| "Pacific/Auckland"
+		| "Pacific/Fiji"
+		| "Pacific/Chatham"
+		| "Pacific/Tongatapu"
+		| "Pacific/Apia"
+		| "Pacific/Kiritimati";
 	receive_admin_email?: boolean;
 	activity_visible?: boolean;
 	show_dob_date?: boolean;
@@ -4459,21 +4558,21 @@ export interface UsersEditBody {
 	allow_receive_news_feed?: "none" | "members" | "followed";
 	alert?: Record<string, boolean>;
 	fields?: {
-	location?: string;
-	occupation?: string;
-	homepage?: string;
-	_4?: string;
-	lztInnovationLink?: string;
-	lztInnovation20Link?: string;
-	lztInnovation30Link?: string;
-	telegram?: string;
-	vk?: string;
-	discord?: string;
-	steam?: string;
-	jabber?: string;
-	github?: string;
-	matrix?: string;
-};
+		location?: string;
+		occupation?: string;
+		homepage?: string;
+		_4?: string;
+		lztInnovationLink?: string;
+		lztInnovation20Link?: string;
+		lztInnovation30Link?: string;
+		telegram?: string;
+		vk?: string;
+		discord?: string;
+		steam?: string;
+		jabber?: string;
+		github?: string;
+		matrix?: string;
+	};
 }
 
 export type UsersEditResponse = {
@@ -6467,7 +6566,15 @@ export type ProfilePostsCommentsReportResponse = {
 // ─── ConversationsApi Types ────────────────────────────────────────
 
 export interface ConversationsListParams {
-	folder?: "all" | "unread" | "groups" | "market" | "market_replacements" | "staff" | "giveaways" | "p2p";
+	folder?:
+		| "all"
+		| "unread"
+		| "groups"
+		| "market"
+		| "market_replacements"
+		| "staff"
+		| "giveaways"
+		| "p2p";
 	page?: number;
 	limit?: number;
 }
@@ -9206,14 +9313,28 @@ export type FormsListResponse = {
 export interface FormsCreateBody {
 	form_id?: 3;
 	fields?: {
-	"22"?: string;
-	"23"?: "cp_re_1" | "cp_re_2" | "cp_re_3" | "cp_re_4" | "cp_re_5" | "cp_re_6" | "cp_re_7" | "cp_re_8" | "cp_re_9" | "cp_re_10" | "cp_re_11" | "cp_re_12" | "cp_re_13" | "cp_re_other";
-	"24": string;
-	"27"?: string;
-	"28"?: string;
-	"29"?: string;
-	"30"?: string;
-};
+		"22"?: string;
+		"23"?:
+			| "cp_re_1"
+			| "cp_re_2"
+			| "cp_re_3"
+			| "cp_re_4"
+			| "cp_re_5"
+			| "cp_re_6"
+			| "cp_re_7"
+			| "cp_re_8"
+			| "cp_re_9"
+			| "cp_re_10"
+			| "cp_re_11"
+			| "cp_re_12"
+			| "cp_re_13"
+			| "cp_re_other";
+		"24": string;
+		"27"?: string;
+		"28"?: string;
+		"29"?: string;
+		"30"?: string;
+	};
 }
 
 export type FormsCreateResponse = {

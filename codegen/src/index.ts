@@ -2,11 +2,11 @@
  * CLI entry point: generate TypeScript clients from OpenAPI schemas.
  */
 
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { execSync } from "node:child_process";
+import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { emitGroupFile, emitIndexFile, emitTypesFile } from "./emitter.js";
+import { emitCombinedIndexFile, emitTypesFile } from "./emitter.js";
 import { parseSpec } from "./parser.js";
-import { groupToFileName } from "./utils/naming.js";
 
 interface ApiConfig {
 	schemaPath: string;
@@ -35,6 +35,22 @@ const apis: ApiConfig[] = [
 	},
 ];
 
+const GENERATED_FILES = new Set(["types.ts", "index.ts"]);
+
+function cleanOutputDir(outputDir: string): void {
+	let entries: string[];
+	try {
+		entries = readdirSync(outputDir);
+	} catch {
+		return;
+	}
+	for (const entry of entries) {
+		if (!GENERATED_FILES.has(entry)) {
+			rmSync(join(outputDir, entry), { force: true });
+		}
+	}
+}
+
 function generateApi(config: ApiConfig): void {
 	console.log(`Generating ${config.clientName}...`);
 
@@ -48,22 +64,15 @@ function generateApi(config: ApiConfig): void {
 	const result = parseSpec(rawSpec);
 
 	mkdirSync(config.outputDir, { recursive: true });
+	cleanOutputDir(config.outputDir);
 
 	// Write types.ts
 	const typesContent = emitTypesFile(result.groups, result.componentSchemas);
 	writeFileSync(join(config.outputDir, "types.ts"), typesContent);
 	console.log("  types.ts");
 
-	// Write group files
-	for (const group of result.groups) {
-		const fileName = groupToFileName(group.groupName);
-		const content = emitGroupFile(group);
-		writeFileSync(join(config.outputDir, `${fileName}.ts`), content);
-		console.log(`  ${fileName}.ts`);
-	}
-
-	// Write index.ts
-	const indexContent = emitIndexFile(
+	// Write index.ts (all group classes + client class)
+	const indexContent = emitCombinedIndexFile(
 		result.groups,
 		config.clientName,
 		config.defaultBaseUrl,
@@ -80,3 +89,8 @@ function generateApi(config: ApiConfig): void {
 for (const api of apis) {
 	generateApi(api);
 }
+
+// Format generated code with biome to fix long imports and sort them
+const generatedDir = join(ROOT, "src/generated");
+console.log("Formatting generated code with biome...");
+execSync(`bunx biome check --write ${generatedDir}`, { stdio: "inherit" });

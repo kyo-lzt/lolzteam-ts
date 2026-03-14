@@ -1,25 +1,1564 @@
 // Auto-generated. Do not edit manually.
 
-import type { ClientConfig } from "../../runtime/types.js";
 import { HttpClient } from "../../runtime/http-client.js";
-import { OAuthApi } from "./o-auth.js";
-import { AssetsApi } from "./assets.js";
-import { CategoriesApi } from "./categories.js";
-import { ForumsApi } from "./forums.js";
-import { LinksApi } from "./links.js";
-import { PagesApi } from "./pages.js";
-import { NavigationApi } from "./navigation.js";
-import { ThreadsApi } from "./threads.js";
-import { PostsApi } from "./posts.js";
-import { UsersApi } from "./users.js";
-import { ProfilePostsApi } from "./profile-posts.js";
-import { ConversationsApi } from "./conversations.js";
-import { NotificationsApi } from "./notifications.js";
-import { TagsApi } from "./tags.js";
-import { SearchApi } from "./search.js";
-import { BatchApi } from "./batch.js";
-import { ChatboxApi } from "./chatbox.js";
-import { FormsApi } from "./forms.js";
+import type { ClientConfig } from "../../runtime/types.js";
+import type {
+	AssetsCssParams,
+	AssetsCssResponse,
+	BatchExecuteBody,
+	BatchExecuteResponse,
+	CategoriesGetResponse,
+	CategoriesListParams,
+	CategoriesListResponse,
+	ChatboxDeleteIgnoreBody,
+	ChatboxDeleteIgnoreResponse,
+	ChatboxDeleteMessageBody,
+	ChatboxDeleteMessageResponse,
+	ChatboxEditMessageBody,
+	ChatboxEditMessageResponse,
+	ChatboxGetIgnoreResponse,
+	ChatboxGetLeaderboardParams,
+	ChatboxGetLeaderboardResponse,
+	ChatboxGetMessagesParams,
+	ChatboxGetMessagesResponse,
+	ChatboxIndexParams,
+	ChatboxIndexResponse,
+	ChatboxOnlineParams,
+	ChatboxOnlineResponse,
+	ChatboxPostIgnoreBody,
+	ChatboxPostIgnoreResponse,
+	ChatboxPostMessageBody,
+	ChatboxPostMessageResponse,
+	ChatboxReportBody,
+	ChatboxReportReasonsParams,
+	ChatboxReportReasonsResponse,
+	ChatboxReportResponse,
+	ConversationsAlertsDisableResponse,
+	ConversationsAlertsEnableResponse,
+	ConversationsCreateBody,
+	ConversationsCreateResponse,
+	ConversationsDeleteBody,
+	ConversationsDeleteResponse,
+	ConversationsGetResponse,
+	ConversationsInviteBody,
+	ConversationsInviteResponse,
+	ConversationsKickBody,
+	ConversationsKickResponse,
+	ConversationsListParams,
+	ConversationsListResponse,
+	ConversationsMessagesCreateBody,
+	ConversationsMessagesCreateResponse,
+	ConversationsMessagesDeleteResponse,
+	ConversationsMessagesEditBody,
+	ConversationsMessagesEditResponse,
+	ConversationsMessagesGetResponse,
+	ConversationsMessagesListParams,
+	ConversationsMessagesListResponse,
+	ConversationsMessagesStickResponse,
+	ConversationsMessagesUnstickResponse,
+	ConversationsReadAllResponse,
+	ConversationsReadResponse,
+	ConversationsSaveBody,
+	ConversationsSaveResponse,
+	ConversationsSearchBody,
+	ConversationsSearchResponse,
+	ConversationsStarResponse,
+	ConversationsStartBody,
+	ConversationsStartResponse,
+	ConversationsUnstarResponse,
+	ConversationsUpdateBody,
+	ConversationsUpdateResponse,
+	FormsCreateBody,
+	FormsCreateResponse,
+	FormsListParams,
+	FormsListResponse,
+	ForumsEditFeedOptionsBody,
+	ForumsEditFeedOptionsResponse,
+	ForumsFollowBody,
+	ForumsFollowResponse,
+	ForumsFollowedParams,
+	ForumsFollowedResponse,
+	ForumsFollowersResponse,
+	ForumsGetFeedOptionsResponse,
+	ForumsGetResponse,
+	ForumsGroupedResponse,
+	ForumsListParams,
+	ForumsListResponse,
+	ForumsUnfollowResponse,
+	LinksGetResponse,
+	LinksListResponse,
+	NavigationListParams,
+	NavigationListResponse,
+	NotificationsGetResponse,
+	NotificationsListParams,
+	NotificationsListResponse,
+	NotificationsReadBody,
+	NotificationsReadResponse,
+	OAuthTokenBody,
+	OAuthTokenResponse,
+	PagesGetResponse,
+	PagesListParams,
+	PagesListResponse,
+	PostsCommentsCreateBody,
+	PostsCommentsCreateResponse,
+	PostsCommentsDeleteBody,
+	PostsCommentsDeleteResponse,
+	PostsCommentsEditBody,
+	PostsCommentsEditResponse,
+	PostsCommentsGetParams,
+	PostsCommentsGetResponse,
+	PostsCommentsReportBody,
+	PostsCommentsReportResponse,
+	PostsCreateBody,
+	PostsCreateResponse,
+	PostsDeleteBody,
+	PostsDeleteResponse,
+	PostsEditBody,
+	PostsEditResponse,
+	PostsGetResponse,
+	PostsLikeResponse,
+	PostsLikesParams,
+	PostsLikesResponse,
+	PostsListParams,
+	PostsListResponse,
+	PostsReportBody,
+	PostsReportReasonsResponse,
+	PostsReportResponse,
+	PostsUnlikeResponse,
+	ProfilePostsCommentsCreateBody,
+	ProfilePostsCommentsCreateResponse,
+	ProfilePostsCommentsDeleteBody,
+	ProfilePostsCommentsDeleteResponse,
+	ProfilePostsCommentsEditBody,
+	ProfilePostsCommentsEditResponse,
+	ProfilePostsCommentsGetResponse,
+	ProfilePostsCommentsListParams,
+	ProfilePostsCommentsListResponse,
+	ProfilePostsCommentsReportBody,
+	ProfilePostsCommentsReportResponse,
+	ProfilePostsCreateBody,
+	ProfilePostsCreateResponse,
+	ProfilePostsDeleteParams,
+	ProfilePostsDeleteResponse,
+	ProfilePostsEditBody,
+	ProfilePostsEditResponse,
+	ProfilePostsGetResponse,
+	ProfilePostsLikeResponse,
+	ProfilePostsLikesResponse,
+	ProfilePostsListParams,
+	ProfilePostsListResponse,
+	ProfilePostsReportBody,
+	ProfilePostsReportReasonsResponse,
+	ProfilePostsReportResponse,
+	ProfilePostsStickResponse,
+	ProfilePostsUnlikeResponse,
+	ProfilePostsUnstickResponse,
+	SearchAllBody,
+	SearchAllResponse,
+	SearchPostsBody,
+	SearchPostsResponse,
+	SearchProfilePostsBody,
+	SearchProfilePostsResponse,
+	SearchResultsParams,
+	SearchResultsResponse,
+	SearchTaggedBody,
+	SearchTaggedResponse,
+	SearchThreadsBody,
+	SearchThreadsResponse,
+	SearchUsersBody,
+	SearchUsersResponse,
+	TagsFindParams,
+	TagsFindResponse,
+	TagsGetParams,
+	TagsGetResponse,
+	TagsListParams,
+	TagsListResponse,
+	TagsPopularResponse,
+	ThreadsBumpResponse,
+	ThreadsClaimBody,
+	ThreadsClaimResponse,
+	ThreadsCreateBody,
+	ThreadsCreateContestBody,
+	ThreadsCreateContestResponse,
+	ThreadsCreateResponse,
+	ThreadsDeleteBody,
+	ThreadsDeleteResponse,
+	ThreadsEditBody,
+	ThreadsEditResponse,
+	ThreadsFinishResponse,
+	ThreadsFollowBody,
+	ThreadsFollowResponse,
+	ThreadsFollowedParams,
+	ThreadsFollowedResponse,
+	ThreadsFollowersResponse,
+	ThreadsGetParams,
+	ThreadsGetResponse,
+	ThreadsHideResponse,
+	ThreadsListParams,
+	ThreadsListResponse,
+	ThreadsMoveBody,
+	ThreadsMoveResponse,
+	ThreadsNavigationResponse,
+	ThreadsPollGetResponse,
+	ThreadsPollVoteBody,
+	ThreadsPollVoteResponse,
+	ThreadsRecentParams,
+	ThreadsRecentResponse,
+	ThreadsStarResponse,
+	ThreadsUnfollowResponse,
+	ThreadsUnreadParams,
+	ThreadsUnreadResponse,
+	ThreadsUnstarResponse,
+	UsersAvatarCropBody,
+	UsersAvatarCropResponse,
+	UsersAvatarDeleteResponse,
+	UsersAvatarUploadBody,
+	UsersAvatarUploadResponse,
+	UsersBackgroundCropBody,
+	UsersBackgroundCropResponse,
+	UsersBackgroundDeleteResponse,
+	UsersBackgroundUploadBody,
+	UsersBackgroundUploadResponse,
+	UsersClaimsParams,
+	UsersClaimsResponse,
+	UsersContentsParams,
+	UsersContentsResponse,
+	UsersEditBody,
+	UsersEditResponse,
+	UsersFieldsResponse,
+	UsersFindParams,
+	UsersFindResponse,
+	UsersFollowResponse,
+	UsersFollowersParams,
+	UsersFollowersResponse,
+	UsersFollowingsParams,
+	UsersFollowingsResponse,
+	UsersGetParams,
+	UsersGetResponse,
+	UsersIgnoreEditParams,
+	UsersIgnoreEditResponse,
+	UsersIgnoreResponse,
+	UsersIgnoredParams,
+	UsersIgnoredResponse,
+	UsersLikesParams,
+	UsersLikesResponse,
+	UsersListParams,
+	UsersListResponse,
+	UsersSaCancelResetResponse,
+	UsersSaResetResponse,
+	UsersSecretAnswerTypesResponse,
+	UsersTrophiesResponse,
+	UsersUnfollowResponse,
+	UsersUnignoreResponse,
+} from "./types.js";
+
+class OAuthApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async token(body: OAuthTokenBody): Promise<OAuthTokenResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/oauth/token",
+			body: body,
+			multipart: true,
+		});
+	}
+}
+
+class AssetsApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async css(params?: AssetsCssParams): Promise<AssetsCssResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/css",
+			query: params,
+		});
+	}
+}
+
+class CategoriesApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(params?: CategoriesListParams): Promise<CategoriesListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/categories",
+			query: params,
+		});
+	}
+
+	async get(category_id: number): Promise<CategoriesGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/categories/${category_id}`,
+		});
+	}
+}
+
+class ForumsApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(params?: ForumsListParams): Promise<ForumsListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/forums",
+			query: params,
+		});
+	}
+
+	async grouped(): Promise<ForumsGroupedResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/forums/grouped",
+		});
+	}
+
+	async get(forum_id: number): Promise<ForumsGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/forums/${forum_id}`,
+		});
+	}
+
+	async followers(forum_id: number): Promise<ForumsFollowersResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/forums/${forum_id}/followers`,
+		});
+	}
+
+	async follow(forum_id: number, body?: ForumsFollowBody): Promise<ForumsFollowResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/forums/${forum_id}/followers`,
+			body: body,
+		});
+	}
+
+	async unfollow(forum_id: number): Promise<ForumsUnfollowResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/forums/${forum_id}/followers`,
+		});
+	}
+
+	async followed(params?: ForumsFollowedParams): Promise<ForumsFollowedResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/forums/followed",
+			query: params,
+		});
+	}
+
+	async getFeedOptions(): Promise<ForumsGetFeedOptionsResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/forums/feed/options",
+		});
+	}
+
+	async editFeedOptions(body?: ForumsEditFeedOptionsBody): Promise<ForumsEditFeedOptionsResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: "/forums/feed/options",
+			body: body,
+		});
+	}
+}
+
+class LinksApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(): Promise<LinksListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/link-forums",
+		});
+	}
+
+	async get(link_id: number): Promise<LinksGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/link-forums/${link_id}`,
+		});
+	}
+}
+
+class PagesApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(params?: PagesListParams): Promise<PagesListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/pages",
+			query: params,
+		});
+	}
+
+	async get(page_id: number): Promise<PagesGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/pages/${page_id}`,
+		});
+	}
+}
+
+class NavigationApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(params?: NavigationListParams): Promise<NavigationListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/navigation",
+			query: params,
+		});
+	}
+}
+
+class ThreadsApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(params?: ThreadsListParams): Promise<ThreadsListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/threads",
+			query: params,
+		});
+	}
+
+	async create(body?: ThreadsCreateBody): Promise<ThreadsCreateResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/threads",
+			body: body,
+		});
+	}
+
+	async createContest(body: ThreadsCreateContestBody): Promise<ThreadsCreateContestResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/contests",
+			body: body,
+		});
+	}
+
+	async claim(body?: ThreadsClaimBody): Promise<ThreadsClaimResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/claims",
+			body: body,
+		});
+	}
+
+	async get(thread_id: number, params?: ThreadsGetParams): Promise<ThreadsGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/threads/${thread_id}`,
+			query: params,
+		});
+	}
+
+	async edit(thread_id: number, body?: ThreadsEditBody): Promise<ThreadsEditResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: `/threads/${thread_id}`,
+			body: body,
+		});
+	}
+
+	async delete(thread_id: number, body?: ThreadsDeleteBody): Promise<ThreadsDeleteResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/threads/${thread_id}`,
+			body: body,
+		});
+	}
+
+	async move(thread_id: number, body?: ThreadsMoveBody): Promise<ThreadsMoveResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/threads/${thread_id}/move`,
+			body: body,
+		});
+	}
+
+	async bump(thread_id: number): Promise<ThreadsBumpResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/threads/${thread_id}/bump`,
+		});
+	}
+
+	async hide(thread_id: number): Promise<ThreadsHideResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/threads/${thread_id}/hide`,
+		});
+	}
+
+	async star(thread_id: number): Promise<ThreadsStarResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/threads/${thread_id}/star`,
+		});
+	}
+
+	async unstar(thread_id: number): Promise<ThreadsUnstarResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/threads/${thread_id}/star`,
+		});
+	}
+
+	async followers(thread_id: number): Promise<ThreadsFollowersResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/threads/${thread_id}/followers`,
+		});
+	}
+
+	async follow(thread_id: number, body?: ThreadsFollowBody): Promise<ThreadsFollowResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/threads/${thread_id}/followers`,
+			body: body,
+		});
+	}
+
+	async unfollow(thread_id: number): Promise<ThreadsUnfollowResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/threads/${thread_id}/followers`,
+		});
+	}
+
+	async followed(params?: ThreadsFollowedParams): Promise<ThreadsFollowedResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/threads/followed",
+			query: params,
+		});
+	}
+
+	async navigation(thread_id: number): Promise<ThreadsNavigationResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/threads/${thread_id}/navigation`,
+		});
+	}
+
+	async pollGet(thread_id: number): Promise<ThreadsPollGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/threads/${thread_id}/poll`,
+		});
+	}
+
+	async pollVote(thread_id: number, body?: ThreadsPollVoteBody): Promise<ThreadsPollVoteResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/threads/${thread_id}/poll/votes`,
+			body: body,
+		});
+	}
+
+	async unread(params?: ThreadsUnreadParams): Promise<ThreadsUnreadResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/threads/new",
+			query: params,
+		});
+	}
+
+	async recent(params?: ThreadsRecentParams): Promise<ThreadsRecentResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/threads/recent",
+			query: params,
+		});
+	}
+
+	async finish(thread_id: number): Promise<ThreadsFinishResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/contests/${thread_id}/finish`,
+		});
+	}
+}
+
+class PostsApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(params?: PostsListParams): Promise<PostsListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/posts",
+			query: params,
+		});
+	}
+
+	async create(body?: PostsCreateBody): Promise<PostsCreateResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/posts",
+			body: body,
+		});
+	}
+
+	async get(post_id: number): Promise<PostsGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/posts/${post_id}`,
+		});
+	}
+
+	async edit(post_id: number, body?: PostsEditBody): Promise<PostsEditResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: `/posts/${post_id}`,
+			body: body,
+		});
+	}
+
+	async delete(post_id: number, body?: PostsDeleteBody): Promise<PostsDeleteResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/posts/${post_id}`,
+			body: body,
+		});
+	}
+
+	async likes(post_id: number, params?: PostsLikesParams): Promise<PostsLikesResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/posts/${post_id}/likes`,
+			query: params,
+		});
+	}
+
+	async like(post_id: number): Promise<PostsLikeResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/posts/${post_id}/likes`,
+		});
+	}
+
+	async unlike(post_id: number): Promise<PostsUnlikeResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/posts/${post_id}/likes`,
+		});
+	}
+
+	async reportReasons(post_id: number): Promise<PostsReportReasonsResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/posts/${post_id}/report`,
+		});
+	}
+
+	async report(post_id: number, body?: PostsReportBody): Promise<PostsReportResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/posts/${post_id}/report`,
+			body: body,
+		});
+	}
+
+	async commentsGet(params?: PostsCommentsGetParams): Promise<PostsCommentsGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/posts/comments",
+			query: params,
+		});
+	}
+
+	async commentsCreate(body?: PostsCommentsCreateBody): Promise<PostsCommentsCreateResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/posts/comments",
+			body: body,
+		});
+	}
+
+	async commentsEdit(body?: PostsCommentsEditBody): Promise<PostsCommentsEditResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: "/posts/comments",
+			body: body,
+		});
+	}
+
+	async commentsDelete(body?: PostsCommentsDeleteBody): Promise<PostsCommentsDeleteResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: "/posts/comments",
+			body: body,
+		});
+	}
+
+	async commentsReport(body?: PostsCommentsReportBody): Promise<PostsCommentsReportResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/posts/comments/report",
+			body: body,
+		});
+	}
+}
+
+class UsersApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(params?: UsersListParams): Promise<UsersListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/users",
+			query: params,
+		});
+	}
+
+	async fields(): Promise<UsersFieldsResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/users/fields",
+		});
+	}
+
+	async find(params?: UsersFindParams): Promise<UsersFindResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/users/find",
+			query: params,
+		});
+	}
+
+	async get(user_id: string | number, params?: UsersGetParams): Promise<UsersGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/users/${user_id}`,
+			query: params,
+		});
+	}
+
+	async edit(user_id: string | number, body?: UsersEditBody): Promise<UsersEditResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: `/users/${user_id}`,
+			body: body,
+		});
+	}
+
+	async claims(user_id: string | number, params?: UsersClaimsParams): Promise<UsersClaimsResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/users/${user_id}/claims`,
+			query: params,
+		});
+	}
+
+	async avatarUpload(
+		user_id: string | number,
+		body?: UsersAvatarUploadBody,
+	): Promise<UsersAvatarUploadResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/users/${user_id}/avatar`,
+			body: body,
+			multipart: true,
+		});
+	}
+
+	async avatarDelete(user_id: string | number): Promise<UsersAvatarDeleteResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/users/${user_id}/avatar`,
+		});
+	}
+
+	async avatarCrop(
+		user_id: string | number,
+		body?: UsersAvatarCropBody,
+	): Promise<UsersAvatarCropResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/users/${user_id}/avatar/crop`,
+			body: body,
+		});
+	}
+
+	async backgroundUpload(
+		user_id: string | number,
+		body?: UsersBackgroundUploadBody,
+	): Promise<UsersBackgroundUploadResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/users/${user_id}/background`,
+			body: body,
+			multipart: true,
+		});
+	}
+
+	async backgroundDelete(user_id: string | number): Promise<UsersBackgroundDeleteResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/users/${user_id}/background`,
+		});
+	}
+
+	async backgroundCrop(
+		user_id: string | number,
+		body: UsersBackgroundCropBody,
+	): Promise<UsersBackgroundCropResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/users/${user_id}/background/crop`,
+			body: body,
+		});
+	}
+
+	async followers(
+		user_id: string | number,
+		params?: UsersFollowersParams,
+	): Promise<UsersFollowersResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/users/${user_id}/followers`,
+			query: params,
+		});
+	}
+
+	async follow(user_id: string | number): Promise<UsersFollowResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/users/${user_id}/followers`,
+		});
+	}
+
+	async unfollow(user_id: string | number): Promise<UsersUnfollowResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/users/${user_id}/followers`,
+		});
+	}
+
+	async followings(
+		user_id: string | number,
+		params?: UsersFollowingsParams,
+	): Promise<UsersFollowingsResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/users/${user_id}/followings`,
+			query: params,
+		});
+	}
+
+	async likes(user_id: string | number, params?: UsersLikesParams): Promise<UsersLikesResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/users/${user_id}/likes`,
+			query: params,
+		});
+	}
+
+	async ignored(params?: UsersIgnoredParams): Promise<UsersIgnoredResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/users/ignored",
+			query: params,
+		});
+	}
+
+	async ignore(user_id: string | number): Promise<UsersIgnoreResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/users/${user_id}/ignore`,
+		});
+	}
+
+	async ignoreEdit(
+		user_id: string | number,
+		params?: UsersIgnoreEditParams,
+	): Promise<UsersIgnoreEditResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: `/users/${user_id}/ignore`,
+			query: params,
+		});
+	}
+
+	async unignore(user_id: string | number): Promise<UsersUnignoreResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/users/${user_id}/ignore`,
+		});
+	}
+
+	async contents(
+		user_id: string | number,
+		params?: UsersContentsParams,
+	): Promise<UsersContentsResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/users/${user_id}/timeline`,
+			query: params,
+		});
+	}
+
+	async trophies(user_id: string | number): Promise<UsersTrophiesResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/users/${user_id}/trophies`,
+		});
+	}
+
+	async secretAnswerTypes(): Promise<UsersSecretAnswerTypesResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/users/secret-answer/types",
+		});
+	}
+
+	async saReset(): Promise<UsersSaResetResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/account/secret-answer/reset",
+		});
+	}
+
+	async saCancelReset(): Promise<UsersSaCancelResetResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: "/account/secret-answer/reset",
+		});
+	}
+}
+
+class ProfilePostsApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(
+		user_id: string | number,
+		params?: ProfilePostsListParams,
+	): Promise<ProfilePostsListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/users/${user_id}/profile-posts`,
+			query: params,
+		});
+	}
+
+	async get(profile_post_id: number): Promise<ProfilePostsGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/profile-posts/${profile_post_id}`,
+		});
+	}
+
+	async edit(
+		profile_post_id: number,
+		body?: ProfilePostsEditBody,
+	): Promise<ProfilePostsEditResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: `/profile-posts/${profile_post_id}`,
+			body: body,
+		});
+	}
+
+	async delete(
+		profile_post_id: number,
+		params?: ProfilePostsDeleteParams,
+	): Promise<ProfilePostsDeleteResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/profile-posts/${profile_post_id}`,
+			query: params,
+		});
+	}
+
+	async reportReasons(profile_post_id: number): Promise<ProfilePostsReportReasonsResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/profile-posts/${profile_post_id}/report`,
+		});
+	}
+
+	async report(
+		profile_post_id: number,
+		body?: ProfilePostsReportBody,
+	): Promise<ProfilePostsReportResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/profile-posts/${profile_post_id}/report`,
+			body: body,
+		});
+	}
+
+	async create(body?: ProfilePostsCreateBody): Promise<ProfilePostsCreateResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/profile-posts",
+			body: body,
+		});
+	}
+
+	async stick(profile_post_id: number): Promise<ProfilePostsStickResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/profile-posts/${profile_post_id}/stick`,
+		});
+	}
+
+	async unstick(profile_post_id: number): Promise<ProfilePostsUnstickResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/profile-posts/${profile_post_id}/stick`,
+		});
+	}
+
+	async likes(profile_post_id: number): Promise<ProfilePostsLikesResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/profile-posts/${profile_post_id}/likes`,
+		});
+	}
+
+	async like(profile_post_id: number): Promise<ProfilePostsLikeResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/profile-posts/${profile_post_id}/likes`,
+		});
+	}
+
+	async unlike(profile_post_id: number): Promise<ProfilePostsUnlikeResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/profile-posts/${profile_post_id}/likes`,
+		});
+	}
+
+	async commentsList(
+		params?: ProfilePostsCommentsListParams,
+	): Promise<ProfilePostsCommentsListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/profile-posts/comments",
+			query: params,
+		});
+	}
+
+	async commentsCreate(
+		body?: ProfilePostsCommentsCreateBody,
+	): Promise<ProfilePostsCommentsCreateResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/profile-posts/comments",
+			body: body,
+		});
+	}
+
+	async commentsEdit(
+		body?: ProfilePostsCommentsEditBody,
+	): Promise<ProfilePostsCommentsEditResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: "/profile-posts/comments",
+			body: body,
+		});
+	}
+
+	async commentsDelete(
+		body?: ProfilePostsCommentsDeleteBody,
+	): Promise<ProfilePostsCommentsDeleteResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: "/profile-posts/comments",
+			body: body,
+		});
+	}
+
+	async commentsGet(
+		profile_post_id: number,
+		comment_id: number,
+	): Promise<ProfilePostsCommentsGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/profile-posts/${profile_post_id}/comments/${comment_id}`,
+		});
+	}
+
+	async commentsReport(
+		comment_id: number,
+		body?: ProfilePostsCommentsReportBody,
+	): Promise<ProfilePostsCommentsReportResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/profile-posts/comments/${comment_id}/report`,
+			body: body,
+		});
+	}
+}
+
+class ConversationsApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(params?: ConversationsListParams): Promise<ConversationsListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/conversations",
+			query: params,
+		});
+	}
+
+	async create(body?: ConversationsCreateBody): Promise<ConversationsCreateResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/conversations",
+			body: body,
+		});
+	}
+
+	async update(body?: ConversationsUpdateBody): Promise<ConversationsUpdateResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: "/conversations",
+			body: body,
+		});
+	}
+
+	async delete(body?: ConversationsDeleteBody): Promise<ConversationsDeleteResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: "/conversations",
+			body: body,
+		});
+	}
+
+	async start(body?: ConversationsStartBody): Promise<ConversationsStartResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/conversations/start",
+			body: body,
+		});
+	}
+
+	async save(body?: ConversationsSaveBody): Promise<ConversationsSaveResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/conversations/save",
+			body: body,
+		});
+	}
+
+	async get(conversation_id: number): Promise<ConversationsGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/conversations/${conversation_id}`,
+		});
+	}
+
+	async messagesList(
+		conversation_id: number,
+		params?: ConversationsMessagesListParams,
+	): Promise<ConversationsMessagesListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/conversations/${conversation_id}/messages`,
+			query: params,
+		});
+	}
+
+	async messagesCreate(
+		conversation_id: number,
+		body?: ConversationsMessagesCreateBody,
+	): Promise<ConversationsMessagesCreateResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/conversations/${conversation_id}/messages`,
+			body: body,
+		});
+	}
+
+	async search(body?: ConversationsSearchBody): Promise<ConversationsSearchResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/conversations/search",
+			body: body,
+		});
+	}
+
+	async messagesGet(message_id: number): Promise<ConversationsMessagesGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/conversations/messages/${message_id}`,
+		});
+	}
+
+	async messagesEdit(
+		conversation_id: number,
+		message_id: number,
+		body?: ConversationsMessagesEditBody,
+	): Promise<ConversationsMessagesEditResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: `/conversations/${conversation_id}/messages/${message_id}`,
+			body: body,
+		});
+	}
+
+	async messagesDelete(
+		conversation_id: number,
+		message_id: number,
+	): Promise<ConversationsMessagesDeleteResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/conversations/${conversation_id}/messages/${message_id}`,
+		});
+	}
+
+	async invite(
+		conversation_id: number,
+		body?: ConversationsInviteBody,
+	): Promise<ConversationsInviteResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/conversations/${conversation_id}/invite`,
+			body: body,
+		});
+	}
+
+	async kick(
+		conversation_id: number,
+		body?: ConversationsKickBody,
+	): Promise<ConversationsKickResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/conversations/${conversation_id}/kick`,
+			body: body,
+		});
+	}
+
+	async read(conversation_id: number): Promise<ConversationsReadResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/conversations/${conversation_id}/read`,
+		});
+	}
+
+	async readAll(): Promise<ConversationsReadAllResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/conversations/read-all",
+		});
+	}
+
+	async messagesStick(
+		conversation_id: number,
+		message_id: number,
+	): Promise<ConversationsMessagesStickResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/conversations/${conversation_id}/messages/${message_id}/stick`,
+		});
+	}
+
+	async messagesUnstick(
+		conversation_id: number,
+		message_id: number,
+	): Promise<ConversationsMessagesUnstickResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/conversations/${conversation_id}/messages/${message_id}/stick`,
+		});
+	}
+
+	async star(conversation_id: number): Promise<ConversationsStarResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/conversations/${conversation_id}/star`,
+		});
+	}
+
+	async unstar(conversation_id: number): Promise<ConversationsUnstarResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/conversations/${conversation_id}/star`,
+		});
+	}
+
+	async alertsEnable(conversation_id: number): Promise<ConversationsAlertsEnableResponse> {
+		return this.http.request({
+			method: "POST",
+			path: `/conversations/${conversation_id}/alerts`,
+		});
+	}
+
+	async alertsDisable(conversation_id: number): Promise<ConversationsAlertsDisableResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: `/conversations/${conversation_id}/alerts`,
+		});
+	}
+}
+
+class NotificationsApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(params?: NotificationsListParams): Promise<NotificationsListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/notifications",
+			query: params,
+		});
+	}
+
+	async get(notification_id: number): Promise<NotificationsGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/notifications/${notification_id}/content`,
+		});
+	}
+
+	async read(body?: NotificationsReadBody): Promise<NotificationsReadResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/notifications/read",
+			body: body,
+		});
+	}
+}
+
+class TagsApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async popular(): Promise<TagsPopularResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/tags",
+		});
+	}
+
+	async list(params?: TagsListParams): Promise<TagsListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/tags/list",
+			query: params,
+		});
+	}
+
+	async get(tag_id: number, params?: TagsGetParams): Promise<TagsGetResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/tags/${tag_id}`,
+			query: params,
+		});
+	}
+
+	async find(params?: TagsFindParams): Promise<TagsFindResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/tags/find",
+			query: params,
+		});
+	}
+}
+
+class SearchApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async all(body?: SearchAllBody): Promise<SearchAllResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/search",
+			body: body,
+		});
+	}
+
+	async threads(body?: SearchThreadsBody): Promise<SearchThreadsResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/search/threads",
+			body: body,
+		});
+	}
+
+	async posts(body?: SearchPostsBody): Promise<SearchPostsResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/search/posts",
+			body: body,
+		});
+	}
+
+	async users(body?: SearchUsersBody): Promise<SearchUsersResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/search/users",
+			body: body,
+		});
+	}
+
+	async profilePosts(body?: SearchProfilePostsBody): Promise<SearchProfilePostsResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/search/profile-posts",
+			body: body,
+		});
+	}
+
+	async tagged(body?: SearchTaggedBody): Promise<SearchTaggedResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/search/tagged",
+			body: body,
+		});
+	}
+
+	async results(
+		search_id: string | number,
+		params?: SearchResultsParams,
+	): Promise<SearchResultsResponse> {
+		return this.http.request({
+			method: "GET",
+			path: `/search/${search_id}/results`,
+			query: params,
+		});
+	}
+}
+
+class BatchApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async execute(body?: BatchExecuteBody): Promise<BatchExecuteResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/batch",
+			body: body,
+		});
+	}
+}
+
+class ChatboxApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async index(params?: ChatboxIndexParams): Promise<ChatboxIndexResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/chatbox",
+			query: params,
+		});
+	}
+
+	async getMessages(params?: ChatboxGetMessagesParams): Promise<ChatboxGetMessagesResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/chatbox/messages",
+			query: params,
+		});
+	}
+
+	async postMessage(body?: ChatboxPostMessageBody): Promise<ChatboxPostMessageResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/chatbox/messages",
+			body: body,
+		});
+	}
+
+	async editMessage(body?: ChatboxEditMessageBody): Promise<ChatboxEditMessageResponse> {
+		return this.http.request({
+			method: "PUT",
+			path: "/chatbox/messages",
+			body: body,
+		});
+	}
+
+	async deleteMessage(body?: ChatboxDeleteMessageBody): Promise<ChatboxDeleteMessageResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: "/chatbox/messages",
+			body: body,
+		});
+	}
+
+	async online(params?: ChatboxOnlineParams): Promise<ChatboxOnlineResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/chatbox/messages/online",
+			query: params,
+		});
+	}
+
+	async reportReasons(params?: ChatboxReportReasonsParams): Promise<ChatboxReportReasonsResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/chatbox/messages/report",
+			query: params,
+		});
+	}
+
+	async report(body?: ChatboxReportBody): Promise<ChatboxReportResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/chatbox/messages/report",
+			body: body,
+		});
+	}
+
+	async getLeaderboard(
+		params?: ChatboxGetLeaderboardParams,
+	): Promise<ChatboxGetLeaderboardResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/chatbox/messages/leaderboard",
+			query: params,
+		});
+	}
+
+	async getIgnore(): Promise<ChatboxGetIgnoreResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/chatbox/ignore",
+		});
+	}
+
+	async postIgnore(body?: ChatboxPostIgnoreBody): Promise<ChatboxPostIgnoreResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/chatbox/ignore",
+			body: body,
+		});
+	}
+
+	async deleteIgnore(body?: ChatboxDeleteIgnoreBody): Promise<ChatboxDeleteIgnoreResponse> {
+		return this.http.request({
+			method: "DELETE",
+			path: "/chatbox/ignore",
+			body: body,
+		});
+	}
+}
+
+class FormsApi {
+	constructor(private readonly http: HttpClient) {}
+
+	async list(params?: FormsListParams): Promise<FormsListResponse> {
+		return this.http.request({
+			method: "GET",
+			path: "/forms",
+			query: params,
+		});
+	}
+
+	async create(body?: FormsCreateBody): Promise<FormsCreateResponse> {
+		return this.http.request({
+			method: "POST",
+			path: "/forms/save",
+			body: body,
+		});
+	}
+}
 
 export class ForumClient {
 	readonly oAuth: OAuthApi;

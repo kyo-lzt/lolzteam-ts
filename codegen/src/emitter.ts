@@ -4,13 +4,8 @@
 
 import type { ComponentSchemas, ParsedGroup } from "./parser.js";
 import type { MethodDefinition } from "./transforms/operations.js";
-import { generateInterface, schemaToType } from "./transforms/types.js";
-import {
-	buildTypeName,
-	groupToClassName,
-	groupToFileName,
-	groupToPropertyName,
-} from "./utils/naming.js";
+import { generateInterface } from "./transforms/types.js";
+import { buildTypeName, groupToClassName, groupToPropertyName } from "./utils/naming.js";
 
 // ─── Type Emission ───────────────────────────────────────────────────────────
 
@@ -183,50 +178,9 @@ function emitMethod(group: string, method: MethodDefinition): string {
 	return lines.join("\n");
 }
 
-export function emitGroupFile(group: ParsedGroup): string {
-	const className = groupToClassName(group.groupName);
-	const lines: string[] = [];
+// ─── Combined Index File Emission ────────────────────────────────────────────
 
-	lines.push("// Auto-generated. Do not edit manually.\n");
-	lines.push('import type { HttpClient } from "../../runtime/http-client.js";');
-
-	// Collect type imports
-	const typeImports: string[] = [];
-	for (const method of group.methods) {
-		const base = buildTypeName(group.groupName, method.methodName);
-		typeImports.push(`${base}Response`);
-
-		if (method.params.queryParams.length > 0) {
-			typeImports.push(`${base}Params`);
-		}
-		if (method.hasBody && (method.bodyProperties.length > 0 || method.bodyIsArray)) {
-			typeImports.push(`${base}Body`);
-		}
-	}
-
-	if (typeImports.length > 0) {
-		typeImports.sort();
-		lines.push(`import type { ${typeImports.join(", ")} } from "./types.js";`);
-	}
-
-	lines.push("");
-	lines.push(`export class ${className} {`);
-	lines.push("\tconstructor(private readonly http: HttpClient) {}");
-
-	for (const method of group.methods) {
-		lines.push("");
-		lines.push(emitMethod(group.groupName, method));
-	}
-
-	lines.push("}");
-	lines.push("");
-
-	return lines.join("\n");
-}
-
-// ─── Index File Emission ─────────────────────────────────────────────────────
-
-export function emitIndexFile(
+export function emitCombinedIndexFile(
 	groups: ParsedGroup[],
 	clientName: string,
 	defaultBaseUrl: string,
@@ -238,12 +192,34 @@ export function emitIndexFile(
 	lines.push('import type { ClientConfig } from "../../runtime/types.js";');
 	lines.push('import { HttpClient } from "../../runtime/http-client.js";');
 
+	// Collect all type imports from all groups
+	const typeImports: string[] = [];
 	for (const group of groups) {
-		const className = groupToClassName(group.groupName);
-		const fileName = groupToFileName(group.groupName);
-		lines.push(`import { ${className} } from "./${fileName}.js";`);
+		for (const method of group.methods) {
+			const base = buildTypeName(group.groupName, method.methodName);
+			typeImports.push(`${base}Response`);
+
+			if (method.params.queryParams.length > 0) {
+				typeImports.push(`${base}Params`);
+			}
+			if (method.hasBody && (method.bodyProperties.length > 0 || method.bodyIsArray)) {
+				typeImports.push(`${base}Body`);
+			}
+		}
 	}
 
+	if (typeImports.length > 0) {
+		typeImports.sort();
+		lines.push(`import type { ${typeImports.join(", ")} } from "./types.js";`);
+	}
+
+	// Emit all group classes
+	for (const group of groups) {
+		lines.push("");
+		lines.push(emitGroupClass(group));
+	}
+
+	// Emit client class
 	lines.push("");
 	lines.push(`export class ${clientName} {`);
 
@@ -274,6 +250,23 @@ export function emitIndexFile(
 	// Re-export types
 	lines.push('export type * from "./types.js";');
 	lines.push("");
+
+	return lines.join("\n");
+}
+
+function emitGroupClass(group: ParsedGroup): string {
+	const className = groupToClassName(group.groupName);
+	const lines: string[] = [];
+
+	lines.push(`class ${className} {`);
+	lines.push("\tconstructor(private readonly http: HttpClient) {}");
+
+	for (const method of group.methods) {
+		lines.push("");
+		lines.push(emitMethod(group.groupName, method));
+	}
+
+	lines.push("}");
 
 	return lines.join("\n");
 }

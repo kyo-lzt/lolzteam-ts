@@ -73,10 +73,10 @@ export class HttpClient {
 			await this.rateLimiter.acquire();
 		}
 
-		return withRetry(() => this.execute<T>(options), this.retryConfig);
+		return withRetry(() => this.execute(options), this.retryConfig);
 	}
 
-	private async execute<T>(options: RequestOptions): Promise<T> {
+	private async execute<T = unknown>(options: RequestOptions): Promise<T> {
 		if (this.dispatcherReady) {
 			await this.dispatcherReady;
 		}
@@ -129,19 +129,7 @@ export class HttpClient {
 			throw new NetworkError(error);
 		}
 
-		const contentType = response.headers.get("content-type") ?? "";
-		const isJson = contentType.includes("application/json");
-
-		let body: unknown;
-		if (isJson) {
-			try {
-				body = await response.json();
-			} catch {
-				body = null;
-			}
-		} else {
-			body = await response.text();
-		}
+		const body: T = await this.parseResponseBody(response);
 
 		if (!response.ok) {
 			throw createHttpError(response.status, body, response.headers);
@@ -153,6 +141,21 @@ export class HttpClient {
 			);
 		}
 
-		return body as T;
+		return body;
+	}
+
+	/**
+	 * Parse response body based on content type.
+	 *
+	 * Returns the Fetch API's native `response.json()` result, which is `Promise<any>`
+	 * per the spec. This is the trust boundary between the external API and our typed
+	 * code — the caller assigns the result to `T` without an explicit cast.
+	 */
+	private parseResponseBody(response: Response) {
+		const contentType = response.headers.get("content-type") ?? "";
+		if (contentType.includes("application/json")) {
+			return response.json().catch(() => null);
+		}
+		return response.text();
 	}
 }

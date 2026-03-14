@@ -250,7 +250,7 @@ describe("ForumClient", () => {
 		expect(result).toEqual({ user: { user_id: 5 } });
 	});
 
-	it("uses default base URL https://api.lolz.live when not specified", async () => {
+	it("uses default base URL https://prod-api.lolz.live when not specified", async () => {
 		const client = new ForumClient({
 			token: "t",
 			retry: { maxRetries: 0 },
@@ -258,7 +258,7 @@ describe("ForumClient", () => {
 		});
 		await client.threads.list();
 		const url = mockFetch.mock.calls[0]?.[0] as string;
-		expect(url).toStartWith("https://api.lolz.live/threads");
+		expect(url).toStartWith("https://prod-api.lolz.live/threads");
 	});
 });
 
@@ -324,7 +324,7 @@ describe("MarketClient", () => {
 		expect(url).toStartWith("https://custom.market.api/");
 	});
 
-	it("uses default base URL https://api.lzt.market when not specified", async () => {
+	it("uses default base URL https://prod-api.lzt.market when not specified", async () => {
 		const client = new MarketClient({
 			token: "t",
 			retry: { maxRetries: 0 },
@@ -332,7 +332,7 @@ describe("MarketClient", () => {
 		});
 		await client.category.all();
 		const url = mockFetch.mock.calls[0]?.[0] as string;
-		expect(url).toStartWith("https://api.lzt.market/");
+		expect(url).toStartWith("https://prod-api.lzt.market/");
 	});
 
 	it("sends Authorization: Bearer with market token", async () => {
