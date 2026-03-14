@@ -1,0 +1,46 @@
+{
+	"name": "lolzteam-api",
+	"version": "0.1.0",
+	"description": "TypeScript API wrapper for Lolzteam Forum and Market",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		},
+		"./forum": {
+			"types": "./dist/generated/forum/index.d.ts",
+			"import": "./dist/generated/forum/index.js"
+		},
+		"./market": {
+			"types": "./dist/generated/market/index.d.ts",
+			"import": "./dist/generated/market/index.js"
+		}
+	},
+	"files": ["dist"],
+	"scripts": {
+		"build": "tsc",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check --fix .",
+		"lint:check": "biome check .",
+		"test": "bun test",
+		"codegen": "bun codegen/src/index.ts",
+		"prepublishOnly": "bun run build"
+	},
+	"keywords": ["lolzteam", "lolz", "zelenka", "api", "wrapper"],
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.0",
+		"typescript": "^5.7.0"
+	},
+	"peerDependencies": {
+		"undici": "^7.0.0"
+	},
+	"peerDependenciesMeta": {
+		"undici": {
+			"optional": true
+		}
+	}
+}
