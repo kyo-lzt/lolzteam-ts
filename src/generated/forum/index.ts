@@ -2,6 +2,7 @@
 
 import { HttpClient } from "../../runtime/http-client.js";
 import type { ClientConfig } from "../../runtime/types.js";
+import { validateEnum } from "../../runtime/validation.js";
 import type {
 	AssetsCssParams,
 	AssetsCssResponse,
@@ -261,7 +262,10 @@ class OAuthApi {
 		return this.http.request({
 			method: "POST",
 			path: "/oauth/token",
-			body: body,
+			body: {
+				...body,
+				...("scope" in body && Array.isArray(body.scope) ? { scope: body.scope.join(" ") } : {}),
+			},
 			bodyEncoding: "multipart",
 		});
 	}
@@ -283,6 +287,7 @@ class CategoriesApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async list(params?: CategoriesListParams): Promise<CategoriesListResponse> {
+		validateEnum("order", params?.order, ["natural", "list"]);
 		return this.http.request({
 			method: "GET",
 			path: "/categories",
@@ -302,6 +307,7 @@ class ForumsApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async list(params?: ForumsListParams): Promise<ForumsListResponse> {
+		validateEnum("order", params?.order, ["natural", "list"]);
 		return this.http.request({
 			method: "GET",
 			path: "/forums",
@@ -393,6 +399,7 @@ class PagesApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async list(params?: PagesListParams): Promise<PagesListResponse> {
+		validateEnum("order", params?.order, ["natural", "list"]);
 		return this.http.request({
 			method: "GET",
 			path: "/pages",
@@ -424,6 +431,17 @@ class ThreadsApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async list(params?: ThreadsListParams): Promise<ThreadsListResponse> {
+		validateEnum("state", params?.state, ["active", "closed"]);
+		validateEnum("period", params?.period, ["day", "week", "month", "year"]);
+		validateEnum("order", params?.order, [
+			"post_date",
+			"last_post_date",
+			"reply_count",
+			"reply_count_asc",
+			"first_post_likes",
+			"vote_count",
+		]);
+		validateEnum("direction", params?.direction, ["asc", "desc"]);
 		return this.http.request({
 			method: "GET",
 			path: "/threads",
@@ -441,6 +459,12 @@ class ThreadsApi {
 	}
 
 	async createContest(body: ThreadsCreateContestBody): Promise<ThreadsCreateContestResponse> {
+		if (body && "contest_type" in body)
+			validateEnum("contest_type", body.contest_type, ["by_finish_date"]);
+		if (body && "length_option" in body)
+			validateEnum("length_option", body.length_option, ["minutes", "hours", "days"]);
+		if (body && "prize_type" in body)
+			validateEnum("prize_type", body.prize_type, ["money", "upgrades"]);
 		return this.http.request({
 			method: "POST",
 			path: "/contests",
@@ -450,6 +474,21 @@ class ThreadsApi {
 	}
 
 	async claim(body?: ThreadsClaimBody): Promise<ThreadsClaimResponse> {
+		if (body && "currency" in body)
+			validateEnum("currency", body.currency, [
+				"rub",
+				"uah",
+				"kzt",
+				"byn",
+				"usd",
+				"eur",
+				"gbp",
+				"cny",
+				"try",
+			]);
+		if (body && "transfer_type" in body)
+			validateEnum("transfer_type", body.transfer_type, ["guarantor", "safe", "notsafe"]);
+		if (body && "pay_claim" in body) validateEnum("pay_claim", body.pay_claim, ["now", "later"]);
 		return this.http.request({
 			method: "POST",
 			path: "/claims",
@@ -603,6 +642,12 @@ class PostsApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async list(params?: PostsListParams): Promise<PostsListResponse> {
+		validateEnum("order", params?.order, [
+			"natural",
+			"natural_reverse",
+			"post_likes",
+			"post_likes_reverse",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/posts",
@@ -762,6 +807,121 @@ class UsersApi {
 	}
 
 	async edit(user_id: UserIDModel, body?: UsersEditBody): Promise<UsersEditResponse> {
+		if (body && "gender" in body) validateEnum("gender", body.gender, ["", "male", "female"]);
+		if (body && "timezone" in body)
+			validateEnum("timezone", body.timezone, [
+				"Pacific/Midway",
+				"Pacific/Honolulu",
+				"Pacific/Marquesas",
+				"America/Anchorage",
+				"America/Los_Angeles",
+				"America/Santa_Isabel",
+				"America/Tijuana",
+				"America/Denver",
+				"America/Chihuahua",
+				"America/Phoenix",
+				"America/Chicago",
+				"America/Belize",
+				"America/Mexico_City",
+				"Pacific/Easter",
+				"America/New_York",
+				"America/Havana",
+				"America/Bogota",
+				"America/Caracas",
+				"America/Halifax",
+				"America/Goose_Bay",
+				"America/Asuncion",
+				"America/Santiago",
+				"America/Cuiaba",
+				"America/La_Paz",
+				"America/St_Johns",
+				"America/Argentina/Buenos_Aires",
+				"America/Argentina/San_Luis",
+				"America/Argentina/Mendoza",
+				"Atlantic/Stanley",
+				"America/Godthab",
+				"America/Montevideo",
+				"America/Sao_Paulo",
+				"America/Miquelon",
+				"America/Noronha",
+				"Atlantic/Cape_Verde",
+				"Atlantic/Azores",
+				"Europe/London",
+				"Africa/Casablanca",
+				"Atlantic/Reykjavik",
+				"Europe/Amsterdam",
+				"Africa/Algiers",
+				"Africa/Windhoek",
+				"Africa/Tunis",
+				"Europe/Athens",
+				"Africa/Johannesburg",
+				"Europe/Kaliningrad",
+				"Asia/Amman",
+				"Asia/Beirut",
+				"Africa/Cairo",
+				"Asia/Jerusalem",
+				"Asia/Gaza",
+				"Asia/Damascus",
+				"Europe/Moscow",
+				"Europe/Minsk",
+				"Africa/Nairobi",
+				"Asia/Tehran",
+				"Asia/Dubai",
+				"Asia/Yerevan",
+				"Asia/Baku",
+				"Indian/Mauritius",
+				"Asia/Kabul",
+				"Asia/Yekaterinburg",
+				"Asia/Tashkent",
+				"Asia/Kolkata",
+				"Asia/Kathmandu",
+				"Asia/Novosibirsk",
+				"Asia/Dhaka",
+				"Asia/Almaty",
+				"Asia/Rangoon",
+				"Asia/Krasnoyarsk",
+				"Asia/Bangkok",
+				"Asia/Irkutsk",
+				"Asia/Hong_Kong",
+				"Asia/Singapore",
+				"Australia/Perth",
+				"Asia/Yakutsk",
+				"Asia/Tokyo",
+				"Asia/Seoul",
+				"Australia/Adelaide",
+				"Australia/Darwin",
+				"Asia/Vladivostok",
+				"Asia/Magadan",
+				"Australia/Brisbane",
+				"Australia/Sydney",
+				"Pacific/Noumea",
+				"Pacific/Norfolk",
+				"Asia/Anadyr",
+				"Pacific/Auckland",
+				"Pacific/Fiji",
+				"Pacific/Chatham",
+				"Pacific/Tongatapu",
+				"Pacific/Apia",
+				"Pacific/Kiritimati",
+			]);
+		if (body && "allow_view_profile" in body)
+			validateEnum("allow_view_profile", body.allow_view_profile, ["none", "members", "followed"]);
+		if (body && "allow_post_profile" in body)
+			validateEnum("allow_post_profile", body.allow_post_profile, ["none", "members", "followed"]);
+		if (body && "allow_send_personal_conversation" in body)
+			validateEnum("allow_send_personal_conversation", body.allow_send_personal_conversation, [
+				"none",
+				"members",
+				"followed",
+			]);
+		if (body && "allow_invite_group" in body)
+			validateEnum("allow_invite_group", body.allow_invite_group, ["none", "members", "followed"]);
+		if (body && "allow_receive_news_feed" in body)
+			validateEnum("allow_receive_news_feed", body.allow_receive_news_feed, [
+				"none",
+				"members",
+				"followed",
+			]);
 		return this.http.request({
 			method: "PUT",
 			path: `/users/${user_id}`,
@@ -771,6 +931,8 @@ class UsersApi {
 	}
 
 	async claims(user_id: UserIDModel, params?: UsersClaimsParams): Promise<UsersClaimsResponse> {
+		validateEnum("type", params?.type, ["market", "nomarket"]);
+		validateEnum("claim_state", params?.claim_state, ["active", "solved", "rejected", "settled"]);
 		return this.http.request({
 			method: "GET",
 			path: `/users/${user_id}/claims`,
@@ -844,6 +1006,7 @@ class UsersApi {
 		user_id: UserIDModel,
 		params?: UsersFollowersParams,
 	): Promise<UsersFollowersResponse> {
+		validateEnum("order", params?.order, ["natural", "follow_date", "follow_date_reverse"]);
 		return this.http.request({
 			method: "GET",
 			path: `/users/${user_id}/followers`,
@@ -869,6 +1032,7 @@ class UsersApi {
 		user_id: UserIDModel,
 		params?: UsersFollowingsParams,
 	): Promise<UsersFollowingsResponse> {
+		validateEnum("order", params?.order, ["natural", "follow_date", "follow_date_reverse"]);
 		return this.http.request({
 			method: "GET",
 			path: `/users/${user_id}/followings`,
@@ -877,6 +1041,14 @@ class UsersApi {
 	}
 
 	async likes(user_id: UserIDModel, params?: UsersLikesParams): Promise<UsersLikesResponse> {
+		validateEnum("like_type", params?.like_type, ["like", "like2"]);
+		validateEnum("type", params?.type, ["gotten", "given"]);
+		validateEnum("content_type", params?.content_type, [
+			"post",
+			"post_comment",
+			"profile_post",
+			"profile_post_comment",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: `/users/${user_id}/likes`,
@@ -1134,6 +1306,16 @@ class ConversationsApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async list(params?: ConversationsListParams): Promise<ConversationsListResponse> {
+		validateEnum("folder", params?.folder, [
+			"all",
+			"unread",
+			"groups",
+			"market",
+			"market_replacements",
+			"staff",
+			"giveaways",
+			"p2p",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/conversations",
@@ -1160,6 +1342,8 @@ class ConversationsApi {
 	}
 
 	async delete(body?: ConversationsDeleteBody): Promise<ConversationsDeleteResponse> {
+		if (body && "delete_type" in body)
+			validateEnum("delete_type", body.delete_type, ["delete", "delete_ignore"]);
 		return this.http.request({
 			method: "DELETE",
 			path: "/conversations",
@@ -1197,6 +1381,7 @@ class ConversationsApi {
 		conversation_id: number,
 		params?: ConversationsMessagesListParams,
 	): Promise<ConversationsMessagesListResponse> {
+		validateEnum("order", params?.order, ["natural", "natural_reverse"]);
 		return this.http.request({
 			method: "GET",
 			path: `/conversations/${conversation_id}/messages`,
@@ -1346,6 +1531,7 @@ class NotificationsApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async list(params?: NotificationsListParams): Promise<NotificationsListResponse> {
+		validateEnum("type", params?.type, ["market", "nomarket"]);
 		return this.http.request({
 			method: "GET",
 			path: "/notifications",
@@ -1561,6 +1747,7 @@ class ChatboxApi {
 	async getLeaderboard(
 		params?: ChatboxGetLeaderboardParams,
 	): Promise<ChatboxGetLeaderboardResponse> {
+		validateEnum("duration", params?.duration, ["day", "week", "month"]);
 		return this.http.request({
 			method: "GET",
 			path: "/chatbox/messages/leaderboard",

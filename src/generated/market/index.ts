@@ -2,6 +2,7 @@
 
 import { HttpClient } from "../../runtime/http-client.js";
 import type { ClientConfig } from "../../runtime/types.js";
+import { validateEnum } from "../../runtime/validation.js";
 import type {
 	AutoPaymentsCreateBody,
 	AutoPaymentsCreateResponse,
@@ -213,6 +214,39 @@ class CategoryApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async all(params?: CategoryAllParams): Promise<CategoryAllResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/",
@@ -222,6 +256,51 @@ class CategoryApi {
 	}
 
 	async steam(params?: CategorySteamParams): Promise<CategorySteamResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("rt", params?.rt, ["yes", "no", "nomatter"]);
+		validateEnum("reg_period", params?.reg_period, ["day", "month", "year"]);
+		validateEnum("last_trans_date_period", params?.last_trans_date_period, [
+			"day",
+			"month",
+			"year",
+		]);
+		validateEnum("d2_last_match_date_period", params?.d2_last_match_date_period, [
+			"day",
+			"month",
+			"year",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/steam",
@@ -231,6 +310,47 @@ class CategoryApi {
 	}
 
 	async fortnite(params?: CategoryFortniteParams): Promise<CategoryFortniteResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("temp_email", params?.temp_email, ["yes", "no", "nomatter"]);
+		validateEnum("change_email", params?.change_email, ["yes", "no", "nomatter"]);
+		validateEnum("last_trans_date_period", params?.last_trans_date_period, [
+			"day",
+			"month",
+			"year",
+		]);
+		validateEnum("reg_period", params?.reg_period, ["day", "month", "year"]);
 		return this.http.request({
 			method: "GET",
 			path: "/fortnite",
@@ -240,6 +360,40 @@ class CategoryApi {
 	}
 
 	async mihoyo(params?: CategoryMihoyoParams): Promise<CategoryMihoyoResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("email", params?.email, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/mihoyo",
@@ -249,6 +403,41 @@ class CategoryApi {
 	}
 
 	async riot(params?: CategoryRiotParams): Promise<CategoryRiotResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("email", params?.email, ["yes", "no", "nomatter"]);
+		validateEnum("tel", params?.tel, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/riot",
@@ -258,6 +447,48 @@ class CategoryApi {
 	}
 
 	async telegram(params?: CategoryTelegramParams): Promise<CategoryTelegramResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("premium", params?.premium, ["yes", "no", "nomatter"]);
+		validateEnum("premium_expiration_period", params?.premium_expiration_period, [
+			"day",
+			"month",
+			"year",
+		]);
+		validateEnum("birthday_period", params?.birthday_period, ["day", "month", "year"]);
+		validateEnum("birthday_after_period", params?.birthday_after_period, ["day", "month", "year"]);
+		validateEnum("email", params?.email, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/telegram",
@@ -267,6 +498,39 @@ class CategoryApi {
 	}
 
 	async supercell(params?: CategorySupercellParams): Promise<CategorySupercellResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/supercell",
@@ -276,6 +540,41 @@ class CategoryApi {
 	}
 
 	async ea(params?: CategoryEaParams): Promise<CategoryEaResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("subscription", params?.subscription, ["EA Play", "EA Play Pro"]);
+		validateEnum("subscription_period", params?.subscription_period, ["day", "month", "year"]);
 		return this.http.request({
 			method: "GET",
 			path: "/ea",
@@ -285,6 +584,47 @@ class CategoryApi {
 	}
 
 	async wot(params?: CategoryWotParams): Promise<CategoryWotResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("tel", params?.tel, ["yes", "no", "nomatter"]);
+		validateEnum("premium", params?.premium, ["yes", "no", "nomatter"]);
+		validateEnum("premium_expiration_period", params?.premium_expiration_period, [
+			"day",
+			"month",
+			"year",
+		]);
+		validateEnum("clan", params?.clan, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/world-of-tanks",
@@ -294,6 +634,47 @@ class CategoryApi {
 	}
 
 	async wotBlitz(params?: CategoryWotBlitzParams): Promise<CategoryWotBlitzResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("tel", params?.tel, ["yes", "no", "nomatter"]);
+		validateEnum("premium", params?.premium, ["yes", "no", "nomatter"]);
+		validateEnum("premium_expiration_period", params?.premium_expiration_period, [
+			"day",
+			"month",
+			"year",
+		]);
+		validateEnum("clan", params?.clan, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/wot-blitz",
@@ -303,6 +684,46 @@ class CategoryApi {
 	}
 
 	async gifts(params?: CategoryGiftsParams): Promise<CategoryGiftsResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("subscription", params?.subscription, [
+			"discord_nitro",
+			"discord_nitro_basic",
+			"discord_nitro_trial",
+			"telegram_premium",
+		]);
+		validateEnum("subscription_period", params?.subscription_period, ["day", "month", "year"]);
 		return this.http.request({
 			method: "GET",
 			path: "/gifts",
@@ -312,6 +733,40 @@ class CategoryApi {
 	}
 
 	async epicGames(params?: CategoryEpicGamesParams): Promise<CategoryEpicGamesResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("change_email", params?.change_email, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/epicgames",
@@ -323,6 +778,42 @@ class CategoryApi {
 	async escapeFromTarkov(
 		params?: CategoryEscapeFromTarkovParams,
 	): Promise<CategoryEscapeFromTarkovResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("region", params?.region, ["af", "as", "cis", "eu", "me", "oc", "us"]);
+		validateEnum("reg_period", params?.reg_period, ["day", "month", "year"]);
+		validateEnum("side", params?.side, ["Bear", "Savage"]);
 		return this.http.request({
 			method: "GET",
 			path: "/escape-from-tarkov",
@@ -332,6 +823,39 @@ class CategoryApi {
 	}
 
 	async socialClub(params?: CategorySocialClubParams): Promise<CategorySocialClubResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/socialclub",
@@ -341,6 +865,42 @@ class CategoryApi {
 	}
 
 	async uplay(params?: CategoryUplayParams): Promise<CategoryUplayResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("subscription", params?.subscription, ["basic", "premium", "premiumAnywhere"]);
+		validateEnum("subscription_period", params?.subscription_period, ["day", "month", "year"]);
+		validateEnum("reg_period", params?.reg_period, ["day", "month", "year"]);
 		return this.http.request({
 			method: "GET",
 			path: "/uplay",
@@ -350,6 +910,42 @@ class CategoryApi {
 	}
 
 	async discord(params?: CategoryDiscordParams): Promise<CategoryDiscordResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("tel", params?.tel, ["yes", "no", "nomatter"]);
+		validateEnum("nitro_period", params?.nitro_period, ["day", "month", "year"]);
+		validateEnum("reg_period", params?.reg_period, ["day", "month", "year"]);
 		return this.http.request({
 			method: "GET",
 			path: "/discord",
@@ -359,6 +955,43 @@ class CategoryApi {
 	}
 
 	async tikTok(params?: CategoryTikTokParams): Promise<CategoryTikTokResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("tel", params?.tel, ["yes", "no", "nomatter"]);
+		validateEnum("reg_period", params?.reg_period, ["day", "month", "year"]);
+		validateEnum("verified", params?.verified, ["yes", "no", "nomatter"]);
+		validateEnum("email", params?.email, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/tiktok",
@@ -368,6 +1001,42 @@ class CategoryApi {
 	}
 
 	async instagram(params?: CategoryInstagramParams): Promise<CategoryInstagramResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("tel", params?.tel, ["yes", "no", "nomatter"]);
+		validateEnum("cookies", params?.cookies, ["yes", "no", "nomatter"]);
+		validateEnum("reg_period", params?.reg_period, ["day", "month", "year"]);
 		return this.http.request({
 			method: "GET",
 			path: "/instagram",
@@ -377,6 +1046,40 @@ class CategoryApi {
 	}
 
 	async battleNet(params?: CategoryBattleNetParams): Promise<CategoryBattleNetResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("tel", params?.tel, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/battlenet",
@@ -386,6 +1089,43 @@ class CategoryApi {
 	}
 
 	async chatGPT(params?: CategoryChatGPTParams): Promise<CategoryChatGPTResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("subscription_period", params?.subscription_period, ["day", "month", "year"]);
+		validateEnum("autorenewal", params?.autorenewal, ["yes", "no", "nomatter"]);
+		validateEnum("tel", params?.tel, ["yes", "no", "nomatter"]);
+		validateEnum("reg_period", params?.reg_period, ["day", "month", "year"]);
 		return this.http.request({
 			method: "GET",
 			path: "/chatgpt",
@@ -395,6 +1135,41 @@ class CategoryApi {
 	}
 
 	async vpn(params?: CategoryVpnParams): Promise<CategoryVpnResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("subscription_period", params?.subscription_period, ["day", "month", "year"]);
+		validateEnum("autorenewal", params?.autorenewal, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/vpn",
@@ -404,6 +1179,52 @@ class CategoryApi {
 	}
 
 	async roblox(params?: CategoryRobloxParams): Promise<CategoryRobloxResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("reg_period", params?.reg_period, ["day", "month", "year"]);
+		validateEnum("subscription", params?.subscription, [
+			"RobloxPremium1000",
+			"RobloxPremium100012Months",
+			"RobloxPremium1000OneMonth",
+			"RobloxPremium2200",
+			"RobloxPremium2200OneMonth",
+			"RobloxPremium450",
+			"RobloxPremium450OneMonth",
+		]);
+		validateEnum("subscription_period", params?.subscription_period, ["day", "month", "year"]);
+		validateEnum("autorenewal", params?.autorenewal, ["yes", "no", "nomatter"]);
+		validateEnum("verified", params?.verified, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/roblox",
@@ -413,6 +1234,40 @@ class CategoryApi {
 	}
 
 	async warface(params?: CategoryWarfaceParams): Promise<CategoryWarfaceResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("tel", params?.tel, ["yes", "no", "nomatter"]);
 		return this.http.request({
 			method: "GET",
 			path: "/warface",
@@ -422,6 +1277,48 @@ class CategoryApi {
 	}
 
 	async minecraft(params?: CategoryMinecraftParams): Promise<CategoryMinecraftResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
+		validateEnum("subscription", params?.subscription, ["PC Game Pass", "Xbox Game Pass Ultimate"]);
+		validateEnum("subscription_period", params?.subscription_period, ["day", "month", "year"]);
+		validateEnum("autorenewal", params?.autorenewal, ["yes", "no", "nomatter"]);
+		validateEnum("reg_period", params?.reg_period, ["day", "month", "year"]);
+		validateEnum("last_login_hypixel_period", params?.last_login_hypixel_period, [
+			"day",
+			"month",
+			"year",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/minecraft",
@@ -431,6 +1328,39 @@ class CategoryApi {
 	}
 
 	async hytale(params?: CategoryHytaleParams): Promise<CategoryHytaleResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/hytale",
@@ -521,6 +1451,28 @@ class ListApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async user(params?: ListUserParams): Promise<ListUserResponse> {
+		validateEnum("show", params?.show, [
+			"active",
+			"paid",
+			"deleted",
+			"awaiting",
+			"closed",
+			"discount_request",
+			"stickied",
+			"pre_active",
+		]);
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/user/items",
@@ -529,6 +1481,28 @@ class ListApi {
 	}
 
 	async orders(params?: ListOrdersParams): Promise<ListOrdersResponse> {
+		validateEnum("show", params?.show, [
+			"active",
+			"paid",
+			"deleted",
+			"awaiting",
+			"closed",
+			"discount_request",
+			"stickied",
+			"pre_active",
+		]);
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/user/orders",
@@ -548,6 +1522,34 @@ class ListApi {
 		type: "items" | "orders",
 		params?: ListDownloadParams,
 	): Promise<ListDownloadResponse> {
+		validateEnum("format", params?.format, [
+			"short",
+			"custom",
+			"mfa_file_steam_id",
+			"mfa_file_login",
+		]);
+		validateEnum("show", params?.show, [
+			"active",
+			"paid",
+			"deleted",
+			"awaiting",
+			"closed",
+			"discount_request",
+			"stickied",
+			"pre_active",
+		]);
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: `/user/${type}/download`,
@@ -556,6 +1558,28 @@ class ListApi {
 	}
 
 	async favorites(params?: ListFavoritesParams): Promise<ListFavoritesResponse> {
+		validateEnum("show", params?.show, [
+			"active",
+			"paid",
+			"deleted",
+			"awaiting",
+			"closed",
+			"discount_request",
+			"stickied",
+			"pre_active",
+		]);
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/fave",
@@ -564,6 +1588,28 @@ class ListApi {
 	}
 
 	async viewed(params?: ListViewedParams): Promise<ListViewedResponse> {
+		validateEnum("show", params?.show, [
+			"active",
+			"paid",
+			"deleted",
+			"awaiting",
+			"closed",
+			"discount_request",
+			"stickied",
+			"pre_active",
+		]);
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/viewed",
@@ -633,6 +1679,7 @@ class ManagingApi {
 		item_id: number,
 		params?: ManagingSteamPreviewParams,
 	): Promise<ManagingSteamPreviewResponse> {
+		validateEnum("type", params?.type, ["profiles", "games"]);
 		return this.http.request({
 			method: "GET",
 			path: `/${item_id}/steam-preview`,
@@ -641,6 +1688,18 @@ class ManagingApi {
 	}
 
 	async edit(item_id: number, body?: ManagingEditBody): Promise<ManagingEditResponse> {
+		if (body && "item_origin" in body)
+			validateEnum("item_origin", body.item_origin, [
+				"brute",
+				"phishing",
+				"stealer",
+				"personal",
+				"resale",
+				"autoreg",
+				"dummy",
+			]);
+		if (body && "email_type" in body)
+			validateEnum("email_type", body.email_type, ["native", "autoreg"]);
 		return this.http.request({
 			method: "PUT",
 			path: `/${item_id}/edit`,
@@ -722,6 +1781,15 @@ class ManagingApi {
 	}
 
 	async image(item_id: number, params?: ManagingImageParams): Promise<ManagingImageResponse> {
+		validateEnum("type", params?.type, [
+			"skins",
+			"pickaxes",
+			"dances",
+			"gliders",
+			"weapons",
+			"agents",
+			"buddies",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: `/${item_id}/image`,
@@ -924,6 +1992,8 @@ class ProfileApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async claims(params?: ProfileClaimsParams): Promise<ProfileClaimsResponse> {
+		validateEnum("type", params?.type, ["market", "nomarket"]);
+		validateEnum("claim_state", params?.claim_state, ["active", "solved", "rejected", "settled"]);
 		return this.http.request({
 			method: "GET",
 			path: "/claims",
@@ -953,6 +2023,39 @@ class CartApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async get(params?: CartGetParams): Promise<CartGetResponse> {
+		validateEnum("order_by", params?.order_by, [
+			"price_to_up",
+			"price_to_down",
+			"pdate_to_down",
+			"pdate_to_up",
+			"pdate_to_down_upload",
+			"pdate_to_up_upload",
+			"edate_to_up",
+			"edate_to_down",
+			"ddate_to_up",
+			"ddate_to_down",
+		]);
+		validateEnum("currency", params?.currency, [
+			"rub",
+			"uah",
+			"kzt",
+			"byn",
+			"usd",
+			"eur",
+			"gbp",
+			"cny",
+			"try",
+			"jpy",
+			"brl",
+		]);
+		validateEnum("not_email_provider[]", params?.["not_email_provider[]"], [
+			"other",
+			"rambler",
+			"outlook",
+			"firstmail",
+			"notletters",
+			"mail_ru",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/cart",
@@ -1069,6 +2172,19 @@ class PublishingApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async fastSell(body?: PublishingFastSellBody): Promise<PublishingFastSellResponse> {
+		if (body && "item_origin" in body)
+			validateEnum("item_origin", body.item_origin, [
+				"brute",
+				"phishing",
+				"stealer",
+				"personal",
+				"resale",
+				"autoreg",
+				"dummy",
+				"self_registration",
+			]);
+		if (body && "email_type" in body)
+			validateEnum("email_type", body.email_type, ["native", "autoreg"]);
 		return this.http.request({
 			method: "POST",
 			path: "/item/fast-sell",
@@ -1078,6 +2194,19 @@ class PublishingApi {
 	}
 
 	async add(body?: PublishingAddBody): Promise<PublishingAddResponse> {
+		if (body && "item_origin" in body)
+			validateEnum("item_origin", body.item_origin, [
+				"brute",
+				"phishing",
+				"stealer",
+				"personal",
+				"resale",
+				"autoreg",
+				"dummy",
+				"self_registration",
+			]);
+		if (body && "email_type" in body)
+			validateEnum("email_type", body.email_type, ["native", "autoreg"]);
 		return this.http.request({
 			method: "POST",
 			path: "/item/add",
@@ -1087,6 +2216,8 @@ class PublishingApi {
 	}
 
 	async check(item_id: number, body?: PublishingCheckBody): Promise<PublishingCheckResponse> {
+		if (body && "email_type" in body)
+			validateEnum("email_type", body.email_type, ["native", "autoreg"]);
 		return this.http.request({
 			method: "POST",
 			path: `/${item_id}/goods/check`,
@@ -1099,6 +2230,7 @@ class PublishingApi {
 		item_id: number,
 		body?: PublishingExternalBody,
 	): Promise<PublishingExternalResponse> {
+		if (body && "type" in body) validateEnum("type", body.type, ["socialclub"]);
 		return this.http.request({
 			method: "POST",
 			path: `/${item_id}/external-account`,
@@ -1129,6 +2261,7 @@ class PaymentsApi {
 	}
 
 	async invoiceList(params?: PaymentsInvoiceListParams): Promise<PaymentsInvoiceListResponse> {
+		validateEnum("status", params?.status, ["paid", "not_paid"]);
 		return this.http.request({
 			method: "GET",
 			path: "/invoice/list",
@@ -1162,6 +2295,14 @@ class PaymentsApi {
 	}
 
 	async transfer(body?: PaymentsTransferBody): Promise<PaymentsTransferResponse> {
+		if (body && "hold_length_option" in body)
+			validateEnum("hold_length_option", body.hold_length_option, [
+				"hour",
+				"day",
+				"week",
+				"month",
+				"year",
+			]);
 		return this.http.request({
 			method: "POST",
 			path: "/balance/transfer",
@@ -1188,6 +2329,21 @@ class PaymentsApi {
 	}
 
 	async history(params?: PaymentsHistoryParams): Promise<PaymentsHistoryResponse> {
+		validateEnum("type", params?.type, [
+			"paid_item",
+			"sold_item",
+			"withdrawal_balance",
+			"refilled_balance",
+			"internal_purchase",
+			"money_transfer",
+			"receiving_money",
+			"claim_hold",
+			"insurance_deposit",
+			"paid_mail",
+			"contest",
+			"invoice",
+			"balance_exchange",
+		]);
 		return this.http.request({
 			method: "GET",
 			path: "/user/payments",

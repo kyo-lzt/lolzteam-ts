@@ -15,6 +15,12 @@ function appendQueryValue(params: URLSearchParams, key: string, value: unknown):
 		}
 		return;
 	}
+	if (typeof value === "object" && !Array.isArray(value) && value !== null) {
+		for (const [subKey, subVal] of Object.entries(value)) {
+			params.append(`${key}[${subKey}]`, String(subVal));
+		}
+		return;
+	}
 	if (typeof value === "boolean") {
 		params.append(key, value ? "1" : "0");
 		return;
@@ -138,6 +144,9 @@ export class HttpClient {
 									? value.name
 									: `file${extensionFromMime(value.type)}`;
 							formData.append(key, value, filename);
+						} else if (value instanceof Uint8Array) {
+							const copy = new Uint8Array(value);
+							formData.append(key, new File([copy], "file.bin"));
 						} else {
 							formData.append(key, String(value));
 						}

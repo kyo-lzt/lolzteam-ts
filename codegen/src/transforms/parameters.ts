@@ -28,6 +28,7 @@ export interface ParsedParameter {
 	type: string;
 	required: boolean;
 	defaultValue?: unknown;
+	enumValues?: string[];
 }
 
 export interface OperationParameters {
@@ -52,11 +53,14 @@ export function extractParameters(
 			continue;
 		}
 
+		const enumValues = param.schema?.enum?.filter((v): v is string => typeof v === "string") ?? [];
+
 		const parsed: ParsedParameter = {
 			name: param.name,
 			required: param.required ?? false,
 			type: schemaToTypeString(param.schema, spec),
 			defaultValue: param.schema?.default,
+			enumValues: enumValues.length > 0 ? enumValues : undefined,
 		};
 
 		if (param.in === "path") {

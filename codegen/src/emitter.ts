@@ -109,6 +109,20 @@ export function emitTypesFile(groups: ParsedGroup[], componentSchemas: Component
 
 	sections.push("// Auto-generated. Do not edit manually.\n");
 
+	// Check if any body property uses FileInput
+	const usesFileInput = groups.some((g) =>
+		g.methods.some((m) => {
+			const allProps = [
+				...m.bodyProperties,
+				...(m.bodyVariants?.flatMap((v) => v.properties) ?? []),
+			];
+			return allProps.some((p) => p.type === "FileInput");
+		}),
+	);
+	if (usesFileInput) {
+		sections.push('import type { FileInput } from "../../runtime/types.js";\n');
+	}
+
 	// Component schemas
 	if (Object.keys(componentSchemas).length > 0) {
 		const spec = { components: { schemas: componentSchemas } };
@@ -217,6 +231,15 @@ function emitMethod(group: string, method: MethodDefinition): string {
 			? method.bodyProperties.filter((p) => p.defaultValue !== undefined)
 			: [];
 
+	// Collect spaceDelimited fields from body properties and variants
+	const allBodyProps = [
+		...method.bodyProperties,
+		...(method.bodyVariants?.flatMap((v) => v.properties) ?? []),
+	];
+	const spaceDelimitedFields = [
+		...new Set(allBodyProps.filter((p) => p.isSpaceDelimited).map((p) => p.name)),
+	];
+
 	// Determine effective variable names (with defaults applied)
 	const queryExpr =
 		queryDefaults.length > 0
@@ -228,6 +251,40 @@ function emitMethod(group: string, method: MethodDefinition): string {
 			: "body";
 
 	lines.push(`\tasync ${method.methodName}(${argStr}): Promise<${responseName}> {`);
+
+	// Emit enum validations for query params
+	for (const param of method.params.queryParams) {
+		if (param.enumValues && param.enumValues.length > 0) {
+			const allowed = JSON.stringify(param.enumValues);
+			const accessor = safeAccessor("params?", param.name);
+			lines.push(`\t\tvalidateEnum("${param.name}", ${accessor}, ${allowed});`);
+		}
+	}
+
+	// Emit enum validations for body properties (always access `body` directly)
+	if (hasBodyType && !method.bodyIsArray) {
+		for (const prop of method.bodyProperties) {
+			if (prop.enumValues && prop.enumValues.length > 0) {
+				const allowed = JSON.stringify(prop.enumValues);
+				const accessor = safeAccessor("body", prop.name);
+				const guard = `body && "${prop.name}" in body`;
+				lines.push(`\t\tif (${guard}) validateEnum("${prop.name}", ${accessor}, ${allowed});`);
+			}
+		}
+	}
+
+	// Emit spaceDelimited field transformations
+	const effectiveBodyExpr =
+		hasBodyType && spaceDelimitedFields.length > 0
+			? (() => {
+					const spreads = spaceDelimitedFields.map(
+						(f) =>
+							`...("${f}" in ${bodyExpr} && Array.isArray(${bodyExpr}.${f}) ? { ${safePropName(f)}: ${bodyExpr}.${f}.join(" ") } : {})`,
+					);
+					return `{ ...${bodyExpr}, ${spreads.join(", ")} }`;
+				})()
+			: bodyExpr;
+
 	lines.push("\t\treturn this.http.request({");
 	lines.push(`\t\t\tmethod: "${method.httpMethod}",`);
 	lines.push(`\t\t\tpath: ${pathExpr},`);
@@ -237,7 +294,7 @@ function emitMethod(group: string, method: MethodDefinition): string {
 	}
 
 	if (hasBodyType) {
-		lines.push(`\t\t\tbody: ${bodyExpr},`);
+		lines.push(`\t\t\tbody: ${effectiveBodyExpr},`);
 	}
 
 	if (method.bodyEncoding !== "form") {
@@ -269,6 +326,7 @@ export function emitCombinedIndexFile(
 	lines.push("// Auto-generated. Do not edit manually.\n");
 	lines.push('import type { ClientConfig } from "../../runtime/types.js";');
 	lines.push('import { HttpClient } from "../../runtime/http-client.js";');
+	lines.push('import { validateEnum } from "../../runtime/validation.js";');
 
 	// Collect all type imports from all groups
 	const typeImports: string[] = [];
@@ -369,6 +427,18 @@ function safePropName(name: string): string {
 		return name;
 	}
 	return `"${name}"`;
+}
+
+/** Build a property accessor, using bracket notation for non-identifier names. */
+function safeAccessor(obj: string, prop: string): string {
+	if (/^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(prop)) {
+		return `${obj}.${prop}`;
+	}
+	// "params?" → "params?.["key"]"
+	if (obj.endsWith("?")) {
+		return `${obj}.["${prop}"]`;
+	}
+	return `${obj}["${prop}"]`;
 }
 
 /** Extract component schema type names referenced in a type expression. */

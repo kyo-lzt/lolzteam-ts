@@ -36,6 +36,8 @@ export interface BodyProperty {
 	type: string;
 	required: boolean;
 	defaultValue?: unknown;
+	isSpaceDelimited?: boolean;
+	enumValues?: string[];
 }
 
 export interface BodyVariant {
@@ -81,6 +83,7 @@ interface OperationObject {
 					oneOf?: Array<Record<string, unknown>>;
 					[key: string]: unknown;
 				};
+				encoding?: Record<string, { style?: string }>;
 			}
 		>;
 		$ref?: string;
@@ -157,7 +160,8 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 	if (!mediaType?.schema) return { properties: [], bodyEncoding };
 
 	const schema = mediaType.schema;
-	const bodyProperties: Array<{ name: string; type: string; required: boolean }> = [];
+	const encoding = mediaType.encoding;
+	const bodyProperties: BodyProperty[] = [];
 
 	// Handle array body (e.g. POST /batch)
 	if (schema.type === "array" && !schema.properties) {
@@ -240,6 +244,7 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 				name,
 				type: schemaToTypeString(mergedSchema, spec),
 				required: isRequired,
+				isSpaceDelimited: encoding?.[name]?.style === "spaceDelimited" || undefined,
 			});
 		}
 
@@ -256,12 +261,13 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 				const properties: BodyProperty[] = [];
 				for (const [name, propSchema] of Object.entries(variantProps)) {
 					const format = (propSchema as { format?: string }).format;
-					const type = format === "binary" ? "Blob" : schemaToTypeString(propSchema, spec);
+					const type = format === "binary" ? "FileInput" : schemaToTypeString(propSchema, spec);
 					properties.push({
 						name,
 						type,
 						required: requiredSet.has(name),
 						defaultValue: (propSchema as { default?: unknown }).default,
+						isSpaceDelimited: encoding?.[name]?.style === "spaceDelimited" || undefined,
 					});
 				}
 
@@ -275,12 +281,17 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 		for (const [name, propSchema] of Object.entries(schema.properties)) {
 			// format: binary → Blob type for file uploads
 			const format = (propSchema as { format?: string }).format;
-			const type = format === "binary" ? "Blob" : schemaToTypeString(propSchema, spec);
+			const type = format === "binary" ? "FileInput" : schemaToTypeString(propSchema, spec);
+			const propEnum = (propSchema as { enum?: unknown[] }).enum?.filter(
+				(v): v is string => typeof v === "string",
+			);
 			bodyProperties.push({
 				name,
 				type,
 				required: requiredSet.has(name),
 				defaultValue: (propSchema as { default?: unknown }).default,
+				isSpaceDelimited: encoding?.[name]?.style === "spaceDelimited" || undefined,
+				enumValues: propEnum && propEnum.length > 0 ? propEnum : undefined,
 			});
 		}
 	}

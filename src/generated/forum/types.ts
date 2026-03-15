@@ -1,5 +1,7 @@
 // Auto-generated. Do not edit manually.
 
+import type { FileInput } from "../../runtime/types.js";
+
 // ─── Component Schemas ────────────────────────────────────────
 
 export type UserIDModel = string | number;
@@ -2221,7 +2223,7 @@ export type UsersClaimsResponse = {
 };
 
 export interface UsersAvatarUploadBody {
-	avatar: Blob;
+	avatar: FileInput;
 	x?: number;
 	y?: number;
 	crop?: number;
@@ -2252,7 +2254,7 @@ export type UsersAvatarCropResponse = {
 };
 
 export interface UsersBackgroundUploadBody {
-	background: Blob;
+	background: FileInput;
 	x?: number;
 	y?: number;
 	crop?: number;

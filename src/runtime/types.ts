@@ -1,3 +1,5 @@
+export type FileInput = Blob | Uint8Array;
+
 export interface ClientConfig {
 	token: string;
 	baseUrl: string;

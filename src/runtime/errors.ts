@@ -12,12 +12,26 @@ export class HttpError extends LolzteamError {
 	readonly parseError?: unknown;
 
 	constructor(status: number, body: unknown, headers: Headers, parseError?: unknown) {
-		super(`HTTP ${status}`);
+		const firstError = extractFirstError(body);
+		super(firstError ? `HTTP ${status}: ${firstError}` : `HTTP ${status}`);
 		this.name = "HttpError";
 		this.status = status;
 		this.body = body;
 		this.headers = headers;
 		this.parseError = parseError;
+	}
+
+	/** Typed access to the `errors` array from the API response body. */
+	get errors(): string[] {
+		if (
+			typeof this.body === "object" &&
+			this.body !== null &&
+			"errors" in this.body &&
+			Array.isArray(this.body.errors)
+		) {
+			return this.body.errors.filter((e): e is string => typeof e === "string");
+		}
+		return [];
 	}
 }
 
@@ -107,6 +121,28 @@ export class RetryExhaustedError extends LolzteamError {
 		this.attempts = attempts;
 		this.lastError = lastError;
 	}
+}
+
+export class ValidationError extends LolzteamError {
+	readonly field: string;
+	readonly value: unknown;
+
+	constructor(field: string, value: unknown, allowed: readonly string[]) {
+		super(
+			`Invalid value ${JSON.stringify(value)} for field "${field}". Allowed: ${allowed.join(", ")}`,
+		);
+		this.name = "ValidationError";
+		this.field = field;
+		this.value = value;
+	}
+}
+
+function extractFirstError(body: unknown): string | undefined {
+	if (typeof body === "object" && body !== null && "errors" in body && Array.isArray(body.errors)) {
+		const first = body.errors.find((e): e is string => typeof e === "string");
+		return first;
+	}
+	return undefined;
 }
 
 export function createHttpError(
