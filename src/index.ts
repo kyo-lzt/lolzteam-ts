@@ -28,6 +28,7 @@ export type {
 	ClientConfig,
 	ProxyConfig,
 	RetryConfig,
+	RetryInfo,
 	RateLimitConfig,
 	RequestOptions,
 } from "./runtime/index.js";

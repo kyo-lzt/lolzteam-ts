@@ -1,5 +1,5 @@
-import { RateLimitError, ServerError } from "./errors.js";
-import type { RetryConfig } from "./types.js";
+import { NetworkError, RateLimitError, ServerError } from "./errors.js";
+import type { RetryConfig, RetryInfo } from "./types.js";
 
 const DEFAULT_MAX_RETRIES = 3;
 const DEFAULT_BASE_DELAY = 1000;
@@ -9,13 +9,26 @@ function isRetryable(error: unknown): boolean {
 	if (error instanceof RateLimitError) {
 		return true;
 	}
-	if (error instanceof ServerError && (error.status === 502 || error.status === 503)) {
+	if (
+		error instanceof ServerError &&
+		(error.status === 502 || error.status === 503 || error.status === 504)
+	) {
+		return true;
+	}
+	if (error instanceof NetworkError && error.isTransient) {
 		return true;
 	}
 	return false;
 }
 
-function computeDelay(attempt: number, config: Required<RetryConfig>, error: unknown): number {
+interface ResolvedConfig {
+	maxRetries: number;
+	baseDelay: number;
+	maxDelay: number;
+	onRetry: ((info: RetryInfo) => void) | undefined;
+}
+
+function computeDelay(attempt: number, config: ResolvedConfig, error: unknown): number {
 	if (error instanceof RateLimitError && error.retryAfter !== undefined) {
 		return Math.min(error.retryAfter, config.maxDelay);
 	}
@@ -28,11 +41,16 @@ function sleep(ms: number): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export async function withRetry<T>(fn: () => Promise<T>, config: RetryConfig): Promise<T> {
-	const resolved: Required<RetryConfig> = {
+export async function withRetry<T>(
+	fn: () => Promise<T>,
+	config: RetryConfig,
+	context?: { method: string; path: string },
+): Promise<T> {
+	const resolved: ResolvedConfig = {
 		maxRetries: config.maxRetries ?? DEFAULT_MAX_RETRIES,
 		baseDelay: config.baseDelay ?? DEFAULT_BASE_DELAY,
 		maxDelay: config.maxDelay ?? DEFAULT_MAX_DELAY,
+		onRetry: config.onRetry,
 	};
 
 	let lastError: unknown;
@@ -45,6 +63,15 @@ export async function withRetry<T>(fn: () => Promise<T>, config: RetryConfig): P
 				throw error;
 			}
 			const delay = computeDelay(attempt, resolved, error);
+			if (resolved.onRetry && context && error instanceof Error) {
+				resolved.onRetry({
+					attempt,
+					delay,
+					error,
+					method: context.method,
+					path: context.path,
+				});
+			}
 			await sleep(delay);
 		}
 	}

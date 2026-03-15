@@ -60,6 +60,13 @@ export class NetworkError extends LolzteamError {
 		this.name = "NetworkError";
 		this.cause = cause;
 	}
+
+	get isTransient(): boolean {
+		if (!(this.cause instanceof Error)) {
+			return false;
+		}
+		return this.cause.name === "TimeoutError" || this.cause.message === "fetch failed";
+	}
 }
 
 export class ConfigError extends LolzteamError {
@@ -79,7 +86,7 @@ export function createHttpError(status: number, body: unknown, headers: Headers)
 	if (status === 404) {
 		return new NotFoundError(body, headers);
 	}
-	if (status === 500 || status === 502 || status === 503) {
+	if (status === 500 || status === 502 || status === 503 || status === 504) {
 		return new ServerError(status, body, headers);
 	}
 	return new HttpError(status, body, headers);

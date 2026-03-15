@@ -13,6 +13,7 @@ export type {
 	ClientConfig,
 	ProxyConfig,
 	RetryConfig,
+	RetryInfo,
 	RateLimitConfig,
 	RequestOptions,
 } from "./types.js";

@@ -33,7 +33,8 @@ function buildQueryString(query: object): string {
 export class HttpClient {
 	private readonly token: string;
 	private readonly baseUrl: string;
-	private readonly retryConfig: RetryConfig;
+	private readonly retryConfig: RetryConfig | false;
+	private readonly timeout: number | undefined;
 	private readonly rateLimiter: RateLimiter | undefined;
 	private readonly searchRateLimiter: RateLimiter | undefined;
 	private dispatcher: unknown | undefined;
@@ -43,6 +44,7 @@ export class HttpClient {
 		this.token = config.token;
 		this.baseUrl = config.baseUrl.replace(/\/+$/, "");
 		this.retryConfig = config.retry ?? {};
+		this.timeout = config.timeout;
 
 		if (config.rateLimit) {
 			this.rateLimiter = new RateLimiter(config.rateLimit.requestsPerMinute);
@@ -80,7 +82,14 @@ export class HttpClient {
 			await this.searchRateLimiter.acquire();
 		}
 
-		return withRetry(() => this.execute(options), this.retryConfig);
+		if (this.retryConfig === false) {
+			return this.execute(options);
+		}
+
+		return withRetry(() => this.execute(options), this.retryConfig, {
+			method: options.method,
+			path: options.path,
+		});
 	}
 
 	private async execute<T = unknown>(options: RequestOptions): Promise<T> {
@@ -135,6 +144,10 @@ export class HttpClient {
 
 		if (this.dispatcher) {
 			fetchOptions.dispatcher = this.dispatcher;
+		}
+
+		if (this.timeout !== undefined) {
+			fetchOptions.signal = AbortSignal.timeout(this.timeout);
 		}
 
 		let response: Response;
