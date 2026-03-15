@@ -60,6 +60,11 @@ Market API groups: `category`, `list`, `managing`, `profile`, `cart`, `purchasin
 const client = new ForumClient({
   token: "your_token",
 
+  // Base URL (optional, defaults differ per client)
+  // Forum: "https://prod-api.lolz.live"
+  // Market: "https://prod-api.lzt.market"
+  baseUrl: "https://prod-api.lolz.live",
+
   // Proxy (requires undici)
   proxy: { url: "http://user:pass@127.0.0.1:8080" },
 
@@ -73,6 +78,19 @@ const client = new ForumClient({
   // Rate limiting
   rateLimit: {
     requestsPerMinute: 200,  // default: 300 (Forum), 120 (Market)
+  },
+
+  // Separate rate limit for search endpoints
+  searchRateLimit: {
+    requestsPerMinute: 30,   // default: 20 (Market)
+  },
+
+  // Request timeout in milliseconds
+  timeout: 15000,
+
+  // Callback on each retry attempt
+  onRetry: (info) => {
+    console.log(`Retry #${info.attempt} for ${info.method} ${info.path} in ${info.delay}ms`);
   },
 });
 ```
