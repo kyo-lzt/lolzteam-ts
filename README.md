@@ -94,12 +94,13 @@ Delay formula: `min(baseDelay * 2^attempt + random(0, baseDelay), maxDelay)`
 
 ```typescript
 // Disable retry
-const client = new ForumClient({ token: "...", retry: false });
+const client = new ForumClient({ token: "..." }); // retry is undefined = disabled
 
-// onRetry callback
+// Enable retry with onRetry callback
 const client = new ForumClient({
   token: "...",
-  retry: { onRetry: (info) => console.log(`Retry #${info.attempt}`) },
+  retry: { maxRetries: 3, baseDelay: 1000, maxDelay: 30000 },
+  onRetry: (info) => console.log(`Retry #${info.attempt}`),
 });
 ```
 
