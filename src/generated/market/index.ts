@@ -213,6 +213,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -221,6 +222,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/steam",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -229,6 +231,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/fortnite",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -237,6 +240,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/mihoyo",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -245,6 +249,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/riot",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -253,6 +258,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/telegram",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -261,6 +267,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/supercell",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -269,6 +276,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/ea",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -277,6 +285,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/world-of-tanks",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -285,6 +294,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/wot-blitz",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -293,6 +303,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/gifts",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -301,6 +312,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/epicgames",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -311,6 +323,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/escape-from-tarkov",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -319,6 +332,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/socialclub",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -327,6 +341,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/uplay",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -335,6 +350,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/discord",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -343,6 +359,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/tiktok",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -351,6 +368,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/instagram",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -359,6 +377,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/battlenet",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -367,6 +386,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/chatgpt",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -375,6 +395,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/vpn",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -383,6 +404,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/roblox",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -391,6 +413,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/warface",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -399,6 +422,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/minecraft",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -407,6 +431,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/hytale",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -415,6 +440,7 @@ class CategoryApi {
 			method: "GET",
 			path: "/category",
 			query: params,
+			isSearch: true,
 		});
 	}
 
@@ -448,6 +474,7 @@ class CategoryApi {
 		return this.http.request({
 			method: "GET",
 			path: `/${categoryName}/params`,
+			isSearch: true,
 		});
 	}
 
@@ -481,6 +508,7 @@ class CategoryApi {
 		return this.http.request({
 			method: "GET",
 			path: `/${categoryName}/games`,
+			isSearch: true,
 		});
 	}
 }
@@ -556,6 +584,7 @@ class ManagingApi {
 			method: "DELETE",
 			path: `/${item_id}`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -564,6 +593,7 @@ class ManagingApi {
 			method: "POST",
 			path: "/claims",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -572,6 +602,7 @@ class ManagingApi {
 			method: "POST",
 			path: "/bulk/items",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -610,6 +641,7 @@ class ManagingApi {
 			method: "PUT",
 			path: `/${item_id}/edit`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -632,6 +664,7 @@ class ManagingApi {
 			method: "POST",
 			path: `/${item_id}/note-save`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -643,6 +676,7 @@ class ManagingApi {
 			method: "POST",
 			path: `/${item_id}/update-inventory`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -658,6 +692,7 @@ class ManagingApi {
 			method: "POST",
 			path: `/${item_id}/auto-bump`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -738,6 +773,7 @@ class ManagingApi {
 			method: "POST",
 			path: `/${item_id}/confirm-sda`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -770,6 +806,7 @@ class ManagingApi {
 			method: "POST",
 			path: `/${item_id}/decline-video-recording`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -788,6 +825,7 @@ class ManagingApi {
 			method: "POST",
 			path: `/${item_id}/change-password`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -803,6 +841,7 @@ class ManagingApi {
 			method: "POST",
 			path: `/${item_id}/tag`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -811,6 +850,7 @@ class ManagingApi {
 			method: "DELETE",
 			path: `/${item_id}/tag`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -822,6 +862,7 @@ class ManagingApi {
 			method: "POST",
 			path: `/${item_id}/public-tag`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -833,6 +874,7 @@ class ManagingApi {
 			method: "DELETE",
 			path: `/${item_id}/public-tag`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -869,6 +911,7 @@ class ManagingApi {
 			method: "POST",
 			path: `/${item_id}/change-owner`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -897,6 +940,7 @@ class ProfileApi {
 			method: "PUT",
 			path: "/me",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -917,6 +961,7 @@ class CartApi {
 			method: "POST",
 			path: "/cart",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -925,6 +970,7 @@ class CartApi {
 			method: "DELETE",
 			path: "/cart",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -937,6 +983,7 @@ class PurchasingApi {
 			method: "POST",
 			path: `/${item_id}/fast-buy`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -952,6 +999,7 @@ class PurchasingApi {
 			method: "POST",
 			path: `/${item_id}/confirm-buy`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -963,6 +1011,7 @@ class PurchasingApi {
 			method: "POST",
 			path: `/${item_id}/discount`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -989,6 +1038,7 @@ class CustomDiscountsApi {
 			method: "POST",
 			path: "/custom-discounts",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -997,6 +1047,7 @@ class CustomDiscountsApi {
 			method: "PUT",
 			path: "/custom-discounts",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1005,6 +1056,7 @@ class CustomDiscountsApi {
 			method: "DELETE",
 			path: "/custom-discounts",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1017,6 +1069,7 @@ class PublishingApi {
 			method: "POST",
 			path: "/item/fast-sell",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1025,6 +1078,7 @@ class PublishingApi {
 			method: "POST",
 			path: "/item/add",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1033,6 +1087,7 @@ class PublishingApi {
 			method: "POST",
 			path: `/${item_id}/goods/check`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1044,6 +1099,7 @@ class PublishingApi {
 			method: "POST",
 			path: `/${item_id}/external-account`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1064,6 +1120,7 @@ class PaymentsApi {
 			method: "POST",
 			path: "/invoice",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1096,6 +1153,7 @@ class PaymentsApi {
 			method: "POST",
 			path: "/balance/exchange",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1104,6 +1162,7 @@ class PaymentsApi {
 			method: "POST",
 			path: "/balance/transfer",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1120,6 +1179,7 @@ class PaymentsApi {
 			method: "POST",
 			path: "/balance/transfer/cancel",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1143,6 +1203,7 @@ class PaymentsApi {
 			method: "POST",
 			path: "/balance/payout",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1162,6 +1223,7 @@ class AutoPaymentsApi {
 			method: "POST",
 			path: "/auto-payment",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1170,6 +1232,7 @@ class AutoPaymentsApi {
 			method: "DELETE",
 			path: "/auto-payment",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1189,6 +1252,7 @@ class ProxyApi {
 			method: "POST",
 			path: "/proxy",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1197,6 +1261,7 @@ class ProxyApi {
 			method: "DELETE",
 			path: "/proxy",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1209,6 +1274,7 @@ class ImapApi {
 			method: "POST",
 			path: "/imap",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1217,6 +1283,7 @@ class ImapApi {
 			method: "DELETE",
 			path: "/imap",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1229,6 +1296,7 @@ class BatchApi {
 			method: "POST",
 			path: "/batch",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1253,6 +1321,7 @@ export class MarketClient {
 			...config,
 			baseUrl: config.baseUrl ?? "https://prod-api.lzt.market",
 			rateLimit: config.rateLimit ?? { requestsPerMinute: 120 },
+			searchRateLimit: config.searchRateLimit ?? { requestsPerMinute: 20 },
 		});
 		this.category = new CategoryApi(http);
 		this.list = new ListApi(http);

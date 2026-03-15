@@ -1,6 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import {
 	AuthError,
+	ConfigError,
 	HttpError,
 	LolzteamError,
 	NetworkError,
@@ -99,5 +100,22 @@ describe("error hierarchy", () => {
 		const err = new NetworkError(new Error("fail"));
 		expect(err).toBeInstanceOf(LolzteamError);
 		expect(err).not.toBeInstanceOf(HttpError);
+	});
+
+	it("ConfigError extends LolzteamError but not HttpError", () => {
+		const err = new ConfigError("bad config");
+		expect(err).toBeInstanceOf(LolzteamError);
+		expect(err).not.toBeInstanceOf(HttpError);
+		expect(err.message).toBe("bad config");
+	});
+
+	it("NetworkError uses cause message", () => {
+		const err = new NetworkError(new TypeError("DNS failed"));
+		expect(err.message).toBe("DNS failed");
+	});
+
+	it("NetworkError falls back to generic message for non-Error cause", () => {
+		const err = new NetworkError("just a string");
+		expect(err.message).toBe("Network error");
 	});
 });

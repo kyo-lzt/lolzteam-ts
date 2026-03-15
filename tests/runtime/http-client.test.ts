@@ -50,7 +50,7 @@ describe("HttpClient", () => {
 		expect(headers.Authorization).toBe("Bearer test-token");
 	});
 
-	it("sends JSON body", async () => {
+	it("sends form-urlencoded body", async () => {
 		const client = createClient();
 		await client.request({
 			method: "POST",
@@ -59,8 +59,8 @@ describe("HttpClient", () => {
 		});
 		const calledInit = mockFetch.mock.calls[0]?.[1] as RequestInit;
 		const headers = calledInit.headers as Record<string, string>;
-		expect(headers["Content-Type"]).toBe("application/json");
-		expect(calledInit.body).toBe(JSON.stringify({ title: "hello", content: "world" }));
+		expect(headers["Content-Type"]).toBe("application/x-www-form-urlencoded");
+		expect(calledInit.body).toBe("title=hello&content=world");
 	});
 
 	it("throws HttpError on non-2xx", async () => {

@@ -260,7 +260,7 @@ class OAuthApi {
 			method: "POST",
 			path: "/oauth/token",
 			body: body,
-			multipart: true,
+			bodyEncoding: "multipart",
 		});
 	}
 }
@@ -333,6 +333,7 @@ class ForumsApi {
 			method: "POST",
 			path: `/forums/${forum_id}/followers`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -363,6 +364,7 @@ class ForumsApi {
 			method: "PUT",
 			path: "/forums/feed/options",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -432,6 +434,7 @@ class ThreadsApi {
 			method: "POST",
 			path: "/threads",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -440,6 +443,7 @@ class ThreadsApi {
 			method: "POST",
 			path: "/contests",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -448,6 +452,7 @@ class ThreadsApi {
 			method: "POST",
 			path: "/claims",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -464,6 +469,7 @@ class ThreadsApi {
 			method: "PUT",
 			path: `/threads/${thread_id}`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -472,6 +478,7 @@ class ThreadsApi {
 			method: "DELETE",
 			path: `/threads/${thread_id}`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -480,6 +487,7 @@ class ThreadsApi {
 			method: "POST",
 			path: `/threads/${thread_id}/move`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -523,6 +531,7 @@ class ThreadsApi {
 			method: "POST",
 			path: `/threads/${thread_id}/followers`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -560,6 +569,7 @@ class ThreadsApi {
 			method: "POST",
 			path: `/threads/${thread_id}/poll/votes`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -603,6 +613,7 @@ class PostsApi {
 			method: "POST",
 			path: "/posts",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -618,6 +629,7 @@ class PostsApi {
 			method: "PUT",
 			path: `/posts/${post_id}`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -626,6 +638,7 @@ class PostsApi {
 			method: "DELETE",
 			path: `/posts/${post_id}`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -663,6 +676,7 @@ class PostsApi {
 			method: "POST",
 			path: `/posts/${post_id}/report`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -679,6 +693,7 @@ class PostsApi {
 			method: "POST",
 			path: "/posts/comments",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -687,6 +702,7 @@ class PostsApi {
 			method: "PUT",
 			path: "/posts/comments",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -695,6 +711,7 @@ class PostsApi {
 			method: "DELETE",
 			path: "/posts/comments",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -703,6 +720,7 @@ class PostsApi {
 			method: "POST",
 			path: "/posts/comments/report",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -746,6 +764,7 @@ class UsersApi {
 			method: "PUT",
 			path: `/users/${user_id}`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -765,7 +784,7 @@ class UsersApi {
 			method: "POST",
 			path: `/users/${user_id}/avatar`,
 			body: body,
-			multipart: true,
+			bodyEncoding: "multipart",
 		});
 	}
 
@@ -784,6 +803,7 @@ class UsersApi {
 			method: "POST",
 			path: `/users/${user_id}/avatar/crop`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -795,7 +815,7 @@ class UsersApi {
 			method: "POST",
 			path: `/users/${user_id}/background`,
 			body: body,
-			multipart: true,
+			bodyEncoding: "multipart",
 		});
 	}
 
@@ -814,6 +834,7 @@ class UsersApi {
 			method: "POST",
 			path: `/users/${user_id}/background/crop`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -963,6 +984,7 @@ class ProfilePostsApi {
 			method: "PUT",
 			path: `/profile-posts/${profile_post_id}`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -992,6 +1014,7 @@ class ProfilePostsApi {
 			method: "POST",
 			path: `/profile-posts/${profile_post_id}/report`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1000,6 +1023,7 @@ class ProfilePostsApi {
 			method: "POST",
 			path: "/profile-posts",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1055,6 +1079,7 @@ class ProfilePostsApi {
 			method: "POST",
 			path: "/profile-posts/comments",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1065,6 +1090,7 @@ class ProfilePostsApi {
 			method: "PUT",
 			path: "/profile-posts/comments",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1075,6 +1101,7 @@ class ProfilePostsApi {
 			method: "DELETE",
 			path: "/profile-posts/comments",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1096,6 +1123,7 @@ class ProfilePostsApi {
 			method: "POST",
 			path: `/profile-posts/comments/${comment_id}/report`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1116,6 +1144,7 @@ class ConversationsApi {
 			method: "POST",
 			path: "/conversations",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1124,6 +1153,7 @@ class ConversationsApi {
 			method: "PUT",
 			path: "/conversations",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1132,6 +1162,7 @@ class ConversationsApi {
 			method: "DELETE",
 			path: "/conversations",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1140,6 +1171,7 @@ class ConversationsApi {
 			method: "POST",
 			path: "/conversations/start",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1148,6 +1180,7 @@ class ConversationsApi {
 			method: "POST",
 			path: "/conversations/save",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1177,6 +1210,7 @@ class ConversationsApi {
 			method: "POST",
 			path: `/conversations/${conversation_id}/messages`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1185,6 +1219,7 @@ class ConversationsApi {
 			method: "POST",
 			path: "/conversations/search",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1204,6 +1239,7 @@ class ConversationsApi {
 			method: "PUT",
 			path: `/conversations/${conversation_id}/messages/${message_id}`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1225,6 +1261,7 @@ class ConversationsApi {
 			method: "POST",
 			path: `/conversations/${conversation_id}/invite`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1236,6 +1273,7 @@ class ConversationsApi {
 			method: "POST",
 			path: `/conversations/${conversation_id}/kick`,
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1325,6 +1363,7 @@ class NotificationsApi {
 			method: "POST",
 			path: "/notifications/read",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1372,6 +1411,7 @@ class SearchApi {
 			method: "POST",
 			path: "/search",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1380,6 +1420,7 @@ class SearchApi {
 			method: "POST",
 			path: "/search/threads",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1388,6 +1429,7 @@ class SearchApi {
 			method: "POST",
 			path: "/search/posts",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1396,6 +1438,7 @@ class SearchApi {
 			method: "POST",
 			path: "/search/users",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1404,6 +1447,7 @@ class SearchApi {
 			method: "POST",
 			path: "/search/profile-posts",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1412,6 +1456,7 @@ class SearchApi {
 			method: "POST",
 			path: "/search/tagged",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1435,6 +1480,7 @@ class BatchApi {
 			method: "POST",
 			path: "/batch",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1463,6 +1509,7 @@ class ChatboxApi {
 			method: "POST",
 			path: "/chatbox/messages",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1471,6 +1518,7 @@ class ChatboxApi {
 			method: "PUT",
 			path: "/chatbox/messages",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1479,6 +1527,7 @@ class ChatboxApi {
 			method: "DELETE",
 			path: "/chatbox/messages",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1503,6 +1552,7 @@ class ChatboxApi {
 			method: "POST",
 			path: "/chatbox/messages/report",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1528,6 +1578,7 @@ class ChatboxApi {
 			method: "POST",
 			path: "/chatbox/ignore",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 
@@ -1536,6 +1587,7 @@ class ChatboxApi {
 			method: "DELETE",
 			path: "/chatbox/ignore",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }
@@ -1556,6 +1608,7 @@ class FormsApi {
 			method: "POST",
 			path: "/forms/save",
 			body: body,
+			bodyEncoding: "json",
 		});
 	}
 }

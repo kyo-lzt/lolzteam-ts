@@ -14,6 +14,7 @@ interface ApiConfig {
 	clientName: string;
 	defaultBaseUrl: string;
 	defaultRateLimit: number;
+	defaultSearchRateLimit?: number;
 }
 
 const ROOT = join(import.meta.dir, "../..");
@@ -32,6 +33,7 @@ const apis: ApiConfig[] = [
 		clientName: "MarketClient",
 		defaultBaseUrl: "https://prod-api.lzt.market",
 		defaultRateLimit: 120,
+		defaultSearchRateLimit: 20,
 	},
 ];
 
@@ -77,6 +79,7 @@ function generateApi(config: ApiConfig): void {
 		config.clientName,
 		config.defaultBaseUrl,
 		config.defaultRateLimit,
+		config.defaultSearchRateLimit,
 	);
 	writeFileSync(join(config.outputDir, "index.ts"), indexContent);
 	console.log("  index.ts");

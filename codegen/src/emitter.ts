@@ -155,6 +155,8 @@ function emitMethod(group: string, method: MethodDefinition): string {
 	const argStr = args.join(", ");
 	const pathExpr = buildPathExpression(method.path);
 
+	const isSearch = group.toLowerCase() === "category";
+
 	lines.push(`\tasync ${method.methodName}(${argStr}): Promise<${responseName}> {`);
 	lines.push("\t\treturn this.http.request({");
 	lines.push(`\t\t\tmethod: "${method.httpMethod}",`);
@@ -168,8 +170,12 @@ function emitMethod(group: string, method: MethodDefinition): string {
 		lines.push("\t\t\tbody: body,");
 	}
 
-	if (method.isMultipart) {
-		lines.push("\t\t\tmultipart: true,");
+	if (method.bodyEncoding !== "form") {
+		lines.push(`\t\t\tbodyEncoding: "${method.bodyEncoding}",`);
+	}
+
+	if (isSearch) {
+		lines.push("\t\t\tisSearch: true,");
 	}
 
 	lines.push("\t\t});");
@@ -185,6 +191,7 @@ export function emitCombinedIndexFile(
 	clientName: string,
 	defaultBaseUrl: string,
 	defaultRateLimit: number,
+	defaultSearchRateLimit?: number,
 ): string {
 	const lines: string[] = [];
 
@@ -235,6 +242,11 @@ export function emitCombinedIndexFile(
 	lines.push("\t\t\t...config,");
 	lines.push(`\t\t\tbaseUrl: config.baseUrl ?? "${defaultBaseUrl}",`);
 	lines.push(`\t\t\trateLimit: config.rateLimit ?? { requestsPerMinute: ${defaultRateLimit} },`);
+	if (defaultSearchRateLimit !== undefined) {
+		lines.push(
+			`\t\t\tsearchRateLimit: config.searchRateLimit ?? { requestsPerMinute: ${defaultSearchRateLimit} },`,
+		);
+	}
 	lines.push("\t\t});");
 
 	for (const group of groups) {

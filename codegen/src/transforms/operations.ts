@@ -49,7 +49,7 @@ export interface MethodDefinition {
 	bodyProperties: BodyProperty[];
 	hasBody: boolean;
 	bodyRequired: boolean;
-	isMultipart: boolean;
+	bodyEncoding: "form" | "json" | "multipart";
 	responseType: string;
 	bodyIsArray?: boolean;
 	bodyArrayItemType?: string;
@@ -82,7 +82,7 @@ interface OperationObject {
 
 interface BodyExtractionResult {
 	properties: Array<{ name: string; type: string; required: boolean }>;
-	isMultipart: boolean;
+	bodyEncoding: "form" | "json" | "multipart";
 	bodyIsArray?: boolean;
 	bodyArrayItemType?: string;
 }
@@ -91,7 +91,7 @@ interface BodyExtractionResult {
  * Extract body properties from a request body, resolving $ref as needed.
  */
 function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtractionResult {
-	const empty: BodyExtractionResult = { properties: [], isMultipart: false };
+	const empty: BodyExtractionResult = { properties: [], bodyEncoding: "form" };
 
 	if (!operation.requestBody) return empty;
 
@@ -104,12 +104,20 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 	const content = requestBody.content;
 	if (!content) return empty;
 
-	// Detect multipart
-	const isMultipart = "multipart/form-data" in content;
+	// 3-way content-type detection (matches Rust logic)
+	const hasForm = "application/x-www-form-urlencoded" in content;
+	const hasJson = "application/json" in content;
+	const hasMultipart = "multipart/form-data" in content;
 
-	// Try application/json first, then multipart/form-data
-	const mediaType = content["application/json"] ?? content["multipart/form-data"];
-	if (!mediaType?.schema) return { properties: [], isMultipart };
+	const bodyEncoding: "form" | "json" | "multipart" =
+		hasMultipart && !hasForm ? "multipart" : hasJson && !hasForm ? "json" : "form";
+
+	// Pick schema from best available content type
+	const mediaType =
+		content["application/x-www-form-urlencoded"] ??
+		content["application/json"] ??
+		content["multipart/form-data"];
+	if (!mediaType?.schema) return { properties: [], bodyEncoding };
 
 	const schema = mediaType.schema;
 	const bodyProperties: Array<{ name: string; type: string; required: boolean }> = [];
@@ -118,7 +126,7 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 	if (schema.type === "array" && !schema.properties) {
 		const items = schema.items as Record<string, unknown> | undefined;
 		const itemType = items ? schemaToTypeString(items, spec) : "unknown";
-		return { properties: [], isMultipart, bodyIsArray: true, bodyArrayItemType: itemType };
+		return { properties: [], bodyEncoding, bodyIsArray: true, bodyArrayItemType: itemType };
 	}
 
 	// Handle oneOf — merge all properties, mark all as optional
@@ -152,7 +160,7 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 		}
 	}
 
-	return { properties: bodyProperties, isMultipart };
+	return { properties: bodyProperties, bodyEncoding };
 }
 
 /**
@@ -249,7 +257,7 @@ export function extractMethodDefinition(
 					operation.requestBody &&
 						derefShallow<{ required?: boolean }>(operation.requestBody, spec).required,
 				),
-		isMultipart: isGet ? false : body.isMultipart,
+		bodyEncoding: isGet ? "form" : body.bodyEncoding,
 		responseType,
 		bodyIsArray: isGet ? undefined : body.bodyIsArray,
 		bodyArrayItemType: isGet ? undefined : body.bodyArrayItemType,

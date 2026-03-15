@@ -1,9 +1,10 @@
 export interface ClientConfig {
 	token: string;
-	baseUrl?: string;
+	baseUrl: string;
 	proxy?: ProxyConfig;
 	retry?: RetryConfig;
 	rateLimit?: RateLimitConfig;
+	searchRateLimit?: RateLimitConfig;
 }
 
 export interface ProxyConfig {
@@ -26,5 +27,6 @@ export interface RequestOptions {
 	query?: object;
 	body?: object | unknown[];
 	headers?: Record<string, string>;
-	multipart?: boolean;
+	bodyEncoding?: "form" | "json" | "multipart";
+	isSearch?: boolean;
 }

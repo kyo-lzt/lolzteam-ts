@@ -1,5 +1,12 @@
 import { describe, expect, it } from "bun:test";
-import { AuthError, NotFoundError, RateLimitError, ServerError } from "../../src/runtime/errors.js";
+import {
+	AuthError,
+	HttpError,
+	NetworkError,
+	NotFoundError,
+	RateLimitError,
+	ServerError,
+} from "../../src/runtime/errors.js";
 import { withRetry } from "../../src/runtime/retry.js";
 
 const fastRetry = { maxRetries: 2, baseDelay: 1, maxDelay: 10 };
@@ -79,5 +86,63 @@ describe("withRetry", () => {
 		}, fastRetry);
 		await expect(promise).rejects.toBeInstanceOf(NotFoundError);
 		expect(attempt).toBe(1);
+	});
+
+	it("does not retry ServerError(500)", async () => {
+		let attempt = 0;
+		const promise = withRetry(() => {
+			attempt++;
+			throw new ServerError(500, null, new Headers());
+		}, fastRetry);
+		await expect(promise).rejects.toBeInstanceOf(ServerError);
+		expect(attempt).toBe(1);
+	});
+
+	it("does not retry generic HttpError (418)", async () => {
+		let attempt = 0;
+		const promise = withRetry(
+			() => {
+				attempt++;
+				throw new HttpError(418, null, new Headers());
+			},
+			{ maxRetries: 3, baseDelay: 1, maxDelay: 10 },
+		);
+		await expect(promise).rejects.toBeInstanceOf(HttpError);
+		expect(attempt).toBe(1);
+	});
+
+	it("does not retry NetworkError", async () => {
+		let attempt = 0;
+		const promise = withRetry(() => {
+			attempt++;
+			throw new NetworkError(new Error("offline"));
+		}, fastRetry);
+		await expect(promise).rejects.toBeInstanceOf(NetworkError);
+		expect(attempt).toBe(1);
+	});
+
+	it("uses Retry-After header for RateLimitError delay", async () => {
+		let attempt = 0;
+		const start = Date.now();
+		const result = await withRetry(
+			() => {
+				attempt++;
+				if (attempt === 1) {
+					const headers = new Headers({ "retry-after": "0" });
+					throw new RateLimitError(null, headers);
+				}
+				return Promise.resolve("done");
+			},
+			{ maxRetries: 1, baseDelay: 5000, maxDelay: 10000 },
+		);
+		const elapsed = Date.now() - start;
+		expect(result).toBe("done");
+		// Retry-After: 0 means 0ms delay, not the 5000ms baseDelay
+		expect(elapsed).toBeLessThan(500);
+	});
+
+	it("resolves default config values", async () => {
+		const result = await withRetry(() => Promise.resolve(99), {});
+		expect(result).toBe(99);
 	});
 });

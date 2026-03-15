@@ -5,8 +5,6 @@ import { RateLimiter } from "./rate-limiter.js";
 import { withRetry } from "./retry.js";
 import type { ClientConfig, RequestOptions, RetryConfig } from "./types.js";
 
-const DEFAULT_BASE_URL = "https://api.zelenka.guru";
-
 function appendQueryValue(params: URLSearchParams, key: string, value: unknown): void {
 	if (value === undefined || value === null) {
 		return;
@@ -37,16 +35,21 @@ export class HttpClient {
 	private readonly baseUrl: string;
 	private readonly retryConfig: RetryConfig;
 	private readonly rateLimiter: RateLimiter | undefined;
+	private readonly searchRateLimiter: RateLimiter | undefined;
 	private dispatcher: unknown | undefined;
 	private dispatcherReady: Promise<void> | undefined;
 
 	constructor(config: ClientConfig) {
 		this.token = config.token;
-		this.baseUrl = (config.baseUrl ?? DEFAULT_BASE_URL).replace(/\/+$/, "");
+		this.baseUrl = config.baseUrl.replace(/\/+$/, "");
 		this.retryConfig = config.retry ?? {};
 
 		if (config.rateLimit) {
 			this.rateLimiter = new RateLimiter(config.rateLimit.requestsPerMinute);
+		}
+
+		if (config.searchRateLimit) {
+			this.searchRateLimiter = new RateLimiter(config.searchRateLimit.requestsPerMinute);
 		}
 
 		if (config.proxy) {
@@ -73,6 +76,10 @@ export class HttpClient {
 			await this.rateLimiter.acquire();
 		}
 
+		if (options.isSearch && this.searchRateLimiter) {
+			await this.searchRateLimiter.acquire();
+		}
+
 		return withRetry(() => this.execute(options), this.retryConfig);
 	}
 
@@ -94,7 +101,8 @@ export class HttpClient {
 
 		let fetchBody: string | FormData | undefined;
 		if (options.body && options.method !== "GET") {
-			if (options.multipart && !Array.isArray(options.body)) {
+			const encoding = options.bodyEncoding ?? "form";
+			if (encoding === "multipart" && !Array.isArray(options.body)) {
 				const formData = new FormData();
 				for (const [key, value] of Object.entries(options.body)) {
 					if (value !== undefined) {
@@ -106,9 +114,16 @@ export class HttpClient {
 					}
 				}
 				fetchBody = formData;
-			} else {
+			} else if (encoding === "json") {
 				headers["Content-Type"] = "application/json";
 				fetchBody = JSON.stringify(options.body);
+			} else if (!Array.isArray(options.body)) {
+				headers["Content-Type"] = "application/x-www-form-urlencoded";
+				const params = new URLSearchParams();
+				for (const [key, value] of Object.entries(options.body)) {
+					appendQueryValue(params, key, value);
+				}
+				fetchBody = params.toString();
 			}
 		}
 
