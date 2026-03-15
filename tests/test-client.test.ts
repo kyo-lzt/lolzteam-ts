@@ -351,7 +351,9 @@ describe("MarketClient", () => {
 	});
 
 	it("throws AuthError on 401", async () => {
-		mockFetch.mockImplementation(() => Promise.resolve(makeResponse(401, { error: "unauthorized" })));
+		mockFetch.mockImplementation(() =>
+			Promise.resolve(makeResponse(401, { error: "unauthorized" })),
+		);
 		const client = createMarket();
 		await expect(client.category.all()).rejects.toBeInstanceOf(AuthError);
 	});
