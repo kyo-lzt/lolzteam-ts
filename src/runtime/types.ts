@@ -2,10 +2,11 @@ export interface ClientConfig {
 	token: string;
 	baseUrl: string;
 	proxy?: ProxyConfig;
-	retry?: RetryConfig | false;
+	retry?: RetryConfig;
 	rateLimit?: RateLimitConfig;
 	searchRateLimit?: RateLimitConfig;
 	timeout?: number;
+	onRetry?: (info: RetryInfo) => void;
 }
 
 export interface ProxyConfig {
@@ -24,7 +25,6 @@ export interface RetryConfig {
 	maxRetries?: number;
 	baseDelay?: number;
 	maxDelay?: number;
-	onRetry?: (info: RetryInfo) => void;
 }
 
 export interface RateLimitConfig {

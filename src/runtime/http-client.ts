@@ -3,7 +3,7 @@ import { ConfigError, LolzteamError, NetworkError, createHttpError } from "./err
 import { createProxyDispatcher } from "./proxy.js";
 import { RateLimiter } from "./rate-limiter.js";
 import { withRetry } from "./retry.js";
-import type { ClientConfig, RequestOptions, RetryConfig } from "./types.js";
+import type { ClientConfig, RequestOptions, RetryConfig, RetryInfo } from "./types.js";
 
 function appendQueryValue(params: URLSearchParams, key: string, value: unknown): void {
 	if (value === undefined || value === null) {
@@ -30,10 +30,24 @@ function buildQueryString(query: object): string {
 	return params.toString();
 }
 
+const MIME_EXTENSIONS: Record<string, string> = {
+	"image/png": ".png",
+	"image/jpeg": ".jpg",
+	"image/gif": ".gif",
+	"image/webp": ".webp",
+	"application/pdf": ".pdf",
+	"application/octet-stream": ".bin",
+};
+
+function extensionFromMime(mime: string): string {
+	return MIME_EXTENSIONS[mime] ?? "";
+}
+
 export class HttpClient {
 	private readonly token: string;
 	private readonly baseUrl: string;
-	private readonly retryConfig: RetryConfig | false;
+	private readonly retryConfig: RetryConfig | undefined;
+	private readonly onRetry: ((info: RetryInfo) => void) | undefined;
 	private readonly timeout: number | undefined;
 	private readonly rateLimiter: RateLimiter | undefined;
 	private readonly searchRateLimiter: RateLimiter | undefined;
@@ -43,7 +57,8 @@ export class HttpClient {
 	constructor(config: ClientConfig) {
 		this.token = config.token;
 		this.baseUrl = config.baseUrl.replace(/\/+$/, "");
-		this.retryConfig = config.retry ?? {};
+		this.retryConfig = config.retry;
+		this.onRetry = config.onRetry;
 		this.timeout = config.timeout;
 
 		if (config.rateLimit) {
@@ -82,14 +97,16 @@ export class HttpClient {
 			await this.searchRateLimiter.acquire();
 		}
 
-		if (this.retryConfig === false) {
+		if (!this.retryConfig) {
 			return this.execute(options);
 		}
 
-		return withRetry(() => this.execute(options), this.retryConfig, {
-			method: options.method,
-			path: options.path,
-		});
+		return withRetry(
+			() => this.execute(options),
+			this.retryConfig,
+			{ method: options.method, path: options.path },
+			this.onRetry,
+		);
 	}
 
 	private async execute<T = unknown>(options: RequestOptions): Promise<T> {
@@ -117,7 +134,9 @@ export class HttpClient {
 					if (value !== undefined) {
 						if (value instanceof Blob) {
 							const filename =
-								"name" in value && typeof value.name === "string" ? value.name : "file";
+								"name" in value && typeof value.name === "string"
+									? value.name
+									: `file${extensionFromMime(value.type)}`;
 							formData.append(key, value, filename);
 						} else {
 							formData.append(key, String(value));

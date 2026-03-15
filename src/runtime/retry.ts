@@ -25,7 +25,6 @@ interface ResolvedConfig {
 	maxRetries: number;
 	baseDelay: number;
 	maxDelay: number;
-	onRetry: ((info: RetryInfo) => void) | undefined;
 }
 
 function computeDelay(attempt: number, config: ResolvedConfig, error: unknown): number {
@@ -45,12 +44,12 @@ export async function withRetry<T>(
 	fn: () => Promise<T>,
 	config: RetryConfig,
 	context?: { method: string; path: string },
+	onRetry?: (info: RetryInfo) => void,
 ): Promise<T> {
 	const resolved: ResolvedConfig = {
 		maxRetries: config.maxRetries ?? DEFAULT_MAX_RETRIES,
 		baseDelay: config.baseDelay ?? DEFAULT_BASE_DELAY,
 		maxDelay: config.maxDelay ?? DEFAULT_MAX_DELAY,
-		onRetry: config.onRetry,
 	};
 
 	let lastError: unknown;
@@ -66,8 +65,8 @@ export async function withRetry<T>(
 				throw new RetryExhaustedError(attempt + 1, error);
 			}
 			const delay = computeDelay(attempt, resolved, error);
-			if (resolved.onRetry && context) {
-				resolved.onRetry({
+			if (onRetry && context) {
+				onRetry({
 					attempt,
 					delay,
 					error,

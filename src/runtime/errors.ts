@@ -53,6 +53,17 @@ export class ServerError extends HttpError {
 	}
 }
 
+const TRANSIENT_ERROR_CODES = new Set([
+	"ECONNREFUSED",
+	"ECONNRESET",
+	"EPIPE",
+	"ETIMEDOUT",
+	"ENOTFOUND",
+	"EAI_AGAIN",
+	"UND_ERR_SOCKET",
+	"UND_ERR_CONNECT_TIMEOUT",
+]);
+
 export class NetworkError extends LolzteamError {
 	readonly cause: unknown;
 
@@ -67,7 +78,14 @@ export class NetworkError extends LolzteamError {
 		if (!(this.cause instanceof Error)) {
 			return false;
 		}
-		return this.cause.name === "TimeoutError" || this.cause.message === "fetch failed";
+		if (this.cause.name === "TimeoutError") {
+			return true;
+		}
+		const code: unknown = "code" in this.cause ? this.cause.code : undefined;
+		if (typeof code === "string") {
+			return TRANSIENT_ERROR_CODES.has(code);
+		}
+		return this.cause.message === "fetch failed";
 	}
 }
 
