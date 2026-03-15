@@ -116,7 +116,9 @@ export class HttpClient {
 				for (const [key, value] of Object.entries(options.body)) {
 					if (value !== undefined) {
 						if (value instanceof Blob) {
-							formData.append(key, value);
+							const filename =
+								"name" in value && typeof value.name === "string" ? value.name : "file";
+							formData.append(key, value, filename);
 						} else {
 							formData.append(key, String(value));
 						}
@@ -157,19 +159,19 @@ export class HttpClient {
 			throw new NetworkError(error);
 		}
 
-		const body: T = await this.parseResponseBody(response);
+		const { data, parseError } = await this.parseResponseBody(response);
 
 		if (!response.ok) {
-			throw createHttpError(response.status, body, response.headers);
+			throw createHttpError(response.status, data, response.headers, parseError);
 		}
 
-		if (body === null || body === undefined) {
+		if (data === null || data === undefined) {
 			throw new LolzteamError(
-				`Expected response body but got ${body === null ? "null" : "undefined"} (status ${response.status})`,
+				`Expected response body but got ${data === null ? "null" : "undefined"} (status ${response.status})`,
 			);
 		}
 
-		return body;
+		return data as T;
 	}
 
 	/**
@@ -179,11 +181,17 @@ export class HttpClient {
 	 * per the spec. This is the trust boundary between the external API and our typed
 	 * code — the caller assigns the result to `T` without an explicit cast.
 	 */
-	private parseResponseBody(response: Response) {
+	private async parseResponseBody(
+		response: Response,
+	): Promise<{ data: unknown; parseError?: unknown }> {
 		const contentType = response.headers.get("content-type") ?? "";
 		if (contentType.includes("application/json")) {
-			return response.json().catch(() => null);
+			try {
+				return { data: await response.json() };
+			} catch (error) {
+				return { data: null, parseError: error };
+			}
 		}
-		return response.text();
+		return { data: await response.text() };
 	}
 }

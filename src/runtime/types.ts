@@ -15,7 +15,7 @@ export interface ProxyConfig {
 export interface RetryInfo {
 	attempt: number;
 	delay: number;
-	error: Error;
+	error: unknown;
 	method: string;
 	path: string;
 }

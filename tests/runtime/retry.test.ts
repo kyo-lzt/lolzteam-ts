@@ -5,6 +5,7 @@ import {
 	NetworkError,
 	NotFoundError,
 	RateLimitError,
+	RetryExhaustedError,
 	ServerError,
 } from "../../src/runtime/errors.js";
 import { withRetry } from "../../src/runtime/retry.js";
@@ -64,7 +65,11 @@ describe("withRetry", () => {
 			},
 			{ maxRetries: 2, baseDelay: 1, maxDelay: 5 },
 		);
-		await expect(promise).rejects.toBeInstanceOf(RateLimitError);
+		await expect(promise).rejects.toBeInstanceOf(RetryExhaustedError);
+		const error = await promise.catch((e: unknown) => e);
+		expect(error).toBeInstanceOf(RetryExhaustedError);
+		expect((error as RetryExhaustedError).lastError).toBeInstanceOf(RateLimitError);
+		expect((error as RetryExhaustedError).attempts).toBe(3);
 		expect(attempt).toBe(3); // initial + 2 retries
 	});
 

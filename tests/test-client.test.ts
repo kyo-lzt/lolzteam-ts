@@ -9,6 +9,7 @@ import {
 	NetworkError,
 	NotFoundError,
 	RateLimitError,
+	RetryExhaustedError,
 	ServerError,
 } from "../src/runtime/errors.js";
 
@@ -82,12 +83,14 @@ describe("Base client behavior", () => {
 		await expect(client.threads.get(999)).rejects.toBeInstanceOf(NotFoundError);
 	});
 
-	it("throws RateLimitError on 429 with no retries", async () => {
+	it("throws RetryExhaustedError wrapping RateLimitError on 429 with no retries", async () => {
 		mockFetch.mockImplementation(() =>
 			Promise.resolve(makeResponse(429, { error: "rate limited" }, { "retry-after": "1" })),
 		);
 		const client = createForum();
-		await expect(client.threads.list()).rejects.toBeInstanceOf(RateLimitError);
+		const error = await client.threads.list().catch((e: unknown) => e);
+		expect(error).toBeInstanceOf(RetryExhaustedError);
+		expect((error as RetryExhaustedError).lastError).toBeInstanceOf(RateLimitError);
 	});
 
 	it("retries on 429 then succeeds", async () => {
@@ -122,7 +125,9 @@ describe("Base client behavior", () => {
 			retry: { maxRetries: 2, baseDelay: 1, maxDelay: 10 },
 			rateLimit: { requestsPerMinute: 99999 },
 		});
-		await expect(client.threads.list()).rejects.toBeInstanceOf(RateLimitError);
+		const error = await client.threads.list().catch((e: unknown) => e);
+		expect(error).toBeInstanceOf(RetryExhaustedError);
+		expect((error as RetryExhaustedError).lastError).toBeInstanceOf(RateLimitError);
 		expect(mockFetch.mock.calls.length).toBe(3); // initial + 2 retries
 	});
 
@@ -160,10 +165,12 @@ describe("Base client behavior", () => {
 		expect(mockFetch.mock.calls.length).toBe(1);
 	});
 
-	it("throws NetworkError when fetch itself fails", async () => {
+	it("throws RetryExhaustedError wrapping NetworkError when fetch itself fails", async () => {
 		mockFetch.mockImplementation(() => Promise.reject(new TypeError("fetch failed")));
 		const client = createForum();
-		await expect(client.threads.list()).rejects.toBeInstanceOf(NetworkError);
+		const error = await client.threads.list().catch((e: unknown) => e);
+		expect(error).toBeInstanceOf(RetryExhaustedError);
+		expect((error as RetryExhaustedError).lastError).toBeInstanceOf(NetworkError);
 	});
 });
 
@@ -341,6 +348,44 @@ describe("MarketClient", () => {
 		const init = mockFetch.mock.calls[0]?.[1] as RequestInit;
 		const headers = init.headers as Record<string, string>;
 		expect(headers.Authorization).toBe("Bearer market-token");
+	});
+
+	it("throws AuthError on 401", async () => {
+		mockFetch.mockImplementation(() => Promise.resolve(makeResponse(401, { error: "unauthorized" })));
+		const client = createMarket();
+		await expect(client.category.all()).rejects.toBeInstanceOf(AuthError);
+	});
+
+	it("throws AuthError on 403", async () => {
+		mockFetch.mockImplementation(() => Promise.resolve(makeResponse(403, { error: "forbidden" })));
+		const client = createMarket();
+		await expect(client.category.all()).rejects.toBeInstanceOf(AuthError);
+	});
+
+	it("throws NotFoundError on 404", async () => {
+		mockFetch.mockImplementation(() => Promise.resolve(makeResponse(404, { error: "not found" })));
+		const client = createMarket();
+		await expect(client.category.all()).rejects.toBeInstanceOf(NotFoundError);
+	});
+
+	it("retries on 503 then succeeds", async () => {
+		let callCount = 0;
+		mockFetch.mockImplementation(() => {
+			callCount++;
+			if (callCount === 1) {
+				return Promise.resolve(makeResponse(503, { error: "service unavailable" }));
+			}
+			return Promise.resolve(makeResponse(200, { ok: true }));
+		});
+		const client = new MarketClient({
+			token: "t",
+			baseUrl: "https://api.example.com",
+			retry: { maxRetries: 1, baseDelay: 1, maxDelay: 10 },
+			rateLimit: { requestsPerMinute: 99999 },
+		});
+		const result = await client.category.all();
+		expect(result).toEqual({ ok: true });
+		expect(callCount).toBe(2);
 	});
 });
 

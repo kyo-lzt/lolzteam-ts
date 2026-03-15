@@ -11,6 +11,7 @@ export {
 	NotFoundError,
 	ServerError,
 	NetworkError,
+	RetryExhaustedError,
 	createHttpError,
 } from "./runtime/index.js";
 

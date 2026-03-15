@@ -1,5 +1,5 @@
 import { afterAll, beforeEach, describe, expect, it, mock } from "bun:test";
-import { HttpError, NetworkError } from "../../src/runtime/errors.js";
+import { HttpError, NetworkError, RetryExhaustedError } from "../../src/runtime/errors.js";
 import { HttpClient } from "../../src/runtime/http-client.js";
 
 const originalFetch = globalThis.fetch;
@@ -70,10 +70,11 @@ describe("HttpClient", () => {
 		await expect(promise).rejects.toBeInstanceOf(HttpError);
 	});
 
-	it("throws NetworkError on fetch failure", async () => {
+	it("throws RetryExhaustedError wrapping NetworkError on fetch failure", async () => {
 		mockFetch.mockImplementation(() => Promise.reject(new TypeError("fetch failed")));
 		const client = createClient();
-		const promise = client.request({ method: "GET", path: "/fail" });
-		await expect(promise).rejects.toBeInstanceOf(NetworkError);
+		const error = await client.request({ method: "GET", path: "/fail" }).catch((e: unknown) => e);
+		expect(error).toBeInstanceOf(RetryExhaustedError);
+		expect((error as RetryExhaustedError).lastError).toBeInstanceOf(NetworkError);
 	});
 });

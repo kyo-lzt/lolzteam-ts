@@ -6,6 +6,7 @@ export {
 	NotFoundError,
 	ServerError,
 	NetworkError,
+	RetryExhaustedError,
 	createHttpError,
 } from "./errors.js";
 

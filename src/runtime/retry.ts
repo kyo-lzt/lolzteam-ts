@@ -1,4 +1,4 @@
-import { NetworkError, RateLimitError, ServerError } from "./errors.js";
+import { NetworkError, RateLimitError, RetryExhaustedError, ServerError } from "./errors.js";
 import type { RetryConfig, RetryInfo } from "./types.js";
 
 const DEFAULT_MAX_RETRIES = 3;
@@ -59,11 +59,14 @@ export async function withRetry<T>(
 			return await fn();
 		} catch (error) {
 			lastError = error;
-			if (!isRetryable(error) || attempt === resolved.maxRetries) {
+			if (!isRetryable(error)) {
 				throw error;
 			}
+			if (attempt === resolved.maxRetries) {
+				throw new RetryExhaustedError(attempt + 1, error);
+			}
 			const delay = computeDelay(attempt, resolved, error);
-			if (resolved.onRetry && context && error instanceof Error) {
+			if (resolved.onRetry && context) {
 				resolved.onRetry({
 					attempt,
 					delay,
@@ -76,5 +79,5 @@ export async function withRetry<T>(
 		}
 	}
 
-	throw lastError;
+	throw new RetryExhaustedError(resolved.maxRetries + 1, lastError);
 }
