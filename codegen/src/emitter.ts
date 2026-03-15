@@ -14,6 +14,10 @@ interface TypeEntry {
 	code: string;
 }
 
+function formatDefaultJsdoc(defaultValue: unknown): string {
+	return `/** @default ${JSON.stringify(defaultValue)} */`;
+}
+
 function emitQueryParamsInterface(group: string, method: MethodDefinition): TypeEntry | undefined {
 	if (method.params.queryParams.length === 0) return undefined;
 
@@ -22,7 +26,10 @@ function emitQueryParamsInterface(group: string, method: MethodDefinition): Type
 	lines.push(`export interface ${typeName} {`);
 
 	for (const param of method.params.queryParams) {
-		const opt = param.required ? "" : "?";
+		const opt = param.required && param.defaultValue === undefined ? "" : "?";
+		if (param.defaultValue !== undefined) {
+			lines.push(`\t${formatDefaultJsdoc(param.defaultValue)}`);
+		}
 		lines.push(`\t${safePropName(param.name)}${opt}: ${param.type};`);
 	}
 
@@ -46,11 +53,42 @@ function emitBodyInterface(group: string, method: MethodDefinition): TypeEntry |
 
 	if (method.bodyProperties.length === 0) return undefined;
 
+	// Discriminated union: emit variant interfaces + union type alias
+	if (method.bodyVariants && method.bodyVariants.length > 0) {
+		const baseTypeName = buildTypeName(group, method.methodName);
+		const variantNames: string[] = [];
+		const sections: string[] = [];
+
+		for (const variant of method.bodyVariants) {
+			const variantTypeName = `${baseTypeName}${variant.nameSuffix}`;
+			variantNames.push(variantTypeName);
+
+			const lines: string[] = [];
+			lines.push(`export interface ${variantTypeName} {`);
+			for (const prop of variant.properties) {
+				const opt = prop.required && prop.defaultValue === undefined ? "" : "?";
+				if (prop.defaultValue !== undefined) {
+					lines.push(`\t${formatDefaultJsdoc(prop.defaultValue)}`);
+				}
+				lines.push(`\t${safePropName(prop.name)}${opt}: ${prop.type};`);
+			}
+			lines.push("}");
+			sections.push(lines.join("\n"));
+		}
+
+		sections.push(`export type ${typeName} =\n\t| ${variantNames.join("\n\t| ")};`);
+
+		return { name: typeName, code: sections.join("\n\n") };
+	}
+
 	const lines: string[] = [];
 	lines.push(`export interface ${typeName} {`);
 
 	for (const prop of method.bodyProperties) {
-		const opt = prop.required ? "" : "?";
+		const opt = prop.required && prop.defaultValue === undefined ? "" : "?";
+		if (prop.defaultValue !== undefined) {
+			lines.push(`\t${formatDefaultJsdoc(prop.defaultValue)}`);
+		}
 		lines.push(`\t${safePropName(prop.name)}${opt}: ${prop.type};`);
 	}
 
@@ -130,6 +168,16 @@ function buildPathExpression(path: string): string {
 	return `\`${template}\``;
 }
 
+function formatDefaultLiteral(value: unknown): string {
+	if (typeof value === "string") {
+		return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+	}
+	if (typeof value === "boolean") {
+		return value ? "true" : "false";
+	}
+	return String(value);
+}
+
 function emitMethod(group: string, method: MethodDefinition): string {
 	const lines: string[] = [];
 	const responseName = `${buildTypeName(group, method.methodName)}Response`;
@@ -162,17 +210,34 @@ function emitMethod(group: string, method: MethodDefinition): string {
 
 	const isSearch = group.toLowerCase() === "category";
 
+	// Collect defaults for query params and body properties
+	const queryDefaults = method.params.queryParams.filter((p) => p.defaultValue !== undefined);
+	const bodyDefaults =
+		hasBodyType && !method.bodyIsArray
+			? method.bodyProperties.filter((p) => p.defaultValue !== undefined)
+			: [];
+
+	// Determine effective variable names (with defaults applied)
+	const queryExpr =
+		queryDefaults.length > 0
+			? `{ ${queryDefaults.map((p) => `${safePropName(p.name)}: ${formatDefaultLiteral(p.defaultValue)}`).join(", ")}, ...params }`
+			: "params";
+	const bodyExpr =
+		bodyDefaults.length > 0
+			? `{ ${bodyDefaults.map((p) => `${safePropName(p.name)}: ${formatDefaultLiteral(p.defaultValue)}`).join(", ")}, ...body }`
+			: "body";
+
 	lines.push(`\tasync ${method.methodName}(${argStr}): Promise<${responseName}> {`);
 	lines.push("\t\treturn this.http.request({");
 	lines.push(`\t\t\tmethod: "${method.httpMethod}",`);
 	lines.push(`\t\t\tpath: ${pathExpr},`);
 
 	if (hasQueryType) {
-		lines.push("\t\t\tquery: params,");
+		lines.push(`\t\t\tquery: ${queryExpr},`);
 	}
 
 	if (hasBodyType) {
-		lines.push("\t\t\tbody: body,");
+		lines.push(`\t\t\tbody: ${bodyExpr},`);
 	}
 
 	if (method.bodyEncoding !== "form") {

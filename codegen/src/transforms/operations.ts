@@ -21,7 +21,7 @@ export interface OperationInfo {
 	methodName: string; // camelCase method name
 	pathParams: Array<{ name: string; type: string; required: boolean }>;
 	queryParams: Array<{ name: string; type: string; required: boolean }>;
-	bodyProperties: Array<{ name: string; type: string; required: boolean }>;
+	bodyProperties: Array<{ name: string; type: string; required: boolean; defaultValue?: unknown }>;
 	responseType: string;
 }
 
@@ -35,6 +35,13 @@ export interface BodyProperty {
 	name: string;
 	type: string;
 	required: boolean;
+	defaultValue?: unknown;
+}
+
+export interface BodyVariant {
+	/** Suffix for the variant interface name, e.g. "ClientCredentials" */
+	nameSuffix: string;
+	properties: BodyProperty[];
 }
 
 export interface MethodDefinition {
@@ -44,7 +51,7 @@ export interface MethodDefinition {
 	path: string;
 	params: {
 		pathParams: Array<{ name: string; type: string; required: boolean }>;
-		queryParams: Array<{ name: string; type: string; required: boolean }>;
+		queryParams: Array<{ name: string; type: string; required: boolean; defaultValue?: unknown }>;
 	};
 	bodyProperties: BodyProperty[];
 	hasBody: boolean;
@@ -53,6 +60,8 @@ export interface MethodDefinition {
 	responseType: string;
 	bodyIsArray?: boolean;
 	bodyArrayItemType?: string;
+	/** Discriminated union variants (set when oneOf has a discriminator field) */
+	bodyVariants?: BodyVariant[];
 }
 
 const HTTP_METHODS = ["get", "post", "put", "delete", "patch"] as const;
@@ -81,10 +90,38 @@ interface OperationObject {
 }
 
 interface BodyExtractionResult {
-	properties: Array<{ name: string; type: string; required: boolean }>;
+	properties: Array<{ name: string; type: string; required: boolean; defaultValue?: unknown }>;
 	bodyEncoding: "form" | "json" | "multipart";
 	bodyIsArray?: boolean;
 	bodyArrayItemType?: string;
+	bodyVariants?: BodyVariant[];
+}
+
+/**
+ * Find a discriminator field: present in every variant with a single-value enum.
+ * Returns the field name, or undefined if no discriminator exists.
+ */
+function findDiscriminator(
+	variants: Array<{
+		properties?: Record<string, Record<string, unknown>>;
+		required?: string[];
+	}>,
+): string | undefined {
+	if (variants.length < 2) return undefined;
+
+	const firstVariant = variants[0];
+	if (!firstVariant?.properties) return undefined;
+
+	for (const fieldName of Object.keys(firstVariant.properties)) {
+		const isSingleEnumInAll = variants.every((v) => {
+			const prop = v.properties?.[fieldName];
+			if (!prop) return false;
+			const enumVal = prop.enum;
+			return Array.isArray(enumVal) && enumVal.length === 1;
+		});
+		if (isSingleEnumInAll) return fieldName;
+	}
+	return undefined;
 }
 
 /**
@@ -129,18 +166,24 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 		return { properties: [], bodyEncoding, bodyIsArray: true, bodyArrayItemType: itemType };
 	}
 
-	// Handle oneOf — merge all variant properties (PHP pattern)
+	// Handle oneOf — detect discriminator and emit discriminated union variants
 	if (schema.oneOf) {
+		const variants = schema.oneOf as Array<{
+			title?: string;
+			properties?: Record<string, Record<string, unknown>>;
+			required?: string[];
+		}>;
+
+		// Detect discriminator: a field that has a single-value enum in every variant
+		const discriminator = findDiscriminator(variants);
+
+		// Always build merged properties for backward compat (audit, flat access)
 		const allProps: Record<string, Array<Record<string, unknown>>> = {};
 		const variantRequiredSets: Array<Set<string>> = [];
 
-		for (const variant of schema.oneOf) {
-			const v = variant as {
-				properties?: Record<string, Record<string, unknown>>;
-				required?: string[];
-			};
-			const variantProps = v.properties ?? {};
-			const requiredSet = new Set(v.required ?? []);
+		for (const variant of variants) {
+			const variantProps = variant.properties ?? {};
+			const requiredSet = new Set(variant.required ?? []);
 			variantRequiredSets.push(requiredSet);
 
 			for (const [name, propSchema] of Object.entries(variantProps)) {
@@ -154,7 +197,6 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 		}
 
 		for (const [name, propSchemas] of Object.entries(allProps)) {
-			// Required only if required in ALL variants (intersection)
 			const isRequired = variantRequiredSets.every((s) => s.has(name));
 
 			let mergedSchema: Record<string, unknown>;
@@ -162,7 +204,6 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 			if (propSchemas.length === 1 && firstSchema) {
 				mergedSchema = firstSchema;
 			} else {
-				// Check if all schemas have enums — merge enum values
 				const allEnums: unknown[] = [];
 				let allAreEnums = true;
 				for (const ps of propSchemas) {
@@ -176,13 +217,11 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 				}
 
 				if (allAreEnums && allEnums.length > 0) {
-					// Deduplicate enum values
 					const unique = [...new Set(allEnums.map((v) => JSON.stringify(v)))].map(
 						(s) => JSON.parse(s) as unknown,
 					);
 					mergedSchema = { enum: unique };
 				} else {
-					// Different types — deduplicate and wrap in oneOf if needed
 					const uniqueMap = new Map<string, Record<string, unknown>>();
 					for (const ps of propSchemas) {
 						uniqueMap.set(JSON.stringify(ps), ps);
@@ -203,6 +242,34 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 				required: isRequired,
 			});
 		}
+
+		// Build discriminated union variants if a discriminator was found
+		if (discriminator) {
+			const bodyVariants: BodyVariant[] = [];
+
+			for (const variant of variants) {
+				const variantProps = variant.properties ?? {};
+				const requiredSet = new Set(variant.required ?? []);
+				const title = variant.title ?? "";
+				const nameSuffix = title.replace(/\s+/g, "");
+
+				const properties: BodyProperty[] = [];
+				for (const [name, propSchema] of Object.entries(variantProps)) {
+					const format = (propSchema as { format?: string }).format;
+					const type = format === "binary" ? "Blob" : schemaToTypeString(propSchema, spec);
+					properties.push({
+						name,
+						type,
+						required: requiredSet.has(name),
+						defaultValue: (propSchema as { default?: unknown }).default,
+					});
+				}
+
+				bodyVariants.push({ nameSuffix, properties });
+			}
+
+			return { properties: bodyProperties, bodyEncoding, bodyVariants };
+		}
 	} else if (schema.properties) {
 		const requiredSet = new Set(schema.required ?? []);
 		for (const [name, propSchema] of Object.entries(schema.properties)) {
@@ -213,6 +280,7 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 				name,
 				type,
 				required: requiredSet.has(name),
+				defaultValue: (propSchema as { default?: unknown }).default,
 			});
 		}
 	}
@@ -318,5 +386,6 @@ export function extractMethodDefinition(
 		responseType,
 		bodyIsArray: isGet ? undefined : body.bodyIsArray,
 		bodyArrayItemType: isGet ? undefined : body.bodyArrayItemType,
+		bodyVariants: isGet ? undefined : body.bodyVariants,
 	};
 }

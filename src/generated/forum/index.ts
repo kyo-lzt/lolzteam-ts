@@ -435,7 +435,7 @@ class ThreadsApi {
 		return this.http.request({
 			method: "POST",
 			path: "/threads",
-			body: body,
+			body: { reply_group: 2, ...body },
 			bodyEncoding: "json",
 		});
 	}
@@ -444,7 +444,7 @@ class ThreadsApi {
 		return this.http.request({
 			method: "POST",
 			path: "/contests",
-			body: body,
+			body: { contest_type: "by_finish_date", reply_group: 2, ...body },
 			bodyEncoding: "json",
 		});
 	}
@@ -453,7 +453,7 @@ class ThreadsApi {
 		return this.http.request({
 			method: "POST",
 			path: "/claims",
-			body: body,
+			body: { reply_group: 2, ...body },
 			bodyEncoding: "json",
 		});
 	}
@@ -880,7 +880,7 @@ class UsersApi {
 		return this.http.request({
 			method: "GET",
 			path: `/users/${user_id}/likes`,
-			query: params,
+			query: { type: "gotten", content_type: "post", ...params },
 		});
 	}
 
@@ -1145,7 +1145,7 @@ class ConversationsApi {
 		return this.http.request({
 			method: "POST",
 			path: "/conversations",
-			body: body,
+			body: { is_group: false, ...body },
 			bodyEncoding: "json",
 		});
 	}

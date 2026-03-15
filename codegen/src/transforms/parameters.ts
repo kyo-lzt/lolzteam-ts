@@ -27,6 +27,7 @@ export interface ParsedParameter {
 	name: string;
 	type: string;
 	required: boolean;
+	defaultValue?: unknown;
 }
 
 export interface OperationParameters {
@@ -55,6 +56,7 @@ export function extractParameters(
 			name: param.name,
 			required: param.required ?? false,
 			type: schemaToTypeString(param.schema, spec),
+			defaultValue: param.schema?.default,
 		};
 
 		if (param.in === "path") {

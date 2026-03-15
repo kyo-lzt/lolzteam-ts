@@ -225,7 +225,7 @@ class CategoryApi {
 		return this.http.request({
 			method: "GET",
 			path: "/steam",
-			query: params,
+			query: { rt: "no", ...params },
 			isSearch: true,
 		});
 	}
@@ -1123,7 +1123,7 @@ class PaymentsApi {
 		return this.http.request({
 			method: "POST",
 			path: "/invoice",
-			body: body,
+			body: { lifetime: 3600, ...body },
 			bodyEncoding: "json",
 		});
 	}

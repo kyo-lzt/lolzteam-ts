@@ -683,6 +683,7 @@ export interface CategorySteamParams {
 	eg?: -1 | 0 | 1;
 	"vac[]"?: Array<number>;
 	vac_skip_game_check?: boolean;
+	/** @default "no" */
 	rt?: "yes" | "no" | "nomatter";
 	trade_ban?: YesNoNoMatterScheme;
 	trade_limit?: YesNoNoMatterScheme;
@@ -22270,6 +22271,7 @@ export interface PaymentsInvoiceCreateBody {
 	merchant_id: number;
 	required_telegram_id?: number;
 	required_telegram_username?: string;
+	/** @default 3600 */
 	lifetime?: number;
 	additional_data?: string;
 	is_test?: boolean;
