@@ -44,6 +44,10 @@ export function deref<T = unknown>(value: unknown, spec: OpenApiSpec, visited?: 
 
 	if (isRefObject(value)) {
 		const ref = value.$ref;
+		// Preserve component schema refs — they map to named types
+		if (ref.startsWith("#/components/schemas/")) {
+			return value as T;
+		}
 		if (seen.has(ref)) {
 			// Circular ref — return empty object to avoid infinite loop
 			return {} as T;

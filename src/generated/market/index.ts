@@ -37,6 +37,7 @@ import type {
 	CategoryGiftsResponse,
 	CategoryHytaleParams,
 	CategoryHytaleResponse,
+	CategoryIDModel,
 	CategoryInstagramParams,
 	CategoryInstagramResponse,
 	CategoryListParams,
@@ -70,6 +71,7 @@ import type {
 	CategoryWotBlitzResponse,
 	CategoryWotParams,
 	CategoryWotResponse,
+	CurrencyModel,
 	CustomDiscountsCreateBody,
 	CustomDiscountsCreateResponse,
 	CustomDiscountsDeleteBody,
@@ -77,6 +79,7 @@ import type {
 	CustomDiscountsEditBody,
 	CustomDiscountsEditResponse,
 	CustomDiscountsGetResponse,
+	DatePeriodModel,
 	ImapCreateBody,
 	ImapCreateResponse,
 	ImapDeleteBody,
@@ -203,6 +206,7 @@ import type {
 	PurchasingDiscountRequestResponse,
 	PurchasingFastBuyBody,
 	PurchasingFastBuyResponse,
+	YesNoNoMatterScheme,
 } from "./types.js";
 
 class CategoryApi {

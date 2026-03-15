@@ -74,12 +74,14 @@ function generateApi(config: ApiConfig): void {
 	console.log("  types.ts");
 
 	// Write index.ts (all group classes + client class)
+	const componentSchemaNames = new Set(Object.keys(result.componentSchemas));
 	const indexContent = emitCombinedIndexFile(
 		result.groups,
 		config.clientName,
 		config.defaultBaseUrl,
 		config.defaultRateLimit,
 		config.defaultSearchRateLimit,
+		componentSchemaNames,
 	);
 	writeFileSync(join(config.outputDir, "index.ts"), indexContent);
 	console.log("  index.ts");

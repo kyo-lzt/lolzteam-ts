@@ -497,138 +497,7 @@ export interface Resp_ProfilePostModel {
 		report: boolean;
 		stick: boolean;
 	};
-	timeline_user: {
-		user_id: number;
-		username: string;
-		username_html: string;
-		user_message_count: number;
-		user_register_date: number;
-		user_like_count: number;
-		user_like2_count: number;
-		contest_count: number;
-		trophy_count: number;
-		short_link: string;
-		custom_title: string;
-		is_banned: number;
-		display_banner_id: number;
-		display_icon_group_id: number;
-		balance: string;
-		hold: string;
-		currency: string;
-		user_email: string;
-		user_unread_notification_count: number;
-		user_unread_conversation_count: number;
-		conv_welcome_message: string;
-		user_title: string;
-		user_deposit: number;
-		user_is_valid: boolean;
-		user_is_verified: boolean;
-		user_is_followed: boolean;
-		user_last_seen_date: number;
-		links: {
-			permalink: string;
-			detail: string;
-			avatar: string;
-			avatar_big: string;
-			avatar_small: string;
-			followers: string;
-			followings: string;
-			ignore: string;
-			background_l: string;
-			background_m: string;
-			status: string;
-			timeline: string;
-		};
-		permissions: {
-			edit: boolean;
-			follow: boolean;
-			ignore: boolean;
-			profile_post: boolean;
-		};
-		user_is_ignored: boolean;
-		user_is_visitor: boolean;
-		user_group_id: number;
-		curator_titles: Array<string>;
-		user_groups: Array<{
-			user_group_id: number;
-			user_group_title: string;
-			user_group_title_en: string;
-			user_group_banner_css_class: string;
-			user_group_banner_text: string;
-			user_group_banner_text_en: string;
-			display_group_selectable: boolean;
-			display_banner_selectable: boolean;
-			display_icon_selectable: boolean;
-			is_primary_group: boolean;
-			user_group_icon_class: string;
-		}>;
-		fields: Array<{
-			id: string;
-			title: string;
-			description: string;
-			position: string;
-			is_required: boolean;
-			value?: string;
-			is_multi_choice: boolean;
-			choices: Array<{
-				key: string;
-				value: string;
-			}>;
-			values: Array<unknown>;
-		}>;
-		user_timezone_offset: number;
-		user_external_authentications: Array<{
-			provider: string;
-			provider_key: string;
-		}>;
-		self_permissions: {
-			create_conversation: boolean;
-		};
-		edit_permissions: {
-			password: boolean;
-			user_email: boolean;
-			username: boolean;
-			user_title: boolean;
-			short_link: boolean;
-			hide_username_logs: boolean;
-			primary_group_id: boolean;
-			secondary_group_ids: boolean;
-			user_dob_day: boolean;
-			user_dob_month: boolean;
-			user_dob_year: boolean;
-			fields: boolean;
-		};
-		birthday: {
-			age: number;
-			timeStamp: {
-				date: string;
-				timezone_type: number;
-				timezone: string;
-			};
-			format: string;
-		};
-		secret_answer_rendered: string;
-		secret_answer_first_letter: string;
-		user_following: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		user_followers: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		banner: string;
-	};
+	timeline_user: Resp_UserModel;
 }
 
 export interface Resp_ProfilePostCommentModel {
@@ -776,10 +645,7 @@ export interface AssetsCssParams {
 
 export type AssetsCssResponse = {
 	contents: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 // ─── CategoriesApi Types ────────────────────────────────────────
@@ -808,10 +674,7 @@ export type CategoriesListResponse = {
 		};
 	}>;
 	categories_total: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type CategoriesGetResponse = {
@@ -831,10 +694,7 @@ export type CategoriesGetResponse = {
 			delete: boolean;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 // ─── ForumsApi Types ────────────────────────────────────────
@@ -886,10 +746,7 @@ export type ForumsListResponse = {
 		title: string;
 		isHidden: boolean;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ForumsGroupedResponse = {
@@ -928,10 +785,7 @@ export type ForumsGroupedResponse = {
 		title: string;
 		isHidden: boolean;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ForumsGetResponse = {
@@ -969,10 +823,7 @@ export type ForumsGetResponse = {
 		};
 		forum_is_followed: boolean;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ForumsFollowersResponse = {
@@ -985,10 +836,7 @@ export type ForumsFollowersResponse = {
 			email: boolean;
 		};
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ForumsFollowBody {
@@ -1002,19 +850,13 @@ export interface ForumsFollowBody {
 export type ForumsFollowResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ForumsUnfollowResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ForumsFollowedParams {
@@ -1061,10 +903,7 @@ export type ForumsFollowedResponse = {
 			email: boolean;
 		};
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ForumsGetFeedOptionsResponse = {
@@ -1095,10 +934,7 @@ export type ForumsGetFeedOptionsResponse = {
 	excluded_forums_ids: Array<number>;
 	default_excluded_forums_ids: Array<number>;
 	keywords: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ForumsEditFeedOptionsBody {
@@ -1109,51 +945,20 @@ export interface ForumsEditFeedOptionsBody {
 export type ForumsEditFeedOptionsResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── LinksApi Types ────────────────────────────────────────
 
 export type LinksListResponse = {
-	"link-forums": Array<{
-		link_id: number;
-		link_title: string;
-		link_description: string;
-		links: {
-			target: string;
-			detail: string;
-		};
-		permissions: {
-			view: boolean;
-		};
-	}>;
+	"link-forums": Array<Resp_LinkModel>;
 	"link-forums_total": number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type LinksGetResponse = {
-	"link-forum": {
-		link_id: number;
-		link_title: string;
-		link_description: string;
-		links: {
-			target: string;
-			detail: string;
-		};
-		permissions: {
-			view: boolean;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	"link-forum": Resp_LinkModel;
+	system_info: Resp_SystemInfo;
 };
 
 // ─── PagesApi Types ────────────────────────────────────────
@@ -1180,10 +985,7 @@ export type PagesListResponse = {
 		};
 	}>;
 	pages_total: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type PagesGetResponse = {
@@ -1204,10 +1006,7 @@ export type PagesGetResponse = {
 		};
 		page_html: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 // ─── NavigationApi Types ────────────────────────────────────────
@@ -1239,10 +1038,7 @@ export type NavigationListResponse = {
 		has_sub_elements: boolean;
 	}>;
 	elements_count: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 // ─── ThreadsApi Types ────────────────────────────────────────
@@ -1275,163 +1071,7 @@ export interface ThreadsListParams {
 }
 
 export type ThreadsListResponse = {
-	threads: Array<{
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"206": string;
-			"97491": string;
-			"193431": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		restrictions: {
-			reply_delay: number;
-			max_reply_count: number;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		contest: {
-			type: string;
-			finish_date: number;
-			now_count_members: number;
-			needed_members: number;
-			is_finished: number;
-			count_winners: number;
-			require_like_count: number;
-			require_total_like_count: number;
-			prize_type: string;
-			prize_type_phrase: string;
-			prize_data: number;
-			is_money_places: number;
-			chance_to_win: number;
-			winners: Array<number>;
-			already_participate: boolean;
-			permissions: {
-				can_finish: boolean;
-				can_participate: boolean;
-				can_participate_error: string;
-				can_view_user_list: boolean;
-			};
-		};
-	}>;
+	threads: Array<Resp_ThreadModel>;
 	forum: {
 		forum_id: number;
 		forum_title: string;
@@ -1466,10 +1106,7 @@ export type ThreadsListResponse = {
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ThreadsCreateBody {
@@ -1492,167 +1129,8 @@ export interface ThreadsCreateBody {
 }
 
 export type ThreadsCreateResponse = {
-	thread: {
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"206": string;
-			"97491": string;
-			"193431": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		restrictions: {
-			reply_delay: number;
-			max_reply_count: number;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		contest: {
-			type: string;
-			finish_date: number;
-			now_count_members: number;
-			needed_members: number;
-			is_finished: number;
-			count_winners: number;
-			require_like_count: number;
-			require_total_like_count: number;
-			prize_type: string;
-			prize_type_phrase: string;
-			prize_data: number;
-			is_money_places: number;
-			chance_to_win: number;
-			winners: Array<number>;
-			already_participate: boolean;
-			permissions: {
-				can_finish: boolean;
-				can_participate: boolean;
-				can_participate_error: string;
-				can_view_user_list: boolean;
-			};
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	thread: Resp_ThreadModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ThreadsCreateContestBody {
@@ -1685,167 +1163,8 @@ export interface ThreadsCreateContestBody {
 }
 
 export type ThreadsCreateContestResponse = {
-	thread: {
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"206": string;
-			"97491": string;
-			"193431": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		restrictions: {
-			reply_delay: number;
-			max_reply_count: number;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		contest: {
-			type: string;
-			finish_date: number;
-			now_count_members: number;
-			needed_members: number;
-			is_finished: number;
-			count_winners: number;
-			require_like_count: number;
-			require_total_like_count: number;
-			prize_type: string;
-			prize_type_phrase: string;
-			prize_data: number;
-			is_money_places: number;
-			chance_to_win: number;
-			winners: Array<number>;
-			already_participate: boolean;
-			permissions: {
-				can_finish: boolean;
-				can_participate: boolean;
-				can_participate_error: string;
-				can_view_user_list: boolean;
-			};
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	thread: Resp_ThreadModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ThreadsClaimBody {
@@ -1874,167 +1193,8 @@ export interface ThreadsClaimBody {
 }
 
 export type ThreadsClaimResponse = {
-	thread: {
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"206": string;
-			"97491": string;
-			"193431": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		restrictions: {
-			reply_delay: number;
-			max_reply_count: number;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		contest: {
-			type: string;
-			finish_date: number;
-			now_count_members: number;
-			needed_members: number;
-			is_finished: number;
-			count_winners: number;
-			require_like_count: number;
-			require_total_like_count: number;
-			prize_type: string;
-			prize_type_phrase: string;
-			prize_data: number;
-			is_money_places: number;
-			chance_to_win: number;
-			winners: Array<number>;
-			already_participate: boolean;
-			permissions: {
-				can_finish: boolean;
-				can_participate: boolean;
-				can_participate_error: string;
-				can_view_user_list: boolean;
-			};
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	thread: Resp_ThreadModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ThreadsGetParams {
@@ -2042,167 +1202,8 @@ export interface ThreadsGetParams {
 }
 
 export type ThreadsGetResponse = {
-	thread: {
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"206": string;
-			"97491": string;
-			"193431": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		restrictions: {
-			reply_delay: number;
-			max_reply_count: number;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		contest: {
-			type: string;
-			finish_date: number;
-			now_count_members: number;
-			needed_members: number;
-			is_finished: number;
-			count_winners: number;
-			require_like_count: number;
-			require_total_like_count: number;
-			prize_type: string;
-			prize_type_phrase: string;
-			prize_data: number;
-			is_money_places: number;
-			chance_to_win: number;
-			winners: Array<number>;
-			already_participate: boolean;
-			permissions: {
-				can_finish: boolean;
-				can_participate: boolean;
-				can_participate_error: string;
-				can_view_user_list: boolean;
-			};
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	thread: Resp_ThreadModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ThreadsEditBody {
@@ -2218,167 +1219,8 @@ export interface ThreadsEditBody {
 }
 
 export type ThreadsEditResponse = {
-	thread: {
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"206": string;
-			"97491": string;
-			"193431": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		restrictions: {
-			reply_delay: number;
-			max_reply_count: number;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		contest: {
-			type: string;
-			finish_date: number;
-			now_count_members: number;
-			needed_members: number;
-			is_finished: number;
-			count_winners: number;
-			require_like_count: number;
-			require_total_like_count: number;
-			prize_type: string;
-			prize_type_phrase: string;
-			prize_data: number;
-			is_money_places: number;
-			chance_to_win: number;
-			winners: Array<number>;
-			already_participate: boolean;
-			permissions: {
-				can_finish: boolean;
-				can_participate: boolean;
-				can_participate_error: string;
-				can_view_user_list: boolean;
-			};
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	thread: Resp_ThreadModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ThreadsDeleteBody {
@@ -2388,10 +1230,7 @@ export interface ThreadsDeleteBody {
 export type ThreadsDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ThreadsMoveBody {
@@ -2406,46 +1245,31 @@ export interface ThreadsMoveBody {
 export type ThreadsMoveResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ThreadsBumpResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ThreadsHideResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ThreadsStarResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ThreadsUnstarResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ThreadsFollowersResponse = {
@@ -2457,10 +1281,7 @@ export type ThreadsFollowersResponse = {
 			email: boolean;
 		};
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ThreadsFollowBody {
@@ -2470,19 +1291,13 @@ export interface ThreadsFollowBody {
 export type ThreadsFollowResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ThreadsUnfollowResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ThreadsFollowedParams {
@@ -2617,10 +1432,7 @@ export type ThreadsFollowedResponse = {
 		};
 	}>;
 	threads_total: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ThreadsNavigationResponse = {
@@ -2647,10 +1459,7 @@ export type ThreadsNavigationResponse = {
 		has_sub_elements: boolean;
 	}>;
 	elements_count: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ThreadsPollGetResponse = {
@@ -2674,10 +1483,7 @@ export type ThreadsPollGetResponse = {
 			vote: string;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ThreadsPollVoteBody {
@@ -2688,10 +1494,7 @@ export interface ThreadsPollVoteBody {
 export type ThreadsPollVoteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ThreadsUnreadParams {
@@ -2701,163 +1504,7 @@ export interface ThreadsUnreadParams {
 }
 
 export type ThreadsUnreadResponse = {
-	threads: Array<{
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"206": string;
-			"97491": string;
-			"193431": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		restrictions: {
-			reply_delay: number;
-			max_reply_count: number;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		contest: {
-			type: string;
-			finish_date: number;
-			now_count_members: number;
-			needed_members: number;
-			is_finished: number;
-			count_winners: number;
-			require_like_count: number;
-			require_total_like_count: number;
-			prize_type: string;
-			prize_type_phrase: string;
-			prize_data: number;
-			is_money_places: number;
-			chance_to_win: number;
-			winners: Array<number>;
-			already_participate: boolean;
-			permissions: {
-				can_finish: boolean;
-				can_participate: boolean;
-				can_participate_error: string;
-				can_view_user_list: boolean;
-			};
-		};
-	}>;
+	threads: Array<Resp_ThreadModel>;
 	data: Array<{
 		content_type: string;
 		content_id: number;
@@ -2974,10 +1621,7 @@ export type ThreadsUnreadResponse = {
 			forum_is_followed: boolean;
 		};
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ThreadsRecentParams {
@@ -2988,163 +1632,7 @@ export interface ThreadsRecentParams {
 }
 
 export type ThreadsRecentResponse = {
-	threads: Array<{
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"206": string;
-			"97491": string;
-			"193431": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		restrictions: {
-			reply_delay: number;
-			max_reply_count: number;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		contest: {
-			type: string;
-			finish_date: number;
-			now_count_members: number;
-			needed_members: number;
-			is_finished: number;
-			count_winners: number;
-			require_like_count: number;
-			require_total_like_count: number;
-			prize_type: string;
-			prize_type_phrase: string;
-			prize_data: number;
-			is_money_places: number;
-			chance_to_win: number;
-			winners: Array<number>;
-			already_participate: boolean;
-			permissions: {
-				can_finish: boolean;
-				can_participate: boolean;
-				can_participate_error: string;
-				can_view_user_list: boolean;
-			};
-		};
-	}>;
+	threads: Array<Resp_ThreadModel>;
 	data: Array<{
 		content_type: string;
 		content_id: number;
@@ -3254,19 +1742,13 @@ export type ThreadsRecentResponse = {
 			forum_is_followed: boolean;
 		};
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ThreadsFinishResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── PostsApi Types ────────────────────────────────────────
@@ -3280,325 +1762,10 @@ export interface PostsListParams {
 }
 
 export type PostsListResponse = {
-	posts: Array<{
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"206": string;
-			"97491": string;
-			"193431": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		restrictions: {
-			reply_delay: number;
-			max_reply_count: number;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		contest: {
-			type: string;
-			finish_date: number;
-			now_count_members: number;
-			needed_members: number;
-			is_finished: number;
-			count_winners: number;
-			require_like_count: number;
-			require_total_like_count: number;
-			prize_type: string;
-			prize_type_phrase: string;
-			prize_data: number;
-			is_money_places: number;
-			chance_to_win: number;
-			winners: Array<number>;
-			already_participate: boolean;
-			permissions: {
-				can_finish: boolean;
-				can_participate: boolean;
-				can_participate_error: string;
-				can_view_user_list: boolean;
-			};
-		};
-	}>;
-	thread: {
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"206": string;
-			"97491": string;
-			"193431": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		restrictions: {
-			reply_delay: number;
-			max_reply_count: number;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		contest: {
-			type: string;
-			finish_date: number;
-			now_count_members: number;
-			needed_members: number;
-			is_finished: number;
-			count_winners: number;
-			require_like_count: number;
-			require_total_like_count: number;
-			prize_type: string;
-			prize_type_phrase: string;
-			prize_data: number;
-			is_money_places: number;
-			chance_to_win: number;
-			winners: Array<number>;
-			already_participate: boolean;
-			permissions: {
-				can_finish: boolean;
-				can_participate: boolean;
-				can_participate_error: string;
-				can_view_user_list: boolean;
-			};
-		};
-	};
+	posts: Array<Resp_ThreadModel>;
+	thread: Resp_ThreadModel;
 	posts_total: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PostsCreateBody {
@@ -3608,93 +1775,13 @@ export interface PostsCreateBody {
 }
 
 export type PostsCreateResponse = {
-	post: {
-		post_id: number;
-		thread_id: number;
-		poster_user_id: number;
-		poster_username: string;
-		poster_username_html: string;
-		post_create_date: number;
-		post_body: string;
-		post_body_html: string;
-		post_body_plain_text: string;
-		signature: string;
-		signature_html: string;
-		signature_plain_text: string;
-		post_like_count: number;
-		user_is_ignored: boolean;
-		post_is_published: boolean;
-		post_is_deleted: boolean;
-		post_update_date: number;
-		post_is_first_post: boolean;
-		links: {
-			permalink: string;
-			detail: string;
-			thread: string;
-			poster: string;
-			likes: string;
-			report: string;
-			poster_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			reply: boolean;
-			like: boolean;
-			report: boolean;
-		};
-		thread_is_deleted: boolean;
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	post: Resp_PostModel;
+	system_info: Resp_SystemInfo;
 };
 
 export type PostsGetResponse = {
-	post: {
-		post_id: number;
-		thread_id: number;
-		poster_user_id: number;
-		poster_username: string;
-		poster_username_html: string;
-		post_create_date: number;
-		post_body: string;
-		post_body_html: string;
-		post_body_plain_text: string;
-		signature: string;
-		signature_html: string;
-		signature_plain_text: string;
-		post_like_count: number;
-		user_is_ignored: boolean;
-		post_is_published: boolean;
-		post_is_deleted: boolean;
-		post_update_date: number;
-		post_is_first_post: boolean;
-		links: {
-			permalink: string;
-			detail: string;
-			thread: string;
-			poster: string;
-			likes: string;
-			report: string;
-			poster_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			reply: boolean;
-			like: boolean;
-			report: boolean;
-		};
-		thread_is_deleted: boolean;
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	post: Resp_PostModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface PostsEditBody {
@@ -3702,48 +1789,8 @@ export interface PostsEditBody {
 }
 
 export type PostsEditResponse = {
-	post: {
-		post_id: number;
-		thread_id: number;
-		poster_user_id: number;
-		poster_username: string;
-		poster_username_html: string;
-		post_create_date: number;
-		post_body: string;
-		post_body_html: string;
-		post_body_plain_text: string;
-		signature: string;
-		signature_html: string;
-		signature_plain_text: string;
-		post_like_count: number;
-		user_is_ignored: boolean;
-		post_is_published: boolean;
-		post_is_deleted: boolean;
-		post_update_date: number;
-		post_is_first_post: boolean;
-		links: {
-			permalink: string;
-			detail: string;
-			thread: string;
-			poster: string;
-			likes: string;
-			report: string;
-			poster_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			reply: boolean;
-			like: boolean;
-			report: boolean;
-		};
-		thread_is_deleted: boolean;
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	post: Resp_PostModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface PostsDeleteBody {
@@ -3753,10 +1800,7 @@ export interface PostsDeleteBody {
 export type PostsDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface PostsLikesParams {
@@ -3769,36 +1813,24 @@ export type PostsLikesResponse = {
 		user_id: number;
 		username: string;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type PostsLikeResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type PostsUnlikeResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type PostsReportReasonsResponse = {
 	reasons: Array<string>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PostsReportBody {
@@ -3808,10 +1840,7 @@ export interface PostsReportBody {
 export type PostsReportResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface PostsCommentsGetParams {
@@ -3821,45 +1850,8 @@ export interface PostsCommentsGetParams {
 }
 
 export type PostsCommentsGetResponse = {
-	comments: Array<{
-		post_comment_id: number;
-		post_id: number;
-		thread_id: number;
-		poster_user_id: number;
-		poster_username: string;
-		poster_username_html: string;
-		post_comment_create_date: number;
-		post_comment_body: string;
-		post_comment_body_html: string;
-		post_comment_body_plain_text: string;
-		post_comment_like_count: number;
-		user_is_ignored: boolean;
-		post_comment_is_published: boolean;
-		post_comment_is_deleted: boolean;
-		post_comment_update_date: number;
-		links: {
-			permalink: string;
-			detail: string;
-			post: string;
-			thread: string;
-			poster: string;
-			likes: string;
-			report: string;
-			poster_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			reply: boolean;
-			like: boolean;
-			report: boolean;
-		};
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	comments: Array<Resp_PostCommentModel>;
+	system_info: Resp_SystemInfo;
 };
 
 export interface PostsCommentsCreateBody {
@@ -3902,10 +1894,7 @@ export type PostsCommentsCreateResponse = {
 			report: boolean;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PostsCommentsEditBody {
@@ -3948,10 +1937,7 @@ export type PostsCommentsEditResponse = {
 			report: boolean;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PostsCommentsDeleteBody {
@@ -3962,10 +1948,7 @@ export interface PostsCommentsDeleteBody {
 export type PostsCommentsDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface PostsCommentsReportBody {
@@ -3976,10 +1959,7 @@ export interface PostsCommentsReportBody {
 export type PostsCommentsReportResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── UsersApi Types ────────────────────────────────────────
@@ -3991,148 +1971,14 @@ export interface UsersListParams {
 }
 
 export type UsersListResponse = {
-	users: Array<{
-		user_id: number;
-		username: string;
-		username_html: string;
-		user_message_count: number;
-		user_register_date: number;
-		user_like_count: number;
-		user_like2_count: number;
-		contest_count: number;
-		trophy_count: number;
-		short_link: string;
-		custom_title: string;
-		is_banned: number;
-		display_banner_id: number;
-		display_icon_group_id: number;
-		balance: string;
-		hold: string;
-		currency: string;
-		user_email: string;
-		user_unread_notification_count: number;
-		user_unread_conversation_count: number;
-		conv_welcome_message: string;
-		user_title: string;
-		user_deposit: number;
-		user_is_valid: boolean;
-		user_is_verified: boolean;
-		user_is_followed: boolean;
-		user_last_seen_date: number;
-		links: {
-			permalink: string;
-			detail: string;
-			avatar: string;
-			avatar_big: string;
-			avatar_small: string;
-			followers: string;
-			followings: string;
-			ignore: string;
-			background_l: string;
-			background_m: string;
-			status: string;
-			timeline: string;
-		};
-		permissions: {
-			edit: boolean;
-			follow: boolean;
-			ignore: boolean;
-			profile_post: boolean;
-		};
-		user_is_ignored: boolean;
-		user_is_visitor: boolean;
-		user_group_id: number;
-		curator_titles: Array<string>;
-		user_groups: Array<{
-			user_group_id: number;
-			user_group_title: string;
-			user_group_title_en: string;
-			user_group_banner_css_class: string;
-			user_group_banner_text: string;
-			user_group_banner_text_en: string;
-			display_group_selectable: boolean;
-			display_banner_selectable: boolean;
-			display_icon_selectable: boolean;
-			is_primary_group: boolean;
-			user_group_icon_class: string;
-		}>;
-		fields: Array<{
-			id: string;
-			title: string;
-			description: string;
-			position: string;
-			is_required: boolean;
-			value?: string;
-			is_multi_choice: boolean;
-			choices: Array<{
-				key: string;
-				value: string;
-			}>;
-			values: Array<unknown>;
-		}>;
-		user_timezone_offset: number;
-		user_external_authentications: Array<{
-			provider: string;
-			provider_key: string;
-		}>;
-		self_permissions: {
-			create_conversation: boolean;
-		};
-		edit_permissions: {
-			password: boolean;
-			user_email: boolean;
-			username: boolean;
-			user_title: boolean;
-			short_link: boolean;
-			hide_username_logs: boolean;
-			primary_group_id: boolean;
-			secondary_group_ids: boolean;
-			user_dob_day: boolean;
-			user_dob_month: boolean;
-			user_dob_year: boolean;
-			fields: boolean;
-		};
-		birthday: {
-			age: number;
-			timeStamp: {
-				date: string;
-				timezone_type: number;
-				timezone: string;
-			};
-			format: string;
-		};
-		secret_answer_rendered: string;
-		secret_answer_first_letter: string;
-		user_following: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		user_followers: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		banner: string;
-	}>;
+	users: Array<Resp_UserModel>;
 	users_total: number;
 	links: {
 		pages: number;
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type UsersFieldsResponse = {
@@ -4143,10 +1989,7 @@ export type UsersFieldsResponse = {
 		position: string;
 		is_required: boolean;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface UsersFindParams {
@@ -4156,142 +1999,8 @@ export interface UsersFindParams {
 }
 
 export type UsersFindResponse = {
-	users: Array<{
-		user_id: number;
-		username: string;
-		username_html: string;
-		user_message_count: number;
-		user_register_date: number;
-		user_like_count: number;
-		user_like2_count: number;
-		contest_count: number;
-		trophy_count: number;
-		short_link: string;
-		custom_title: string;
-		is_banned: number;
-		display_banner_id: number;
-		display_icon_group_id: number;
-		balance: string;
-		hold: string;
-		currency: string;
-		user_email: string;
-		user_unread_notification_count: number;
-		user_unread_conversation_count: number;
-		conv_welcome_message: string;
-		user_title: string;
-		user_deposit: number;
-		user_is_valid: boolean;
-		user_is_verified: boolean;
-		user_is_followed: boolean;
-		user_last_seen_date: number;
-		links: {
-			permalink: string;
-			detail: string;
-			avatar: string;
-			avatar_big: string;
-			avatar_small: string;
-			followers: string;
-			followings: string;
-			ignore: string;
-			background_l: string;
-			background_m: string;
-			status: string;
-			timeline: string;
-		};
-		permissions: {
-			edit: boolean;
-			follow: boolean;
-			ignore: boolean;
-			profile_post: boolean;
-		};
-		user_is_ignored: boolean;
-		user_is_visitor: boolean;
-		user_group_id: number;
-		curator_titles: Array<string>;
-		user_groups: Array<{
-			user_group_id: number;
-			user_group_title: string;
-			user_group_title_en: string;
-			user_group_banner_css_class: string;
-			user_group_banner_text: string;
-			user_group_banner_text_en: string;
-			display_group_selectable: boolean;
-			display_banner_selectable: boolean;
-			display_icon_selectable: boolean;
-			is_primary_group: boolean;
-			user_group_icon_class: string;
-		}>;
-		fields: Array<{
-			id: string;
-			title: string;
-			description: string;
-			position: string;
-			is_required: boolean;
-			value?: string;
-			is_multi_choice: boolean;
-			choices: Array<{
-				key: string;
-				value: string;
-			}>;
-			values: Array<unknown>;
-		}>;
-		user_timezone_offset: number;
-		user_external_authentications: Array<{
-			provider: string;
-			provider_key: string;
-		}>;
-		self_permissions: {
-			create_conversation: boolean;
-		};
-		edit_permissions: {
-			password: boolean;
-			user_email: boolean;
-			username: boolean;
-			user_title: boolean;
-			short_link: boolean;
-			hide_username_logs: boolean;
-			primary_group_id: boolean;
-			secondary_group_ids: boolean;
-			user_dob_day: boolean;
-			user_dob_month: boolean;
-			user_dob_year: boolean;
-			fields: boolean;
-		};
-		birthday: {
-			age: number;
-			timeStamp: {
-				date: string;
-				timezone_type: number;
-				timezone: string;
-			};
-			format: string;
-		};
-		secret_answer_rendered: string;
-		secret_answer_first_letter: string;
-		user_following: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		user_followers: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		banner: string;
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	users: Array<Resp_UserModel>;
+	system_info: Resp_SystemInfo;
 };
 
 export interface UsersGetParams {
@@ -4299,142 +2008,8 @@ export interface UsersGetParams {
 }
 
 export type UsersGetResponse = {
-	user: {
-		user_id: number;
-		username: string;
-		username_html: string;
-		user_message_count: number;
-		user_register_date: number;
-		user_like_count: number;
-		user_like2_count: number;
-		contest_count: number;
-		trophy_count: number;
-		short_link: string;
-		custom_title: string;
-		is_banned: number;
-		display_banner_id: number;
-		display_icon_group_id: number;
-		balance: string;
-		hold: string;
-		currency: string;
-		user_email: string;
-		user_unread_notification_count: number;
-		user_unread_conversation_count: number;
-		conv_welcome_message: string;
-		user_title: string;
-		user_deposit: number;
-		user_is_valid: boolean;
-		user_is_verified: boolean;
-		user_is_followed: boolean;
-		user_last_seen_date: number;
-		links: {
-			permalink: string;
-			detail: string;
-			avatar: string;
-			avatar_big: string;
-			avatar_small: string;
-			followers: string;
-			followings: string;
-			ignore: string;
-			background_l: string;
-			background_m: string;
-			status: string;
-			timeline: string;
-		};
-		permissions: {
-			edit: boolean;
-			follow: boolean;
-			ignore: boolean;
-			profile_post: boolean;
-		};
-		user_is_ignored: boolean;
-		user_is_visitor: boolean;
-		user_group_id: number;
-		curator_titles: Array<string>;
-		user_groups: Array<{
-			user_group_id: number;
-			user_group_title: string;
-			user_group_title_en: string;
-			user_group_banner_css_class: string;
-			user_group_banner_text: string;
-			user_group_banner_text_en: string;
-			display_group_selectable: boolean;
-			display_banner_selectable: boolean;
-			display_icon_selectable: boolean;
-			is_primary_group: boolean;
-			user_group_icon_class: string;
-		}>;
-		fields: Array<{
-			id: string;
-			title: string;
-			description: string;
-			position: string;
-			is_required: boolean;
-			value?: string;
-			is_multi_choice: boolean;
-			choices: Array<{
-				key: string;
-				value: string;
-			}>;
-			values: Array<unknown>;
-		}>;
-		user_timezone_offset: number;
-		user_external_authentications: Array<{
-			provider: string;
-			provider_key: string;
-		}>;
-		self_permissions: {
-			create_conversation: boolean;
-		};
-		edit_permissions: {
-			password: boolean;
-			user_email: boolean;
-			username: boolean;
-			user_title: boolean;
-			short_link: boolean;
-			hide_username_logs: boolean;
-			primary_group_id: boolean;
-			secondary_group_ids: boolean;
-			user_dob_day: boolean;
-			user_dob_month: boolean;
-			user_dob_year: boolean;
-			fields: boolean;
-		};
-		birthday: {
-			age: number;
-			timeStamp: {
-				date: string;
-				timezone_type: number;
-				timezone: string;
-			};
-			format: string;
-		};
-		secret_answer_rendered: string;
-		secret_answer_first_letter: string;
-		user_following: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		user_followers: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		banner: string;
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	user: Resp_UserModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface UsersEditBody {
@@ -4578,10 +2153,7 @@ export interface UsersEditBody {
 export type UsersEditResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface UsersClaimsParams {
@@ -4599,138 +2171,7 @@ export type UsersClaimsResponse = {
 		message_body_plain_text: string;
 		amount: number;
 		amount_formatted: string;
-		author: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			user_message_count: number;
-			user_register_date: number;
-			user_like_count: number;
-			user_like2_count: number;
-			contest_count: number;
-			trophy_count: number;
-			short_link: string;
-			custom_title: string;
-			is_banned: number;
-			display_banner_id: number;
-			display_icon_group_id: number;
-			balance: string;
-			hold: string;
-			currency: string;
-			user_email: string;
-			user_unread_notification_count: number;
-			user_unread_conversation_count: number;
-			conv_welcome_message: string;
-			user_title: string;
-			user_deposit: number;
-			user_is_valid: boolean;
-			user_is_verified: boolean;
-			user_is_followed: boolean;
-			user_last_seen_date: number;
-			links: {
-				permalink: string;
-				detail: string;
-				avatar: string;
-				avatar_big: string;
-				avatar_small: string;
-				followers: string;
-				followings: string;
-				ignore: string;
-				background_l: string;
-				background_m: string;
-				status: string;
-				timeline: string;
-			};
-			permissions: {
-				edit: boolean;
-				follow: boolean;
-				ignore: boolean;
-				profile_post: boolean;
-			};
-			user_is_ignored: boolean;
-			user_is_visitor: boolean;
-			user_group_id: number;
-			curator_titles: Array<string>;
-			user_groups: Array<{
-				user_group_id: number;
-				user_group_title: string;
-				user_group_title_en: string;
-				user_group_banner_css_class: string;
-				user_group_banner_text: string;
-				user_group_banner_text_en: string;
-				display_group_selectable: boolean;
-				display_banner_selectable: boolean;
-				display_icon_selectable: boolean;
-				is_primary_group: boolean;
-				user_group_icon_class: string;
-			}>;
-			fields: Array<{
-				id: string;
-				title: string;
-				description: string;
-				position: string;
-				is_required: boolean;
-				value?: string;
-				is_multi_choice: boolean;
-				choices: Array<{
-					key: string;
-					value: string;
-				}>;
-				values: Array<unknown>;
-			}>;
-			user_timezone_offset: number;
-			user_external_authentications: Array<{
-				provider: string;
-				provider_key: string;
-			}>;
-			self_permissions: {
-				create_conversation: boolean;
-			};
-			edit_permissions: {
-				password: boolean;
-				user_email: boolean;
-				username: boolean;
-				user_title: boolean;
-				short_link: boolean;
-				hide_username_logs: boolean;
-				primary_group_id: boolean;
-				secondary_group_ids: boolean;
-				user_dob_day: boolean;
-				user_dob_month: boolean;
-				user_dob_year: boolean;
-				fields: boolean;
-			};
-			birthday: {
-				age: number;
-				timeStamp: {
-					date: string;
-					timezone_type: number;
-					timezone: string;
-				};
-				format: string;
-			};
-			secret_answer_rendered: string;
-			secret_answer_first_letter: string;
-			user_following: {
-				users: Array<{
-					user_id: number;
-					username: string;
-					username_html: string;
-					avatar: string;
-				}>;
-				count: number;
-			};
-			user_followers: {
-				users: Array<{
-					user_id: number;
-					username: string;
-					username_html: string;
-					avatar: string;
-				}>;
-				count: number;
-			};
-			banner: string;
-		};
+		author: Resp_UserModel;
 	}>;
 	stats: {
 		market: {
@@ -4746,10 +2187,7 @@ export type UsersClaimsResponse = {
 			rejected: number;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface UsersAvatarUploadBody {
@@ -4762,19 +2200,13 @@ export interface UsersAvatarUploadBody {
 export type UsersAvatarUploadResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type UsersAvatarDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface UsersAvatarCropBody {
@@ -4786,10 +2218,7 @@ export interface UsersAvatarCropBody {
 export type UsersAvatarCropResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface UsersBackgroundUploadBody {
@@ -4802,19 +2231,13 @@ export interface UsersBackgroundUploadBody {
 export type UsersBackgroundUploadResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type UsersBackgroundDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface UsersBackgroundCropBody {
@@ -4826,10 +2249,7 @@ export interface UsersBackgroundCropBody {
 export type UsersBackgroundCropResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface UsersFollowersParams {
@@ -4894,28 +2314,19 @@ export type UsersFollowersResponse = {
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type UsersFollowResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type UsersUnfollowResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface UsersFollowingsParams {
@@ -4993,10 +2404,7 @@ export type UsersFollowingsResponse = {
 		};
 	}>;
 	users_total: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface UsersLikesParams {
@@ -5023,278 +2431,13 @@ export type UsersLikesResponse = {
 			like_date: number;
 			content_user_id: number;
 			content_state: string;
-			user: {
-				user_id: number;
-				username: string;
-				username_html: string;
-				user_message_count: number;
-				user_register_date: number;
-				user_like_count: number;
-				user_like2_count: number;
-				contest_count: number;
-				trophy_count: number;
-				short_link: string;
-				custom_title: string;
-				is_banned: number;
-				display_banner_id: number;
-				display_icon_group_id: number;
-				balance: string;
-				hold: string;
-				currency: string;
-				user_email: string;
-				user_unread_notification_count: number;
-				user_unread_conversation_count: number;
-				conv_welcome_message: string;
-				user_title: string;
-				user_deposit: number;
-				user_is_valid: boolean;
-				user_is_verified: boolean;
-				user_is_followed: boolean;
-				user_last_seen_date: number;
-				links: {
-					permalink: string;
-					detail: string;
-					avatar: string;
-					avatar_big: string;
-					avatar_small: string;
-					followers: string;
-					followings: string;
-					ignore: string;
-					background_l: string;
-					background_m: string;
-					status: string;
-					timeline: string;
-				};
-				permissions: {
-					edit: boolean;
-					follow: boolean;
-					ignore: boolean;
-					profile_post: boolean;
-				};
-				user_is_ignored: boolean;
-				user_is_visitor: boolean;
-				user_group_id: number;
-				curator_titles: Array<string>;
-				user_groups: Array<{
-					user_group_id: number;
-					user_group_title: string;
-					user_group_title_en: string;
-					user_group_banner_css_class: string;
-					user_group_banner_text: string;
-					user_group_banner_text_en: string;
-					display_group_selectable: boolean;
-					display_banner_selectable: boolean;
-					display_icon_selectable: boolean;
-					is_primary_group: boolean;
-					user_group_icon_class: string;
-				}>;
-				fields: Array<{
-					id: string;
-					title: string;
-					description: string;
-					position: string;
-					is_required: boolean;
-					value?: string;
-					is_multi_choice: boolean;
-					choices: Array<{
-						key: string;
-						value: string;
-					}>;
-					values: Array<unknown>;
-				}>;
-				user_timezone_offset: number;
-				user_external_authentications: Array<{
-					provider: string;
-					provider_key: string;
-				}>;
-				self_permissions: {
-					create_conversation: boolean;
-				};
-				edit_permissions: {
-					password: boolean;
-					user_email: boolean;
-					username: boolean;
-					user_title: boolean;
-					short_link: boolean;
-					hide_username_logs: boolean;
-					primary_group_id: boolean;
-					secondary_group_ids: boolean;
-					user_dob_day: boolean;
-					user_dob_month: boolean;
-					user_dob_year: boolean;
-					fields: boolean;
-				};
-				birthday: {
-					age: number;
-					timeStamp: {
-						date: string;
-						timezone_type: number;
-						timezone: string;
-					};
-					format: string;
-				};
-				secret_answer_rendered: string;
-				secret_answer_first_letter: string;
-				user_following: {
-					users: Array<{
-						user_id: number;
-						username: string;
-						username_html: string;
-						avatar: string;
-					}>;
-					count: number;
-				};
-				user_followers: {
-					users: Array<{
-						user_id: number;
-						username: string;
-						username_html: string;
-						avatar: string;
-					}>;
-					count: number;
-				};
-				banner: string;
-			};
-			actionUser: {
-				user_id: number;
-				username: string;
-				username_html: string;
-				user_message_count: number;
-				user_register_date: number;
-				user_like_count: number;
-				user_like2_count: number;
-				contest_count: number;
-				trophy_count: number;
-				short_link: string;
-				custom_title: string;
-				is_banned: number;
-				display_banner_id: number;
-				display_icon_group_id: number;
-				balance: string;
-				hold: string;
-				currency: string;
-				user_email: string;
-				user_unread_notification_count: number;
-				user_unread_conversation_count: number;
-				conv_welcome_message: string;
-				user_title: string;
-				user_deposit: number;
-				user_is_valid: boolean;
-				user_is_verified: boolean;
-				user_is_followed: boolean;
-				user_last_seen_date: number;
-				links: {
-					permalink: string;
-					detail: string;
-					avatar: string;
-					avatar_big: string;
-					avatar_small: string;
-					followers: string;
-					followings: string;
-					ignore: string;
-					background_l: string;
-					background_m: string;
-					status: string;
-					timeline: string;
-				};
-				permissions: {
-					edit: boolean;
-					follow: boolean;
-					ignore: boolean;
-					profile_post: boolean;
-				};
-				user_is_ignored: boolean;
-				user_is_visitor: boolean;
-				user_group_id: number;
-				curator_titles: Array<string>;
-				user_groups: Array<{
-					user_group_id: number;
-					user_group_title: string;
-					user_group_title_en: string;
-					user_group_banner_css_class: string;
-					user_group_banner_text: string;
-					user_group_banner_text_en: string;
-					display_group_selectable: boolean;
-					display_banner_selectable: boolean;
-					display_icon_selectable: boolean;
-					is_primary_group: boolean;
-					user_group_icon_class: string;
-				}>;
-				fields: Array<{
-					id: string;
-					title: string;
-					description: string;
-					position: string;
-					is_required: boolean;
-					value?: string;
-					is_multi_choice: boolean;
-					choices: Array<{
-						key: string;
-						value: string;
-					}>;
-					values: Array<unknown>;
-				}>;
-				user_timezone_offset: number;
-				user_external_authentications: Array<{
-					provider: string;
-					provider_key: string;
-				}>;
-				self_permissions: {
-					create_conversation: boolean;
-				};
-				edit_permissions: {
-					password: boolean;
-					user_email: boolean;
-					username: boolean;
-					user_title: boolean;
-					short_link: boolean;
-					hide_username_logs: boolean;
-					primary_group_id: boolean;
-					secondary_group_ids: boolean;
-					user_dob_day: boolean;
-					user_dob_month: boolean;
-					user_dob_year: boolean;
-					fields: boolean;
-				};
-				birthday: {
-					age: number;
-					timeStamp: {
-						date: string;
-						timezone_type: number;
-						timezone: string;
-					};
-					format: string;
-				};
-				secret_answer_rendered: string;
-				secret_answer_first_letter: string;
-				user_following: {
-					users: Array<{
-						user_id: number;
-						username: string;
-						username_html: string;
-						avatar: string;
-					}>;
-					count: number;
-				};
-				user_followers: {
-					users: Array<{
-						user_id: number;
-						username: string;
-						username_html: string;
-						avatar: string;
-					}>;
-					count: number;
-				};
-				banner: string;
-			};
+			user: Resp_UserModel;
+			actionUser: Resp_UserModel;
 			messageHtml: string;
 			post_date: number;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface UsersIgnoredParams {
@@ -5365,19 +2508,13 @@ export type UsersIgnoredResponse = {
 		view_url: string;
 		warning_points: number;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type UsersIgnoreResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface UsersIgnoreEditParams {
@@ -5389,19 +2526,13 @@ export interface UsersIgnoreEditParams {
 export type UsersIgnoreEditResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type UsersUnignoreResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface UsersContentsParams {
@@ -5498,147 +2629,13 @@ export type UsersContentsResponse = {
 		};
 	}>;
 	data_total: number;
-	user: {
-		user_id: number;
-		username: string;
-		username_html: string;
-		user_message_count: number;
-		user_register_date: number;
-		user_like_count: number;
-		user_like2_count: number;
-		contest_count: number;
-		trophy_count: number;
-		short_link: string;
-		custom_title: string;
-		is_banned: number;
-		display_banner_id: number;
-		display_icon_group_id: number;
-		balance: string;
-		hold: string;
-		currency: string;
-		user_email: string;
-		user_unread_notification_count: number;
-		user_unread_conversation_count: number;
-		conv_welcome_message: string;
-		user_title: string;
-		user_deposit: number;
-		user_is_valid: boolean;
-		user_is_verified: boolean;
-		user_is_followed: boolean;
-		user_last_seen_date: number;
-		links: {
-			permalink: string;
-			detail: string;
-			avatar: string;
-			avatar_big: string;
-			avatar_small: string;
-			followers: string;
-			followings: string;
-			ignore: string;
-			background_l: string;
-			background_m: string;
-			status: string;
-			timeline: string;
-		};
-		permissions: {
-			edit: boolean;
-			follow: boolean;
-			ignore: boolean;
-			profile_post: boolean;
-		};
-		user_is_ignored: boolean;
-		user_is_visitor: boolean;
-		user_group_id: number;
-		curator_titles: Array<string>;
-		user_groups: Array<{
-			user_group_id: number;
-			user_group_title: string;
-			user_group_title_en: string;
-			user_group_banner_css_class: string;
-			user_group_banner_text: string;
-			user_group_banner_text_en: string;
-			display_group_selectable: boolean;
-			display_banner_selectable: boolean;
-			display_icon_selectable: boolean;
-			is_primary_group: boolean;
-			user_group_icon_class: string;
-		}>;
-		fields: Array<{
-			id: string;
-			title: string;
-			description: string;
-			position: string;
-			is_required: boolean;
-			value?: string;
-			is_multi_choice: boolean;
-			choices: Array<{
-				key: string;
-				value: string;
-			}>;
-			values: Array<unknown>;
-		}>;
-		user_timezone_offset: number;
-		user_external_authentications: Array<{
-			provider: string;
-			provider_key: string;
-		}>;
-		self_permissions: {
-			create_conversation: boolean;
-		};
-		edit_permissions: {
-			password: boolean;
-			user_email: boolean;
-			username: boolean;
-			user_title: boolean;
-			short_link: boolean;
-			hide_username_logs: boolean;
-			primary_group_id: boolean;
-			secondary_group_ids: boolean;
-			user_dob_day: boolean;
-			user_dob_month: boolean;
-			user_dob_year: boolean;
-			fields: boolean;
-		};
-		birthday: {
-			age: number;
-			timeStamp: {
-				date: string;
-				timezone_type: number;
-				timezone: string;
-			};
-			format: string;
-		};
-		secret_answer_rendered: string;
-		secret_answer_first_letter: string;
-		user_following: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		user_followers: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		banner: string;
-	};
+	user: Resp_UserModel;
 	links: {
 		pages: number;
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type UsersTrophiesResponse = {
@@ -5648,10 +2645,7 @@ export type UsersTrophiesResponse = {
 		description: string;
 		trophy_url: string;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type UsersSecretAnswerTypesResponse = {
@@ -5659,28 +2653,19 @@ export type UsersSecretAnswerTypesResponse = {
 		sa_id: number;
 		renderedPhrase: string;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type UsersSaResetResponse = {
 	success: boolean;
 	waiting_time: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type UsersSaCancelResetResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── ProfilePostsApi Types ────────────────────────────────────────
@@ -5693,178 +2678,7 @@ export interface ProfilePostsListParams {
 }
 
 export type ProfilePostsListResponse = {
-	profile_posts: Array<{
-		profile_post_id: number;
-		timeline_user_id: number;
-		poster_user_id: number;
-		poster_username: string;
-		poster_username_html: string;
-		post_create_date: number;
-		post_body: string;
-		post_body_html: string;
-		post_body_plain_text: string;
-		post_like_count: number;
-		post_comment_count: number;
-		post_comments_is_disabled: number;
-		timeline_username: string;
-		user_is_ignored: boolean;
-		post_is_published: boolean;
-		post_is_deleted: boolean;
-		post_is_liked: boolean;
-		post_is_sticked: boolean;
-		links: {
-			permalink: string;
-			detail: string;
-			timeline: string;
-			timeline_user: string;
-			poster: string;
-			likes: string;
-			comments: string;
-			report: string;
-			poster_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			like: boolean;
-			comment: boolean;
-			report: boolean;
-			stick: boolean;
-		};
-		timeline_user: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			user_message_count: number;
-			user_register_date: number;
-			user_like_count: number;
-			user_like2_count: number;
-			contest_count: number;
-			trophy_count: number;
-			short_link: string;
-			custom_title: string;
-			is_banned: number;
-			display_banner_id: number;
-			display_icon_group_id: number;
-			balance: string;
-			hold: string;
-			currency: string;
-			user_email: string;
-			user_unread_notification_count: number;
-			user_unread_conversation_count: number;
-			conv_welcome_message: string;
-			user_title: string;
-			user_deposit: number;
-			user_is_valid: boolean;
-			user_is_verified: boolean;
-			user_is_followed: boolean;
-			user_last_seen_date: number;
-			links: {
-				permalink: string;
-				detail: string;
-				avatar: string;
-				avatar_big: string;
-				avatar_small: string;
-				followers: string;
-				followings: string;
-				ignore: string;
-				background_l: string;
-				background_m: string;
-				status: string;
-				timeline: string;
-			};
-			permissions: {
-				edit: boolean;
-				follow: boolean;
-				ignore: boolean;
-				profile_post: boolean;
-			};
-			user_is_ignored: boolean;
-			user_is_visitor: boolean;
-			user_group_id: number;
-			curator_titles: Array<string>;
-			user_groups: Array<{
-				user_group_id: number;
-				user_group_title: string;
-				user_group_title_en: string;
-				user_group_banner_css_class: string;
-				user_group_banner_text: string;
-				user_group_banner_text_en: string;
-				display_group_selectable: boolean;
-				display_banner_selectable: boolean;
-				display_icon_selectable: boolean;
-				is_primary_group: boolean;
-				user_group_icon_class: string;
-			}>;
-			fields: Array<{
-				id: string;
-				title: string;
-				description: string;
-				position: string;
-				is_required: boolean;
-				value?: string;
-				is_multi_choice: boolean;
-				choices: Array<{
-					key: string;
-					value: string;
-				}>;
-				values: Array<unknown>;
-			}>;
-			user_timezone_offset: number;
-			user_external_authentications: Array<{
-				provider: string;
-				provider_key: string;
-			}>;
-			self_permissions: {
-				create_conversation: boolean;
-			};
-			edit_permissions: {
-				password: boolean;
-				user_email: boolean;
-				username: boolean;
-				user_title: boolean;
-				short_link: boolean;
-				hide_username_logs: boolean;
-				primary_group_id: boolean;
-				secondary_group_ids: boolean;
-				user_dob_day: boolean;
-				user_dob_month: boolean;
-				user_dob_year: boolean;
-				fields: boolean;
-			};
-			birthday: {
-				age: number;
-				timeStamp: {
-					date: string;
-					timezone_type: number;
-					timezone: string;
-				};
-				format: string;
-			};
-			secret_answer_rendered: string;
-			secret_answer_first_letter: string;
-			user_following: {
-				users: Array<{
-					user_id: number;
-					username: string;
-					username_html: string;
-					avatar: string;
-				}>;
-				count: number;
-			};
-			user_followers: {
-				users: Array<{
-					user_id: number;
-					username: string;
-					username_html: string;
-					avatar: string;
-				}>;
-				count: number;
-			};
-			banner: string;
-		};
-	}>;
+	profile_posts: Array<Resp_ProfilePostModel>;
 	totalProfilePosts: number;
 	canPostOnProfile: boolean;
 	links: {
@@ -5872,189 +2686,12 @@ export type ProfilePostsListResponse = {
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ProfilePostsGetResponse = {
-	profile_post: {
-		profile_post_id: number;
-		timeline_user_id: number;
-		poster_user_id: number;
-		poster_username: string;
-		poster_username_html: string;
-		post_create_date: number;
-		post_body: string;
-		post_body_html: string;
-		post_body_plain_text: string;
-		post_like_count: number;
-		post_comment_count: number;
-		post_comments_is_disabled: number;
-		timeline_username: string;
-		user_is_ignored: boolean;
-		post_is_published: boolean;
-		post_is_deleted: boolean;
-		post_is_liked: boolean;
-		post_is_sticked: boolean;
-		links: {
-			permalink: string;
-			detail: string;
-			timeline: string;
-			timeline_user: string;
-			poster: string;
-			likes: string;
-			comments: string;
-			report: string;
-			poster_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			like: boolean;
-			comment: boolean;
-			report: boolean;
-			stick: boolean;
-		};
-		timeline_user: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			user_message_count: number;
-			user_register_date: number;
-			user_like_count: number;
-			user_like2_count: number;
-			contest_count: number;
-			trophy_count: number;
-			short_link: string;
-			custom_title: string;
-			is_banned: number;
-			display_banner_id: number;
-			display_icon_group_id: number;
-			balance: string;
-			hold: string;
-			currency: string;
-			user_email: string;
-			user_unread_notification_count: number;
-			user_unread_conversation_count: number;
-			conv_welcome_message: string;
-			user_title: string;
-			user_deposit: number;
-			user_is_valid: boolean;
-			user_is_verified: boolean;
-			user_is_followed: boolean;
-			user_last_seen_date: number;
-			links: {
-				permalink: string;
-				detail: string;
-				avatar: string;
-				avatar_big: string;
-				avatar_small: string;
-				followers: string;
-				followings: string;
-				ignore: string;
-				background_l: string;
-				background_m: string;
-				status: string;
-				timeline: string;
-			};
-			permissions: {
-				edit: boolean;
-				follow: boolean;
-				ignore: boolean;
-				profile_post: boolean;
-			};
-			user_is_ignored: boolean;
-			user_is_visitor: boolean;
-			user_group_id: number;
-			curator_titles: Array<string>;
-			user_groups: Array<{
-				user_group_id: number;
-				user_group_title: string;
-				user_group_title_en: string;
-				user_group_banner_css_class: string;
-				user_group_banner_text: string;
-				user_group_banner_text_en: string;
-				display_group_selectable: boolean;
-				display_banner_selectable: boolean;
-				display_icon_selectable: boolean;
-				is_primary_group: boolean;
-				user_group_icon_class: string;
-			}>;
-			fields: Array<{
-				id: string;
-				title: string;
-				description: string;
-				position: string;
-				is_required: boolean;
-				value?: string;
-				is_multi_choice: boolean;
-				choices: Array<{
-					key: string;
-					value: string;
-				}>;
-				values: Array<unknown>;
-			}>;
-			user_timezone_offset: number;
-			user_external_authentications: Array<{
-				provider: string;
-				provider_key: string;
-			}>;
-			self_permissions: {
-				create_conversation: boolean;
-			};
-			edit_permissions: {
-				password: boolean;
-				user_email: boolean;
-				username: boolean;
-				user_title: boolean;
-				short_link: boolean;
-				hide_username_logs: boolean;
-				primary_group_id: boolean;
-				secondary_group_ids: boolean;
-				user_dob_day: boolean;
-				user_dob_month: boolean;
-				user_dob_year: boolean;
-				fields: boolean;
-			};
-			birthday: {
-				age: number;
-				timeStamp: {
-					date: string;
-					timezone_type: number;
-					timezone: string;
-				};
-				format: string;
-			};
-			secret_answer_rendered: string;
-			secret_answer_first_letter: string;
-			user_following: {
-				users: Array<{
-					user_id: number;
-					username: string;
-					username_html: string;
-					avatar: string;
-				}>;
-				count: number;
-			};
-			user_followers: {
-				users: Array<{
-					user_id: number;
-					username: string;
-					username_html: string;
-					avatar: string;
-				}>;
-				count: number;
-			};
-			banner: string;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	profile_post: Resp_ProfilePostModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ProfilePostsEditBody {
@@ -6097,10 +2734,7 @@ export type ProfilePostsEditResponse = {
 			report: boolean;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ProfilePostsDeleteParams {
@@ -6110,18 +2744,12 @@ export interface ProfilePostsDeleteParams {
 export type ProfilePostsDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ProfilePostsReportReasonsResponse = {
 	reasons: Array<string>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ProfilePostsReportBody {
@@ -6131,14 +2759,11 @@ export interface ProfilePostsReportBody {
 export type ProfilePostsReportResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ProfilePostsCreateBody {
-	user_id: string | number;
+	user_id: UserIDModel;
 	post_body: string;
 }
 
@@ -6177,28 +2802,19 @@ export type ProfilePostsCreateResponse = {
 			report: boolean;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ProfilePostsStickResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ProfilePostsUnstickResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ProfilePostsLikesResponse = {
@@ -6206,28 +2822,19 @@ export type ProfilePostsLikesResponse = {
 		user_id: number;
 		username: string;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ProfilePostsLikeResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ProfilePostsUnlikeResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ProfilePostsCommentsListParams {
@@ -6237,31 +2844,7 @@ export interface ProfilePostsCommentsListParams {
 }
 
 export type ProfilePostsCommentsListResponse = {
-	comments: Array<{
-		comment_id: number;
-		profile_post_id: number;
-		comment_user_id: number;
-		comment_username: string;
-		comment_username_html: string;
-		comment_create_date: number;
-		comment_body: string;
-		comment_body_html: string;
-		comment_body_plain_text: string;
-		user_is_ignored: boolean;
-		timeline_user_id: number;
-		links: {
-			detail: string;
-			profile_post: string;
-			timeline: string;
-			timeline_user: string;
-			poster: string;
-			poster_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-		};
-	}>;
+	comments: Array<Resp_ProfilePostCommentModel>;
 	comments_total: number;
 	profile_post: {
 		profile_post_id: number;
@@ -6297,142 +2880,8 @@ export type ProfilePostsCommentsListResponse = {
 			report: boolean;
 		};
 	};
-	timeline_user: {
-		user_id: number;
-		username: string;
-		username_html: string;
-		user_message_count: number;
-		user_register_date: number;
-		user_like_count: number;
-		user_like2_count: number;
-		contest_count: number;
-		trophy_count: number;
-		short_link: string;
-		custom_title: string;
-		is_banned: number;
-		display_banner_id: number;
-		display_icon_group_id: number;
-		balance: string;
-		hold: string;
-		currency: string;
-		user_email: string;
-		user_unread_notification_count: number;
-		user_unread_conversation_count: number;
-		conv_welcome_message: string;
-		user_title: string;
-		user_deposit: number;
-		user_is_valid: boolean;
-		user_is_verified: boolean;
-		user_is_followed: boolean;
-		user_last_seen_date: number;
-		links: {
-			permalink: string;
-			detail: string;
-			avatar: string;
-			avatar_big: string;
-			avatar_small: string;
-			followers: string;
-			followings: string;
-			ignore: string;
-			background_l: string;
-			background_m: string;
-			status: string;
-			timeline: string;
-		};
-		permissions: {
-			edit: boolean;
-			follow: boolean;
-			ignore: boolean;
-			profile_post: boolean;
-		};
-		user_is_ignored: boolean;
-		user_is_visitor: boolean;
-		user_group_id: number;
-		curator_titles: Array<string>;
-		user_groups: Array<{
-			user_group_id: number;
-			user_group_title: string;
-			user_group_title_en: string;
-			user_group_banner_css_class: string;
-			user_group_banner_text: string;
-			user_group_banner_text_en: string;
-			display_group_selectable: boolean;
-			display_banner_selectable: boolean;
-			display_icon_selectable: boolean;
-			is_primary_group: boolean;
-			user_group_icon_class: string;
-		}>;
-		fields: Array<{
-			id: string;
-			title: string;
-			description: string;
-			position: string;
-			is_required: boolean;
-			value?: string;
-			is_multi_choice: boolean;
-			choices: Array<{
-				key: string;
-				value: string;
-			}>;
-			values: Array<unknown>;
-		}>;
-		user_timezone_offset: number;
-		user_external_authentications: Array<{
-			provider: string;
-			provider_key: string;
-		}>;
-		self_permissions: {
-			create_conversation: boolean;
-		};
-		edit_permissions: {
-			password: boolean;
-			user_email: boolean;
-			username: boolean;
-			user_title: boolean;
-			short_link: boolean;
-			hide_username_logs: boolean;
-			primary_group_id: boolean;
-			secondary_group_ids: boolean;
-			user_dob_day: boolean;
-			user_dob_month: boolean;
-			user_dob_year: boolean;
-			fields: boolean;
-		};
-		birthday: {
-			age: number;
-			timeStamp: {
-				date: string;
-				timezone_type: number;
-				timezone: string;
-			};
-			format: string;
-		};
-		secret_answer_rendered: string;
-		secret_answer_first_letter: string;
-		user_following: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		user_followers: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		banner: string;
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	timeline_user: Resp_UserModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ProfilePostsCommentsCreateBody {
@@ -6464,10 +2913,7 @@ export type ProfilePostsCommentsCreateResponse = {
 			delete: boolean;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ProfilePostsCommentsEditBody {
@@ -6499,10 +2945,7 @@ export type ProfilePostsCommentsEditResponse = {
 			delete: boolean;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ProfilePostsCommentsDeleteBody {
@@ -6512,42 +2955,12 @@ export interface ProfilePostsCommentsDeleteBody {
 export type ProfilePostsCommentsDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ProfilePostsCommentsGetResponse = {
-	comment: {
-		comment_id: number;
-		profile_post_id: number;
-		comment_user_id: number;
-		comment_username: string;
-		comment_username_html: string;
-		comment_create_date: number;
-		comment_body: string;
-		comment_body_html: string;
-		comment_body_plain_text: string;
-		user_is_ignored: boolean;
-		timeline_user_id: number;
-		links: {
-			detail: string;
-			profile_post: string;
-			timeline: string;
-			timeline_user: string;
-			poster: string;
-			poster_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	comment: Resp_ProfilePostCommentModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ProfilePostsCommentsReportBody {
@@ -6557,10 +2970,7 @@ export interface ProfilePostsCommentsReportBody {
 export type ProfilePostsCommentsReportResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── ConversationsApi Types ────────────────────────────────────────
@@ -6580,60 +2990,7 @@ export interface ConversationsListParams {
 }
 
 export type ConversationsListResponse = {
-	conversations: Array<{
-		conversation_id: number;
-		conversation_title: string;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		conversation_create_date: number;
-		conversation_update_date: number;
-		conversation_last_read_date: number;
-		conversation_online_count: number;
-		is_starred: number;
-		is_group: number;
-		is_unread: number;
-		alerts: number;
-		permissions: {
-			view: boolean;
-			reply: boolean;
-			invite: boolean;
-			manage_invite_links: boolean;
-			kick: boolean;
-			upload_avatar: boolean;
-			editOwnPost: boolean;
-			stickyMessages: boolean;
-		};
-		conversation_message_count: number;
-		conversation_is_new: boolean;
-		creator_is_ignored: boolean;
-		conversation_is_open: boolean;
-		conversation_is_deleted: boolean;
-		recipient: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		};
-		recipients: Array<{
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		}>;
-		links: {
-			permalink: string;
-			detail: string;
-			messages: string;
-			avatar: string;
-		};
-	}>;
+	conversations: Array<Resp_ConversationModel>;
 	can_start: boolean;
 	folders: Array<{
 		id: string;
@@ -6645,10 +3002,7 @@ export type ConversationsListResponse = {
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ConversationsCreateBody {
@@ -6664,64 +3018,8 @@ export interface ConversationsCreateBody {
 }
 
 export type ConversationsCreateResponse = {
-	conversation: {
-		conversation_id: number;
-		conversation_title: string;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		conversation_create_date: number;
-		conversation_update_date: number;
-		conversation_last_read_date: number;
-		conversation_online_count: number;
-		is_starred: number;
-		is_group: number;
-		is_unread: number;
-		alerts: number;
-		permissions: {
-			view: boolean;
-			reply: boolean;
-			invite: boolean;
-			manage_invite_links: boolean;
-			kick: boolean;
-			upload_avatar: boolean;
-			editOwnPost: boolean;
-			stickyMessages: boolean;
-		};
-		conversation_message_count: number;
-		conversation_is_new: boolean;
-		creator_is_ignored: boolean;
-		conversation_is_open: boolean;
-		conversation_is_deleted: boolean;
-		recipient: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		};
-		recipients: Array<{
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		}>;
-		links: {
-			permalink: string;
-			detail: string;
-			messages: string;
-			avatar: string;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	conversation: Resp_ConversationModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ConversationsUpdateBody {
@@ -6735,64 +3033,8 @@ export interface ConversationsUpdateBody {
 }
 
 export type ConversationsUpdateResponse = {
-	conversation: {
-		conversation_id: number;
-		conversation_title: string;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		conversation_create_date: number;
-		conversation_update_date: number;
-		conversation_last_read_date: number;
-		conversation_online_count: number;
-		is_starred: number;
-		is_group: number;
-		is_unread: number;
-		alerts: number;
-		permissions: {
-			view: boolean;
-			reply: boolean;
-			invite: boolean;
-			manage_invite_links: boolean;
-			kick: boolean;
-			upload_avatar: boolean;
-			editOwnPost: boolean;
-			stickyMessages: boolean;
-		};
-		conversation_message_count: number;
-		conversation_is_new: boolean;
-		creator_is_ignored: boolean;
-		conversation_is_open: boolean;
-		conversation_is_deleted: boolean;
-		recipient: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		};
-		recipients: Array<{
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		}>;
-		links: {
-			permalink: string;
-			detail: string;
-			messages: string;
-			avatar: string;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	conversation: Resp_ConversationModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ConversationsDeleteBody {
@@ -6803,75 +3045,16 @@ export interface ConversationsDeleteBody {
 export type ConversationsDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ConversationsStartBody {
-	user_id: string | number;
+	user_id: UserIDModel;
 }
 
 export type ConversationsStartResponse = {
-	conversation: {
-		conversation_id: number;
-		conversation_title: string;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		conversation_create_date: number;
-		conversation_update_date: number;
-		conversation_last_read_date: number;
-		conversation_online_count: number;
-		is_starred: number;
-		is_group: number;
-		is_unread: number;
-		alerts: number;
-		permissions: {
-			view: boolean;
-			reply: boolean;
-			invite: boolean;
-			manage_invite_links: boolean;
-			kick: boolean;
-			upload_avatar: boolean;
-			editOwnPost: boolean;
-			stickyMessages: boolean;
-		};
-		conversation_message_count: number;
-		conversation_is_new: boolean;
-		creator_is_ignored: boolean;
-		conversation_is_open: boolean;
-		conversation_is_deleted: boolean;
-		recipient: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		};
-		recipients: Array<{
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		}>;
-		links: {
-			permalink: string;
-			detail: string;
-			messages: string;
-			avatar: string;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	conversation: Resp_ConversationModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ConversationsSaveBody {
@@ -6881,71 +3064,12 @@ export interface ConversationsSaveBody {
 export type ConversationsSaveResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ConversationsGetResponse = {
-	conversation: {
-		conversation_id: number;
-		conversation_title: string;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		conversation_create_date: number;
-		conversation_update_date: number;
-		conversation_last_read_date: number;
-		conversation_online_count: number;
-		is_starred: number;
-		is_group: number;
-		is_unread: number;
-		alerts: number;
-		permissions: {
-			view: boolean;
-			reply: boolean;
-			invite: boolean;
-			manage_invite_links: boolean;
-			kick: boolean;
-			upload_avatar: boolean;
-			editOwnPost: boolean;
-			stickyMessages: boolean;
-		};
-		conversation_message_count: number;
-		conversation_is_new: boolean;
-		creator_is_ignored: boolean;
-		conversation_is_open: boolean;
-		conversation_is_deleted: boolean;
-		recipient: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		};
-		recipients: Array<{
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		}>;
-		links: {
-			permalink: string;
-			detail: string;
-			messages: string;
-			avatar: string;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	conversation: Resp_ConversationModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ConversationsMessagesListParams {
@@ -6957,44 +3081,14 @@ export interface ConversationsMessagesListParams {
 }
 
 export type ConversationsMessagesListResponse = {
-	messages: Array<{
-		message_id: number;
-		conversation_id: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		message_create_date: number;
-		message_is_unread: number;
-		message_need_translate: boolean;
-		message_is_system: boolean;
-		message_edit_date: number;
-		message_body: string;
-		message_body_html: string;
-		message_body_plain_text: string;
-		user_is_ignored: boolean;
-		links: {
-			detail: string;
-			conversation: string;
-			creator: string;
-			creator_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			"stick-unstick": boolean;
-		};
-	}>;
+	messages: Array<Resp_ConversationMessageModel>;
 	messages_total: number;
 	links: {
 		pages: number;
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ConversationsMessagesCreateBody {
@@ -7003,38 +3097,8 @@ export interface ConversationsMessagesCreateBody {
 }
 
 export type ConversationsMessagesCreateResponse = {
-	message: {
-		message_id: number;
-		conversation_id: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		message_create_date: number;
-		message_is_unread: number;
-		message_need_translate: boolean;
-		message_is_system: boolean;
-		message_edit_date: number;
-		message_body: string;
-		message_body_html: string;
-		message_body_plain_text: string;
-		user_is_ignored: boolean;
-		links: {
-			detail: string;
-			conversation: string;
-			creator: string;
-			creator_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			"stick-unstick": boolean;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	message: Resp_ConversationMessageModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ConversationsSearchBody {
@@ -7044,126 +3108,14 @@ export interface ConversationsSearchBody {
 }
 
 export type ConversationsSearchResponse = {
-	conversations: Array<{
-		conversation_id: number;
-		conversation_title: string;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		conversation_create_date: number;
-		conversation_update_date: number;
-		conversation_last_read_date: number;
-		conversation_online_count: number;
-		is_starred: number;
-		is_group: number;
-		is_unread: number;
-		alerts: number;
-		permissions: {
-			view: boolean;
-			reply: boolean;
-			invite: boolean;
-			manage_invite_links: boolean;
-			kick: boolean;
-			upload_avatar: boolean;
-			editOwnPost: boolean;
-			stickyMessages: boolean;
-		};
-		conversation_message_count: number;
-		conversation_is_new: boolean;
-		creator_is_ignored: boolean;
-		conversation_is_open: boolean;
-		conversation_is_deleted: boolean;
-		recipient: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		};
-		recipients: Array<{
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		}>;
-		links: {
-			permalink: string;
-			detail: string;
-			messages: string;
-			avatar: string;
-		};
-	}>;
+	conversations: Array<Resp_ConversationModel>;
 	recipients: boolean;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ConversationsMessagesGetResponse = {
-	message: {
-		conversation_id: number;
-		conversation_title: string;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		conversation_create_date: number;
-		conversation_update_date: number;
-		conversation_last_read_date: number;
-		conversation_online_count: number;
-		is_starred: number;
-		is_group: number;
-		is_unread: number;
-		alerts: number;
-		permissions: {
-			view: boolean;
-			reply: boolean;
-			invite: boolean;
-			manage_invite_links: boolean;
-			kick: boolean;
-			upload_avatar: boolean;
-			editOwnPost: boolean;
-			stickyMessages: boolean;
-		};
-		conversation_message_count: number;
-		conversation_is_new: boolean;
-		creator_is_ignored: boolean;
-		conversation_is_open: boolean;
-		conversation_is_deleted: boolean;
-		recipient: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		};
-		recipients: Array<{
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		}>;
-		links: {
-			permalink: string;
-			detail: string;
-			messages: string;
-			avatar: string;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	message: Resp_ConversationModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ConversationsMessagesEditBody {
@@ -7171,73 +3123,14 @@ export interface ConversationsMessagesEditBody {
 }
 
 export type ConversationsMessagesEditResponse = {
-	message: {
-		conversation_id: number;
-		conversation_title: string;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		conversation_create_date: number;
-		conversation_update_date: number;
-		conversation_last_read_date: number;
-		conversation_online_count: number;
-		is_starred: number;
-		is_group: number;
-		is_unread: number;
-		alerts: number;
-		permissions: {
-			view: boolean;
-			reply: boolean;
-			invite: boolean;
-			manage_invite_links: boolean;
-			kick: boolean;
-			upload_avatar: boolean;
-			editOwnPost: boolean;
-			stickyMessages: boolean;
-		};
-		conversation_message_count: number;
-		conversation_is_new: boolean;
-		creator_is_ignored: boolean;
-		conversation_is_open: boolean;
-		conversation_is_deleted: boolean;
-		recipient: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		};
-		recipients: Array<{
-			user_id: number;
-			username: string;
-			username_html: string;
-			last_activity: number;
-			is_online: boolean;
-			contacts_changed: boolean;
-			avatar: string;
-		}>;
-		links: {
-			permalink: string;
-			detail: string;
-			messages: string;
-			avatar: string;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	message: Resp_ConversationModel;
+	system_info: Resp_SystemInfo;
 };
 
 export type ConversationsMessagesDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ConversationsInviteBody {
@@ -7247,10 +3140,7 @@ export interface ConversationsInviteBody {
 export type ConversationsInviteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ConversationsKickBody {
@@ -7260,82 +3150,55 @@ export interface ConversationsKickBody {
 export type ConversationsKickResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ConversationsReadResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ConversationsReadAllResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ConversationsMessagesStickResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ConversationsMessagesUnstickResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ConversationsStarResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ConversationsUnstarResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ConversationsAlertsEnableResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ConversationsAlertsDisableResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 // ─── NotificationsApi Types ────────────────────────────────────────
@@ -7347,23 +3210,7 @@ export interface NotificationsListParams {
 }
 
 export type NotificationsListResponse = {
-	notifications: Array<{
-		notification_id: number;
-		notification_create_date: number;
-		content_type: string;
-		content_id: number;
-		content_action: string;
-		notification_is_unread: boolean;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		notification_type: string;
-		links: {
-			content: string;
-			creator_avatar: string;
-		};
-		notification_html: string;
-	}>;
+	notifications: Array<Resp_NotificationModel>;
 	notifications_total: number;
 	links: {
 		read: string;
@@ -7371,35 +3218,13 @@ export type NotificationsListResponse = {
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type NotificationsGetResponse = {
 	notification_id: number;
-	notification: {
-		notification_id: number;
-		notification_create_date: number;
-		content_type: string;
-		content_id: number;
-		content_action: string;
-		notification_is_unread: boolean;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		notification_type: string;
-		links: {
-			content: string;
-			creator_avatar: string;
-		};
-		notification_html: string;
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	notification: Resp_NotificationModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface NotificationsReadBody {
@@ -7409,10 +3234,7 @@ export interface NotificationsReadBody {
 export type NotificationsReadResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── TagsApi Types ────────────────────────────────────────
@@ -7421,10 +3243,7 @@ export type TagsPopularResponse = {
 	tags: {
 		"000": string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface TagsListParams {
@@ -7460,10 +3279,7 @@ export type TagsListResponse = {
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface TagsGetParams {
@@ -7608,10 +3424,7 @@ export type TagsGetResponse = {
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface TagsFindParams {
@@ -7621,10 +3434,7 @@ export interface TagsFindParams {
 export type TagsFindResponse = {
 	tags: Array<string>;
 	ids: Array<number>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 // ─── SearchApi Types ────────────────────────────────────────
@@ -7633,7 +3443,7 @@ export interface SearchAllBody {
 	q?: string;
 	tag?: string;
 	forum_id?: number;
-	user_id?: string | number;
+	user_id?: UserIDModel;
 	page?: number;
 	limit?: number;
 }
@@ -7795,154 +3605,20 @@ export type SearchAllResponse = {
 		};
 	}>;
 	data_total: number;
-	users: Array<{
-		user_id: number;
-		username: string;
-		username_html: string;
-		user_message_count: number;
-		user_register_date: number;
-		user_like_count: number;
-		user_like2_count: number;
-		contest_count: number;
-		trophy_count: number;
-		short_link: string;
-		custom_title: string;
-		is_banned: number;
-		display_banner_id: number;
-		display_icon_group_id: number;
-		balance: string;
-		hold: string;
-		currency: string;
-		user_email: string;
-		user_unread_notification_count: number;
-		user_unread_conversation_count: number;
-		conv_welcome_message: string;
-		user_title: string;
-		user_deposit: number;
-		user_is_valid: boolean;
-		user_is_verified: boolean;
-		user_is_followed: boolean;
-		user_last_seen_date: number;
-		links: {
-			permalink: string;
-			detail: string;
-			avatar: string;
-			avatar_big: string;
-			avatar_small: string;
-			followers: string;
-			followings: string;
-			ignore: string;
-			background_l: string;
-			background_m: string;
-			status: string;
-			timeline: string;
-		};
-		permissions: {
-			edit: boolean;
-			follow: boolean;
-			ignore: boolean;
-			profile_post: boolean;
-		};
-		user_is_ignored: boolean;
-		user_is_visitor: boolean;
-		user_group_id: number;
-		curator_titles: Array<string>;
-		user_groups: Array<{
-			user_group_id: number;
-			user_group_title: string;
-			user_group_title_en: string;
-			user_group_banner_css_class: string;
-			user_group_banner_text: string;
-			user_group_banner_text_en: string;
-			display_group_selectable: boolean;
-			display_banner_selectable: boolean;
-			display_icon_selectable: boolean;
-			is_primary_group: boolean;
-			user_group_icon_class: string;
-		}>;
-		fields: Array<{
-			id: string;
-			title: string;
-			description: string;
-			position: string;
-			is_required: boolean;
-			value?: string;
-			is_multi_choice: boolean;
-			choices: Array<{
-				key: string;
-				value: string;
-			}>;
-			values: Array<unknown>;
-		}>;
-		user_timezone_offset: number;
-		user_external_authentications: Array<{
-			provider: string;
-			provider_key: string;
-		}>;
-		self_permissions: {
-			create_conversation: boolean;
-		};
-		edit_permissions: {
-			password: boolean;
-			user_email: boolean;
-			username: boolean;
-			user_title: boolean;
-			short_link: boolean;
-			hide_username_logs: boolean;
-			primary_group_id: boolean;
-			secondary_group_ids: boolean;
-			user_dob_day: boolean;
-			user_dob_month: boolean;
-			user_dob_year: boolean;
-			fields: boolean;
-		};
-		birthday: {
-			age: number;
-			timeStamp: {
-				date: string;
-				timezone_type: number;
-				timezone: string;
-			};
-			format: string;
-		};
-		secret_answer_rendered: string;
-		secret_answer_first_letter: string;
-		user_following: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		user_followers: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		banner: string;
-	}>;
+	users: Array<Resp_UserModel>;
 	links: {
 		pages: number;
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface SearchThreadsBody {
 	q?: string;
 	tag?: string;
 	forum_id?: number;
-	user_id?: string | number;
+	user_id?: UserIDModel;
 	page?: number;
 	limit?: number;
 	data_limit?: number;
@@ -8063,17 +3739,14 @@ export type SearchThreadsResponse = {
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface SearchPostsBody {
 	q?: string;
 	tag?: string;
 	forum_id?: number;
-	user_id?: string | number;
+	user_id?: UserIDModel;
 	page?: number;
 	limit?: number;
 	data_limit?: number;
@@ -8194,10 +3867,7 @@ export type SearchPostsResponse = {
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface SearchUsersBody {
@@ -8205,142 +3875,8 @@ export interface SearchUsersBody {
 }
 
 export type SearchUsersResponse = {
-	users: Array<{
-		user_id: number;
-		username: string;
-		username_html: string;
-		user_message_count: number;
-		user_register_date: number;
-		user_like_count: number;
-		user_like2_count: number;
-		contest_count: number;
-		trophy_count: number;
-		short_link: string;
-		custom_title: string;
-		is_banned: number;
-		display_banner_id: number;
-		display_icon_group_id: number;
-		balance: string;
-		hold: string;
-		currency: string;
-		user_email: string;
-		user_unread_notification_count: number;
-		user_unread_conversation_count: number;
-		conv_welcome_message: string;
-		user_title: string;
-		user_deposit: number;
-		user_is_valid: boolean;
-		user_is_verified: boolean;
-		user_is_followed: boolean;
-		user_last_seen_date: number;
-		links: {
-			permalink: string;
-			detail: string;
-			avatar: string;
-			avatar_big: string;
-			avatar_small: string;
-			followers: string;
-			followings: string;
-			ignore: string;
-			background_l: string;
-			background_m: string;
-			status: string;
-			timeline: string;
-		};
-		permissions: {
-			edit: boolean;
-			follow: boolean;
-			ignore: boolean;
-			profile_post: boolean;
-		};
-		user_is_ignored: boolean;
-		user_is_visitor: boolean;
-		user_group_id: number;
-		curator_titles: Array<string>;
-		user_groups: Array<{
-			user_group_id: number;
-			user_group_title: string;
-			user_group_title_en: string;
-			user_group_banner_css_class: string;
-			user_group_banner_text: string;
-			user_group_banner_text_en: string;
-			display_group_selectable: boolean;
-			display_banner_selectable: boolean;
-			display_icon_selectable: boolean;
-			is_primary_group: boolean;
-			user_group_icon_class: string;
-		}>;
-		fields: Array<{
-			id: string;
-			title: string;
-			description: string;
-			position: string;
-			is_required: boolean;
-			value?: string;
-			is_multi_choice: boolean;
-			choices: Array<{
-				key: string;
-				value: string;
-			}>;
-			values: Array<unknown>;
-		}>;
-		user_timezone_offset: number;
-		user_external_authentications: Array<{
-			provider: string;
-			provider_key: string;
-		}>;
-		self_permissions: {
-			create_conversation: boolean;
-		};
-		edit_permissions: {
-			password: boolean;
-			user_email: boolean;
-			username: boolean;
-			user_title: boolean;
-			short_link: boolean;
-			hide_username_logs: boolean;
-			primary_group_id: boolean;
-			secondary_group_ids: boolean;
-			user_dob_day: boolean;
-			user_dob_month: boolean;
-			user_dob_year: boolean;
-			fields: boolean;
-		};
-		birthday: {
-			age: number;
-			timeStamp: {
-				date: string;
-				timezone_type: number;
-				timezone: string;
-			};
-			format: string;
-		};
-		secret_answer_rendered: string;
-		secret_answer_first_letter: string;
-		user_following: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		user_followers: {
-			users: Array<{
-				user_id: number;
-				username: string;
-				username_html: string;
-				avatar: string;
-			}>;
-			count: number;
-		};
-		banner: string;
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	users: Array<Resp_UserModel>;
+	system_info: Resp_SystemInfo;
 };
 
 export interface SearchProfilePostsBody {
@@ -8386,138 +3922,7 @@ export type SearchProfilePostsResponse = {
 			comment: boolean;
 			report: boolean;
 		};
-		timeline_user: {
-			user_id: number;
-			username: string;
-			username_html: string;
-			user_message_count: number;
-			user_register_date: number;
-			user_like_count: number;
-			user_like2_count: number;
-			contest_count: number;
-			trophy_count: number;
-			short_link: string;
-			custom_title: string;
-			is_banned: number;
-			display_banner_id: number;
-			display_icon_group_id: number;
-			balance: string;
-			hold: string;
-			currency: string;
-			user_email: string;
-			user_unread_notification_count: number;
-			user_unread_conversation_count: number;
-			conv_welcome_message: string;
-			user_title: string;
-			user_deposit: number;
-			user_is_valid: boolean;
-			user_is_verified: boolean;
-			user_is_followed: boolean;
-			user_last_seen_date: number;
-			links: {
-				permalink: string;
-				detail: string;
-				avatar: string;
-				avatar_big: string;
-				avatar_small: string;
-				followers: string;
-				followings: string;
-				ignore: string;
-				background_l: string;
-				background_m: string;
-				status: string;
-				timeline: string;
-			};
-			permissions: {
-				edit: boolean;
-				follow: boolean;
-				ignore: boolean;
-				profile_post: boolean;
-			};
-			user_is_ignored: boolean;
-			user_is_visitor: boolean;
-			user_group_id: number;
-			curator_titles: Array<string>;
-			user_groups: Array<{
-				user_group_id: number;
-				user_group_title: string;
-				user_group_title_en: string;
-				user_group_banner_css_class: string;
-				user_group_banner_text: string;
-				user_group_banner_text_en: string;
-				display_group_selectable: boolean;
-				display_banner_selectable: boolean;
-				display_icon_selectable: boolean;
-				is_primary_group: boolean;
-				user_group_icon_class: string;
-			}>;
-			fields: Array<{
-				id: string;
-				title: string;
-				description: string;
-				position: string;
-				is_required: boolean;
-				value?: string;
-				is_multi_choice: boolean;
-				choices: Array<{
-					key: string;
-					value: string;
-				}>;
-				values: Array<unknown>;
-			}>;
-			user_timezone_offset: number;
-			user_external_authentications: Array<{
-				provider: string;
-				provider_key: string;
-			}>;
-			self_permissions: {
-				create_conversation: boolean;
-			};
-			edit_permissions: {
-				password: boolean;
-				user_email: boolean;
-				username: boolean;
-				user_title: boolean;
-				short_link: boolean;
-				hide_username_logs: boolean;
-				primary_group_id: boolean;
-				secondary_group_ids: boolean;
-				user_dob_day: boolean;
-				user_dob_month: boolean;
-				user_dob_year: boolean;
-				fields: boolean;
-			};
-			birthday: {
-				age: number;
-				timeStamp: {
-					date: string;
-					timezone_type: number;
-					timezone: string;
-				};
-				format: string;
-			};
-			secret_answer_rendered: string;
-			secret_answer_first_letter: string;
-			user_following: {
-				users: Array<{
-					user_id: number;
-					username: string;
-					username_html: string;
-					avatar: string;
-				}>;
-				count: number;
-			};
-			user_followers: {
-				users: Array<{
-					user_id: number;
-					username: string;
-					username_html: string;
-					avatar: string;
-				}>;
-				count: number;
-			};
-			banner: string;
-		};
+		timeline_user: Resp_UserModel;
 	}>;
 	data_total: number;
 	links: {
@@ -8525,10 +3930,7 @@ export type SearchProfilePostsResponse = {
 		page: number;
 		next: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface SearchTaggedBody {
@@ -8661,10 +4063,7 @@ export type SearchTaggedResponse = {
 	search_tags: {
 		"160179": string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface SearchResultsParams {
@@ -8795,10 +4194,7 @@ export type SearchResultsResponse = {
 	search_tags: {
 		"160179": string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 // ─── BatchApi Types ────────────────────────────────────────
@@ -8819,7 +4215,7 @@ export type BatchExecuteResponse = {
 // ─── ChatboxApi Types ────────────────────────────────────────
 
 export interface ChatboxIndexParams {
-	room_id?: 1 | 2 | 3 | 4 | 13;
+	room_id?: RoomIDModel;
 }
 
 export type ChatboxIndexResponse = {
@@ -8876,143 +4272,28 @@ export type ChatboxIndexResponse = {
 	roomsOnline: {
 		"chat:0": number;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ChatboxGetMessagesParams {
-	room_id: 1 | 2 | 3 | 4 | 13;
+	room_id: RoomIDModel;
 	before_message_id?: number;
 }
 
 export type ChatboxGetMessagesResponse = {
-	messages: Array<{
-		can_report: boolean;
-		date: number;
-		is_deleted: boolean;
-		message: string;
-		message_id: number;
-		messageJson: string;
-		messageRaw: string;
-		room: {
-			can_report: boolean;
-			eng: boolean;
-			market: boolean;
-			room_id: number;
-			title: string;
-		};
-		user: {
-			avatar_date: number;
-			background_date: number;
-			contest_count: number;
-			custom_title: string;
-			display_banner_id: number;
-			display_icon_group_id: number;
-			display_style_group_id: number;
-			is_admin: boolean;
-			is_banned: boolean;
-			is_moderator: boolean;
-			is_staff: boolean;
-			last_activity: number;
-			like2_count: number;
-			like_count: number;
-			message_count: number;
-			register_date: number;
-			rendered: {
-				username: string;
-				avatars: {
-					l: string;
-					m: string;
-					s: string;
-				};
-				link: string;
-			};
-			short_link: string;
-			trophy_points: number;
-			uniq_banner: {
-				banner_css: string;
-				banner_text: string;
-				banner_icon: string;
-				username_icon: string;
-			};
-			uniq_username_css: string;
-			user_id: number;
-			username: string;
-		};
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	messages: Array<Resp_ChatboxMessageModel>;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ChatboxPostMessageBody {
-	room_id: 1 | 2 | 3 | 4 | 13;
+	room_id: RoomIDModel;
 	reply_message_id?: number;
 	message: string;
 }
 
 export type ChatboxPostMessageResponse = {
-	message: {
-		can_report: boolean;
-		date: number;
-		is_deleted: boolean;
-		message: string;
-		message_id: number;
-		messageJson: string;
-		messageRaw: string;
-		room: {
-			can_report: boolean;
-			eng: boolean;
-			market: boolean;
-			room_id: number;
-			title: string;
-		};
-		user: {
-			avatar_date: number;
-			background_date: number;
-			contest_count: number;
-			custom_title: string;
-			display_banner_id: number;
-			display_icon_group_id: number;
-			display_style_group_id: number;
-			is_admin: boolean;
-			is_banned: boolean;
-			is_moderator: boolean;
-			is_staff: boolean;
-			last_activity: number;
-			like2_count: number;
-			like_count: number;
-			message_count: number;
-			register_date: number;
-			rendered: {
-				username: string;
-				avatars: {
-					l: string;
-					m: string;
-					s: string;
-				};
-				link: string;
-			};
-			short_link: string;
-			trophy_points: number;
-			uniq_banner: {
-				banner_css: string;
-				banner_text: string;
-				banner_icon: string;
-				username_icon: string;
-			};
-			uniq_username_css: string;
-			user_id: number;
-			username: string;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	message: Resp_ChatboxMessageModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ChatboxEditMessageBody {
@@ -9021,64 +4302,8 @@ export interface ChatboxEditMessageBody {
 }
 
 export type ChatboxEditMessageResponse = {
-	message: {
-		can_report: boolean;
-		date: number;
-		is_deleted: boolean;
-		message: string;
-		message_id: number;
-		messageJson: string;
-		messageRaw: string;
-		room: {
-			can_report: boolean;
-			eng: boolean;
-			market: boolean;
-			room_id: number;
-			title: string;
-		};
-		user: {
-			avatar_date: number;
-			background_date: number;
-			contest_count: number;
-			custom_title: string;
-			display_banner_id: number;
-			display_icon_group_id: number;
-			display_style_group_id: number;
-			is_admin: boolean;
-			is_banned: boolean;
-			is_moderator: boolean;
-			is_staff: boolean;
-			last_activity: number;
-			like2_count: number;
-			like_count: number;
-			message_count: number;
-			register_date: number;
-			rendered: {
-				username: string;
-				avatars: {
-					l: string;
-					m: string;
-					s: string;
-				};
-				link: string;
-			};
-			short_link: string;
-			trophy_points: number;
-			uniq_banner: {
-				banner_css: string;
-				banner_text: string;
-				banner_icon: string;
-				username_icon: string;
-			};
-			uniq_username_css: string;
-			user_id: number;
-			username: string;
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	message: Resp_ChatboxMessageModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ChatboxDeleteMessageBody {
@@ -9088,14 +4313,11 @@ export interface ChatboxDeleteMessageBody {
 export type ChatboxDeleteMessageResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ChatboxOnlineParams {
-	room_id: 1 | 2 | 3 | 4 | 13;
+	room_id: RoomIDModel;
 }
 
 export type ChatboxOnlineResponse = {
@@ -9137,10 +4359,7 @@ export type ChatboxOnlineResponse = {
 		user_id: number;
 		username: string;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ChatboxReportReasonsParams {
@@ -9149,10 +4368,7 @@ export interface ChatboxReportReasonsParams {
 
 export type ChatboxReportReasonsResponse = {
 	reasons: Array<string>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ChatboxReportBody {
@@ -9163,10 +4379,7 @@ export interface ChatboxReportBody {
 export type ChatboxReportResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ChatboxGetLeaderboardParams {
@@ -9209,10 +4422,7 @@ export type ChatboxGetLeaderboardResponse = {
 		uniq_username_css: string;
 		username: string;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ChatboxGetIgnoreResponse = {
@@ -9246,36 +4456,27 @@ export type ChatboxGetIgnoreResponse = {
 		user_id: number;
 		username: string;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ChatboxPostIgnoreBody {
-	user_id: string | number;
+	user_id: UserIDModel;
 }
 
 export type ChatboxPostIgnoreResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ChatboxDeleteIgnoreBody {
-	user_id: string | number;
+	user_id: UserIDModel;
 }
 
 export type ChatboxDeleteIgnoreResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── FormsApi Types ────────────────────────────────────────
@@ -9304,10 +4505,7 @@ export type FormsListResponse = {
 	formsPerPage: number;
 	page: number;
 	totalForms: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface FormsCreateBody {
@@ -9376,8 +4574,5 @@ export type FormsCreateResponse = {
 		};
 		node_title: string;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-	};
+	system_info: Resp_SystemInfo;
 };

@@ -57,8 +57,11 @@ export function schemaToTypeString(
 		return "unknown";
 	}
 
-	// $ref → resolve and convert
+	// $ref → component schema refs emit named type, others resolve and convert
 	if (schema.$ref) {
+		if (schema.$ref.startsWith("#/components/schemas/")) {
+			return schema.$ref.split("/").pop() ?? "unknown";
+		}
 		const resolved = derefShallow<SchemaObject>(schema, spec);
 		return schemaToTypeString(resolved, spec, indent);
 	}
@@ -160,11 +163,16 @@ function safePropName(name: string): string {
 }
 
 /** Generate a named interface string. */
-export function generateInterface(name: string, schema: SchemaObject, indent = 0): string {
+export function generateInterface(
+	name: string,
+	schema: SchemaObject,
+	spec: OpenApiSpec = {},
+	indent = 0,
+): string {
 	const pad = "\t".repeat(indent);
 	const props = schema.properties;
 	if (!props || Object.keys(props).length === 0) {
-		const typeStr = schemaToType(schema, indent);
+		const typeStr = schemaToTypeString(schema, spec, indent);
 		return `${pad}export type ${name} = ${typeStr};`;
 	}
 
@@ -174,7 +182,7 @@ export function generateInterface(name: string, schema: SchemaObject, indent = 0
 
 	for (const [propName, propSchema] of Object.entries(props)) {
 		const optional = requiredSet.has(propName) ? "" : "?";
-		const propType = schemaToType(propSchema, indent + 1);
+		const propType = schemaToTypeString(propSchema, spec, indent + 1);
 		lines.push(`${propPad}${safePropName(propName)}${optional}: ${propType};`);
 	}
 
@@ -217,7 +225,7 @@ export function generateComponentTypes(spec: OpenApiSpec): string {
 
 		// Object with properties → interface
 		if (schema.properties && Object.keys(schema.properties).length > 0) {
-			sections.push(generateInterface(name, schema));
+			sections.push(generateInterface(name, schema, spec));
 			continue;
 		}
 
@@ -229,7 +237,7 @@ export function generateComponentTypes(spec: OpenApiSpec): string {
 		}
 
 		// Fallback: use generateInterface which handles the empty-props case
-		sections.push(generateInterface(name, schema));
+		sections.push(generateInterface(name, schema, spec));
 	}
 
 	return sections.join("\n\n");

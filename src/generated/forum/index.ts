@@ -153,6 +153,7 @@ import type {
 	ProfilePostsStickResponse,
 	ProfilePostsUnlikeResponse,
 	ProfilePostsUnstickResponse,
+	RoomIDModel,
 	SearchAllBody,
 	SearchAllResponse,
 	SearchPostsBody,
@@ -209,6 +210,7 @@ import type {
 	ThreadsUnreadParams,
 	ThreadsUnreadResponse,
 	ThreadsUnstarResponse,
+	UserIDModel,
 	UsersAvatarCropBody,
 	UsersAvatarCropResponse,
 	UsersAvatarDeleteResponse,
@@ -751,7 +753,7 @@ class UsersApi {
 		});
 	}
 
-	async get(user_id: string | number, params?: UsersGetParams): Promise<UsersGetResponse> {
+	async get(user_id: UserIDModel, params?: UsersGetParams): Promise<UsersGetResponse> {
 		return this.http.request({
 			method: "GET",
 			path: `/users/${user_id}`,
@@ -759,7 +761,7 @@ class UsersApi {
 		});
 	}
 
-	async edit(user_id: string | number, body?: UsersEditBody): Promise<UsersEditResponse> {
+	async edit(user_id: UserIDModel, body?: UsersEditBody): Promise<UsersEditResponse> {
 		return this.http.request({
 			method: "PUT",
 			path: `/users/${user_id}`,
@@ -768,7 +770,7 @@ class UsersApi {
 		});
 	}
 
-	async claims(user_id: string | number, params?: UsersClaimsParams): Promise<UsersClaimsResponse> {
+	async claims(user_id: UserIDModel, params?: UsersClaimsParams): Promise<UsersClaimsResponse> {
 		return this.http.request({
 			method: "GET",
 			path: `/users/${user_id}/claims`,
@@ -777,7 +779,7 @@ class UsersApi {
 	}
 
 	async avatarUpload(
-		user_id: string | number,
+		user_id: UserIDModel,
 		body?: UsersAvatarUploadBody,
 	): Promise<UsersAvatarUploadResponse> {
 		return this.http.request({
@@ -788,7 +790,7 @@ class UsersApi {
 		});
 	}
 
-	async avatarDelete(user_id: string | number): Promise<UsersAvatarDeleteResponse> {
+	async avatarDelete(user_id: UserIDModel): Promise<UsersAvatarDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
 			path: `/users/${user_id}/avatar`,
@@ -796,7 +798,7 @@ class UsersApi {
 	}
 
 	async avatarCrop(
-		user_id: string | number,
+		user_id: UserIDModel,
 		body?: UsersAvatarCropBody,
 	): Promise<UsersAvatarCropResponse> {
 		return this.http.request({
@@ -808,7 +810,7 @@ class UsersApi {
 	}
 
 	async backgroundUpload(
-		user_id: string | number,
+		user_id: UserIDModel,
 		body?: UsersBackgroundUploadBody,
 	): Promise<UsersBackgroundUploadResponse> {
 		return this.http.request({
@@ -819,7 +821,7 @@ class UsersApi {
 		});
 	}
 
-	async backgroundDelete(user_id: string | number): Promise<UsersBackgroundDeleteResponse> {
+	async backgroundDelete(user_id: UserIDModel): Promise<UsersBackgroundDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
 			path: `/users/${user_id}/background`,
@@ -827,7 +829,7 @@ class UsersApi {
 	}
 
 	async backgroundCrop(
-		user_id: string | number,
+		user_id: UserIDModel,
 		body: UsersBackgroundCropBody,
 	): Promise<UsersBackgroundCropResponse> {
 		return this.http.request({
@@ -839,7 +841,7 @@ class UsersApi {
 	}
 
 	async followers(
-		user_id: string | number,
+		user_id: UserIDModel,
 		params?: UsersFollowersParams,
 	): Promise<UsersFollowersResponse> {
 		return this.http.request({
@@ -849,14 +851,14 @@ class UsersApi {
 		});
 	}
 
-	async follow(user_id: string | number): Promise<UsersFollowResponse> {
+	async follow(user_id: UserIDModel): Promise<UsersFollowResponse> {
 		return this.http.request({
 			method: "POST",
 			path: `/users/${user_id}/followers`,
 		});
 	}
 
-	async unfollow(user_id: string | number): Promise<UsersUnfollowResponse> {
+	async unfollow(user_id: UserIDModel): Promise<UsersUnfollowResponse> {
 		return this.http.request({
 			method: "DELETE",
 			path: `/users/${user_id}/followers`,
@@ -864,7 +866,7 @@ class UsersApi {
 	}
 
 	async followings(
-		user_id: string | number,
+		user_id: UserIDModel,
 		params?: UsersFollowingsParams,
 	): Promise<UsersFollowingsResponse> {
 		return this.http.request({
@@ -874,7 +876,7 @@ class UsersApi {
 		});
 	}
 
-	async likes(user_id: string | number, params?: UsersLikesParams): Promise<UsersLikesResponse> {
+	async likes(user_id: UserIDModel, params?: UsersLikesParams): Promise<UsersLikesResponse> {
 		return this.http.request({
 			method: "GET",
 			path: `/users/${user_id}/likes`,
@@ -890,7 +892,7 @@ class UsersApi {
 		});
 	}
 
-	async ignore(user_id: string | number): Promise<UsersIgnoreResponse> {
+	async ignore(user_id: UserIDModel): Promise<UsersIgnoreResponse> {
 		return this.http.request({
 			method: "POST",
 			path: `/users/${user_id}/ignore`,
@@ -898,7 +900,7 @@ class UsersApi {
 	}
 
 	async ignoreEdit(
-		user_id: string | number,
+		user_id: UserIDModel,
 		params?: UsersIgnoreEditParams,
 	): Promise<UsersIgnoreEditResponse> {
 		return this.http.request({
@@ -908,7 +910,7 @@ class UsersApi {
 		});
 	}
 
-	async unignore(user_id: string | number): Promise<UsersUnignoreResponse> {
+	async unignore(user_id: UserIDModel): Promise<UsersUnignoreResponse> {
 		return this.http.request({
 			method: "DELETE",
 			path: `/users/${user_id}/ignore`,
@@ -916,7 +918,7 @@ class UsersApi {
 	}
 
 	async contents(
-		user_id: string | number,
+		user_id: UserIDModel,
 		params?: UsersContentsParams,
 	): Promise<UsersContentsResponse> {
 		return this.http.request({
@@ -926,7 +928,7 @@ class UsersApi {
 		});
 	}
 
-	async trophies(user_id: string | number): Promise<UsersTrophiesResponse> {
+	async trophies(user_id: UserIDModel): Promise<UsersTrophiesResponse> {
 		return this.http.request({
 			method: "GET",
 			path: `/users/${user_id}/trophies`,
@@ -959,7 +961,7 @@ class ProfilePostsApi {
 	constructor(private readonly http: HttpClient) {}
 
 	async list(
-		user_id: string | number,
+		user_id: UserIDModel,
 		params?: ProfilePostsListParams,
 	): Promise<ProfilePostsListResponse> {
 		return this.http.request({

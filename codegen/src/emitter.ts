@@ -73,9 +73,14 @@ export function emitTypesFile(groups: ParsedGroup[], componentSchemas: Component
 
 	// Component schemas
 	if (Object.keys(componentSchemas).length > 0) {
+		const spec = { components: { schemas: componentSchemas } };
 		sections.push("// ─── Component Schemas ────────────────────────────────────────\n");
 		for (const [name, schema] of Object.entries(componentSchemas)) {
-			const iface = generateInterface(name, schema as Parameters<typeof generateInterface>[1]);
+			const iface = generateInterface(
+				name,
+				schema as Parameters<typeof generateInterface>[1],
+				spec,
+			);
 			sections.push(iface);
 			sections.push("");
 		}
@@ -192,6 +197,7 @@ export function emitCombinedIndexFile(
 	defaultBaseUrl: string,
 	defaultRateLimit: number,
 	defaultSearchRateLimit?: number,
+	componentSchemaNames?: Set<string>,
 ): string {
 	const lines: string[] = [];
 
@@ -201,6 +207,7 @@ export function emitCombinedIndexFile(
 
 	// Collect all type imports from all groups
 	const typeImports: string[] = [];
+	const knownSchemas = componentSchemaNames ?? new Set<string>();
 	for (const group of groups) {
 		for (const method of group.methods) {
 			const base = buildTypeName(group.groupName, method.methodName);
@@ -212,12 +219,19 @@ export function emitCombinedIndexFile(
 			if (method.hasBody && (method.bodyProperties.length > 0 || method.bodyIsArray)) {
 				typeImports.push(`${base}Body`);
 			}
+
+			// Collect component schema types referenced in path/query param types
+			for (const param of [...method.params.pathParams, ...method.params.queryParams]) {
+				for (const name of extractTypeReferences(param.type, knownSchemas)) {
+					typeImports.push(name);
+				}
+			}
 		}
 	}
 
-	if (typeImports.length > 0) {
-		typeImports.sort();
-		lines.push(`import type { ${typeImports.join(", ")} } from "./types.js";`);
+	const uniqueImports = [...new Set(typeImports)].sort();
+	if (uniqueImports.length > 0) {
+		lines.push(`import type { ${uniqueImports.join(", ")} } from "./types.js";`);
 	}
 
 	// Emit all group classes
@@ -290,4 +304,19 @@ function safePropName(name: string): string {
 		return name;
 	}
 	return `"${name}"`;
+}
+
+/** Extract component schema type names referenced in a type expression. */
+function extractTypeReferences(typeExpr: string, knownSchemas: Set<string>): string[] {
+	const refs: string[] = [];
+	// Match identifiers that could be component schema names
+	const identifiers = typeExpr.match(/[A-Z][a-zA-Z0-9_]*/g);
+	if (identifiers) {
+		for (const id of identifiers) {
+			if (knownSchemas.has(id) && !refs.includes(id)) {
+				refs.push(id);
+			}
+		}
+	}
+	return refs;
 }

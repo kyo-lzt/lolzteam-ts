@@ -36,11 +36,18 @@ describe("schemaToTypeString", () => {
 		);
 	});
 
-	it("$ref resolves through spec", () => {
+	it("$ref to component schema emits type name", () => {
 		const spec = {
 			components: { schemas: { Foo: { type: "string" } } },
 		};
-		expect(schemaToTypeString({ $ref: "#/components/schemas/Foo" }, spec)).toBe("string");
+		expect(schemaToTypeString({ $ref: "#/components/schemas/Foo" }, spec)).toBe("Foo");
+	});
+
+	it("$ref to non-component resolves through spec", () => {
+		const spec = {
+			components: { parameters: { bar: { type: "integer" } } },
+		};
+		expect(schemaToTypeString({ $ref: "#/components/parameters/bar" }, spec)).toBe("number");
 	});
 
 	it("oneOf → union", () => {

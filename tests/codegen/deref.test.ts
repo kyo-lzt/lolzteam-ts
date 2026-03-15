@@ -37,18 +37,31 @@ describe("deref", () => {
 		},
 	};
 
-	it("resolves $ref objects", () => {
+	it("preserves component schema $ref objects", () => {
 		const result = deref({ $ref: "#/components/schemas/Name" }, spec);
-		expect(result).toEqual({ type: "string" });
+		expect(result).toEqual({ $ref: "#/components/schemas/Name" });
 	});
 
-	it("recursively resolves nested $refs", () => {
+	it("preserves nested component schema $refs", () => {
 		const result = deref({ $ref: "#/components/schemas/User" }, spec);
 		expect(result).toEqual({
-			type: "object",
-			properties: {
-				name: { type: "string" },
+			$ref: "#/components/schemas/User",
+		});
+	});
+
+	it("resolves non-component $ref objects", () => {
+		const specWithParams = {
+			components: {
+				parameters: {
+					Limit: { name: "limit", in: "query", schema: { type: "integer" } },
+				},
 			},
+		};
+		const result = deref({ $ref: "#/components/parameters/Limit" }, specWithParams);
+		expect(result).toEqual({
+			name: "limit",
+			in: "query",
+			schema: { type: "integer" },
 		});
 	});
 

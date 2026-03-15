@@ -242,192 +242,7 @@ export interface ExtraModel {
 }
 
 export interface ConfirmationCodeModel {
-	item: {
-		item_id: number;
-		item_state: string;
-		category_id: number;
-		published_date: number;
-		title: string;
-		description: string;
-		price: number;
-		update_stat_date: number;
-		refreshed_date: number;
-		edit_date: number;
-		pending_deletion_date: number;
-		login: string;
-		temp_email: string;
-		view_count: number;
-		is_sticky: number;
-		information: string;
-		item_origin: string;
-		extended_guarantee: number;
-		nsb: number;
-		allow_ask_discount: number;
-		title_en: string;
-		description_en: string;
-		information_en: string;
-		email_type: string;
-		email_provider: string;
-		item_domain: string;
-		resale_item_origin: string;
-		note_text: string;
-		content_type: unknown;
-		content_id: unknown;
-		delete_date: number;
-		delete_user_id: number;
-		delete_username: string;
-		delete_reason: string;
-		user_allow_ask_discount: number;
-		max_discount_percent: number;
-		market_custom_title: string;
-		feedback_data: string;
-		buyer_display_icon_group_id: number;
-		buyer_uniq_banner: string;
-		buyer_avatar_date: number;
-		buyer_user_group_id: number;
-		is_fave: unknown;
-		in_cart: unknown;
-		cart_price: unknown;
-		canResellItem: boolean;
-		priceWithSellerFee: number;
-		guarantee: {
-			duration: number;
-			class: string;
-			durationPhrase: string;
-			endDate: number;
-			active: boolean;
-			cancelled: boolean;
-			remainingTime: number;
-			remainingTimePhrase: string;
-			cancelledReason: string;
-			cancelledReasonPhrase: string;
-		};
-		canViewLoginData: boolean;
-		canUpdateItemStats: boolean;
-		canReportItem: boolean;
-		canViewItemViews: boolean;
-		loginData: {
-			raw: string;
-			encodedRaw: string;
-			login: string;
-			password: string;
-			encodedPassword: string;
-			oldPassword: string;
-			encodedOldPassword: unknown;
-		};
-		canViewEmailLoginData: boolean;
-		copyFormatData: {
-			title_link: string;
-			login_data: string;
-			full: string;
-		};
-		showGetEmailCodeButton: boolean;
-		getEmailCodeDisplayLogin: unknown;
-		buyer: {
-			user_id: number;
-			operation_date: number;
-			visitorIsBuyer: boolean;
-			username: string;
-			is_banned: number;
-			display_style_group_id: number;
-			display_icon_group_id: number;
-			uniq_username_css: string;
-			uniq_banner: string;
-			user_group_id: number;
-		};
-		isPersonalAccount: boolean;
-		rub_price: number;
-		price_currency: string;
-		priceWithSellerFeeLabel: string;
-		canValidateAccount: boolean;
-		canResellItemAfterPurchase: boolean;
-		isSmallExf: boolean;
-		account_last_activity: number;
-		canViewAccountLink: boolean;
-		accountLinks: Array<{
-			link: string;
-			text: string;
-			iconClass: string;
-		}>;
-		accountLink: string;
-		imagePreviewLinks: Array<string>;
-		canChangePassword: boolean;
-		canChangeEmailPassword: boolean;
-		uniqueKeyExists: boolean;
-		itemOriginPhrase: string;
-		visitorIsAuthor: boolean;
-		canAskDiscount: boolean;
-		tags: {
-			"1234567890": {
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			};
-		};
-		customFields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztUnbanAmount: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-		};
-		externalAuth: Array<unknown>;
-		isTrusted: boolean;
-		isBirthdayToday: boolean;
-		isIgnored: boolean;
-		deposit: number;
-		extraPrices: Array<{
-			currency: string;
-			price: string;
-			priceValue: number;
-		}>;
-		canViewAccountLoginAndTempEmail: boolean;
-		bumpSettings: {
-			canBumpItem: boolean;
-			canBumpItemGlobally: boolean;
-			shortErrorPhrase: unknown;
-			nextAllowedBumpDate: unknown;
-			errorPhrase: unknown;
-		};
-		canCheckGuarantee: boolean;
-		canShareItem: boolean;
-		canCheckAiPrice: boolean;
-		aiPrice: number;
-		aiPriceCheckDate: number;
-		needToRequireVideoToViewLoginData: boolean;
-		canCheckAutoBuyPrice: boolean;
-		autoBuyPrice: number;
-		autoBuyPriceCheckDate: number;
-		descriptionHtml: string;
-		descriptionEnHtml: string;
-		descriptionPlain: string;
-		descriptionEnPlain: string;
-		seller: {
-			user_id: number;
-			username: string;
-			avatar_date: number;
-			is_banned: number;
-			display_style_group_id: number;
-			joined_date: number;
-			sold_items_count: number;
-			active_items_count: number;
-			restore_data: string;
-			effective_last_activity: number;
-			restore_percents: unknown;
-			isOnline: boolean;
-			contacts: {
-				ban_reason: string;
-				telegram: string;
-			};
-		};
-	};
+	item: ItemModel;
 	codeData: {
 		code: string;
 		date: number;
@@ -453,141 +268,15 @@ export type DatePeriodModel = "day" | "month" | "year";
 export type YesNoNoMatterScheme = "yes" | "no" | "nomatter";
 
 export interface ItemListModel {
-	items: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
+	items: Array<ItemFromListModel>;
 	totalItems: number;
 	totalItemsPrice: unknown;
 	hasNextPage: boolean;
 	perPage: number;
 	page: number;
 	searchUrl: string;
-	stickyItems: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	stickyItems: Array<ItemFromListModel>;
+	system_info: Resp_SystemInfo;
 }
 
 export interface ItemFromListModel {
@@ -928,143 +617,7 @@ export interface CategoryAllParams {
 	parse_same_item_ids?: boolean;
 }
 
-export type CategoryAllResponse = {
-	items: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	totalItems: number;
-	totalItemsPrice: unknown;
-	hasNextPage: boolean;
-	perPage: number;
-	page: number;
-	searchUrl: string;
-	stickyItems: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
-};
+export type CategoryAllResponse = unknown;
 
 export interface CategorySteamParams {
 	page?: number;
@@ -1131,11 +684,11 @@ export interface CategorySteamParams {
 	"vac[]"?: Array<number>;
 	vac_skip_game_check?: boolean;
 	rt?: "yes" | "no" | "nomatter";
-	trade_ban?: "yes" | "no" | "nomatter";
-	trade_limit?: "yes" | "no" | "nomatter";
+	trade_ban?: YesNoNoMatterScheme;
+	trade_limit?: YesNoNoMatterScheme;
 	daybreak?: number;
-	limit?: "yes" | "no" | "nomatter";
-	mafile?: "yes" | "no" | "nomatter";
+	limit?: YesNoNoMatterScheme;
+	mafile?: YesNoNoMatterScheme;
 	reg?: number;
 	reg_period?: "day" | "month" | "year";
 	lmin?: number;
@@ -1145,7 +698,7 @@ export interface CategorySteamParams {
 	wingman_rmin?: number;
 	wingman_rmax?: number;
 	no_vac?: boolean;
-	mm_ban?: "yes" | "no" | "nomatter";
+	mm_ban?: YesNoNoMatterScheme;
 	balance_min?: number;
 	balance_max?: number;
 	inv_game?: number;
@@ -4993,7 +4546,7 @@ export interface CategorySteamParams {
 	last_trans_date?: number;
 	last_trans_date_period?: "day" | "month" | "year";
 	last_trans_date_later?: number;
-	last_trans_date_period_later?: "day" | "month" | "year";
+	last_trans_date_period_later?: DatePeriodModel;
 	no_trans?: boolean;
 	trans?: boolean;
 	gifts_purchase_min?: number;
@@ -5006,13 +4559,13 @@ export interface CategorySteamParams {
 	games_purchase_max?: number;
 	purchase_min?: number;
 	purchase_max?: number;
-	has_activated_keys?: "yes" | "no" | "nomatter";
+	has_activated_keys?: YesNoNoMatterScheme;
 	elo_min?: number;
 	elo_max?: number;
 	cs2_map_rank?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
 	cs2_map_rmin?: number;
 	cs2_map_rmax?: number;
-	has_faceit?: "yes" | "no" | "nomatter";
+	has_faceit?: YesNoNoMatterScheme;
 	faceit_csgo_lvl_min?: number;
 	faceit_csgo_lvl_max?: number;
 	rust_deaths_min?: number;
@@ -5231,11 +4784,7 @@ export type CategorySteamResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryFortniteParams {
@@ -12983,7 +12532,7 @@ export interface CategoryFortniteParams {
 	dances_shop_vbmax?: number;
 	gliders_shop_vbmin?: number;
 	gliders_shop_vbmax?: number;
-	bp?: "yes" | "no" | "nomatter";
+	bp?: YesNoNoMatterScheme;
 	lmin?: number;
 	lmax?: number;
 	bp_lmin?: number;
@@ -12991,8 +12540,8 @@ export interface CategoryFortniteParams {
 	last_trans_date?: number;
 	last_trans_date_period?: "day" | "month" | "year";
 	no_trans?: boolean;
-	xbox_linkable?: "yes" | "no" | "nomatter";
-	psn_linkable?: "yes" | "no" | "nomatter";
+	xbox_linkable?: YesNoNoMatterScheme;
+	psn_linkable?: YesNoNoMatterScheme;
 	daybreak?: number;
 	rl_purchases?: boolean;
 	reg?: number;
@@ -13177,11 +12726,7 @@ export type CategoryFortniteResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryMihoyoParams {
@@ -13243,7 +12788,7 @@ export interface CategoryMihoyoParams {
 	parse_same_item_ids?: boolean;
 	item_domain?: string;
 	email?: "yes" | "no" | "nomatter";
-	ea?: "yes" | "no" | "nomatter";
+	ea?: YesNoNoMatterScheme;
 	region?: Array<"asia" | "cht" | "eu" | "usa">;
 	not_region?: Array<"asia" | "cht" | "eu" | "usa">;
 	"genshin_character[]"?: Array<
@@ -14281,11 +13826,7 @@ export type CategoryMihoyoResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryRiotParams {
@@ -14578,11 +14119,7 @@ export type CategoryRiotResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryTelegramParams {
@@ -14637,8 +14174,8 @@ export interface CategoryTelegramParams {
 	>;
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
 	parse_same_item_ids?: boolean;
-	spam?: "yes" | "no" | "nomatter";
-	password?: "yes" | "no" | "nomatter";
+	spam?: YesNoNoMatterScheme;
+	password?: YesNoNoMatterScheme;
 	premium?: "yes" | "no" | "nomatter";
 	premium_expiration?: number;
 	premium_expiration_period?: "day" | "month" | "year";
@@ -14792,11 +14329,7 @@ export type CategoryTelegramResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategorySupercellParams {
@@ -14859,14 +14392,14 @@ export interface CategorySupercellParams {
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
 	item_domain?: string;
 	eg?: -1 | 0 | 1 | 2;
-	tel?: "yes" | "no" | "nomatter";
+	tel?: YesNoNoMatterScheme;
 	brawl_level_min?: number;
 	brawl_level_max?: number;
 	brawl_cup_min?: number;
 	brawl_cup_max?: number;
 	brawl_wins_min?: number;
 	brawl_wins_max?: number;
-	brawl_pass?: "yes" | "no" | "nomatter";
+	brawl_pass?: YesNoNoMatterScheme;
 	"brawler[]"?: Array<
 		| "8-BIT"
 		| "ALLI"
@@ -14981,14 +14514,14 @@ export interface CategorySupercellParams {
 	royale_wins_max?: number;
 	king_level_min?: number;
 	king_level_max?: number;
-	royale_pass?: "yes" | "no" | "nomatter";
+	royale_pass?: YesNoNoMatterScheme;
 	clash_level_min?: number;
 	clash_level_max?: number;
 	clash_cup_min?: number;
 	clash_cup_max?: number;
 	clash_wins_min?: number;
 	clash_wins_max?: number;
-	clash_pass?: "yes" | "no" | "nomatter";
+	clash_pass?: YesNoNoMatterScheme;
 	total_heroes_level_min?: number;
 	total_heroes_level_max?: number;
 	total_troops_level_min?: number;
@@ -15131,11 +14664,7 @@ export type CategorySupercellResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryEaParams {
@@ -15205,16 +14734,16 @@ export interface CategoryEaParams {
 	al_rank_max?: number;
 	al_level_min?: number;
 	al_level_max?: number;
-	has_ban?: "yes" | "no" | "nomatter";
-	xbox_connected?: "yes" | "no" | "nomatter";
-	steam_connected?: "yes" | "no" | "nomatter";
-	psn_connected?: "yes" | "no" | "nomatter";
+	has_ban?: YesNoNoMatterScheme;
+	xbox_connected?: YesNoNoMatterScheme;
+	steam_connected?: YesNoNoMatterScheme;
+	psn_connected?: YesNoNoMatterScheme;
 	subscription?: "EA Play" | "EA Play Pro";
 	subscription_length?: number;
 	subscription_period?: "day" | "month" | "year";
 	hours_played?: Record<string, number>;
 	hours_played_max?: Record<string, number>;
-	transactions?: "yes" | "no" | "nomatter";
+	transactions?: YesNoNoMatterScheme;
 }
 
 export type CategoryEaResponse = {
@@ -15334,11 +14863,7 @@ export type CategoryEaResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryWotParams {
@@ -15697,11 +15222,7 @@ export type CategoryWotResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryWotBlitzParams {
@@ -17911,11 +17432,7 @@ export type CategoryWotBlitzResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryGiftsParams {
@@ -18073,11 +17590,7 @@ export type CategoryGiftsResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryEpicGamesParams {
@@ -18280,11 +17793,7 @@ export type CategoryEpicGamesResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryEscapeFromTarkovParams {
@@ -18353,7 +17862,7 @@ export interface CategoryEscapeFromTarkovParams {
 	reg_period?: "day" | "month" | "year";
 	level_min?: number;
 	level_max?: number;
-	pve?: "yes" | "no" | "nomatter";
+	pve?: YesNoNoMatterScheme;
 	side?: "Bear" | "Savage";
 }
 
@@ -18469,11 +17978,7 @@ export type CategoryEscapeFromTarkovResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategorySocialClubParams {
@@ -18652,11 +18157,7 @@ export type CategorySocialClubResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryUplayParams {
@@ -18732,17 +18233,17 @@ export interface CategoryUplayParams {
 	r6_rank_max?: number;
 	r6_operators_min?: number;
 	r6_operators_max?: number;
-	r6_ban?: "yes" | "no" | "nomatter";
+	r6_ban?: YesNoNoMatterScheme;
 	r6_smin?: number;
 	r6_smax?: number;
 	"r6_skin[]"?: Array<string>;
 	"r6_operator[]"?: Array<string>;
-	xbox_connected?: "yes" | "no" | "nomatter";
-	psn_connected?: "yes" | "no" | "nomatter";
-	steam_connected?: "yes" | "no" | "nomatter";
+	xbox_connected?: YesNoNoMatterScheme;
+	psn_connected?: YesNoNoMatterScheme;
+	steam_connected?: YesNoNoMatterScheme;
 	balance_min?: number;
 	balance_max?: number;
-	transactions?: "yes" | "no" | "nomatter";
+	transactions?: YesNoNoMatterScheme;
 	reg?: number;
 	reg_period?: "day" | "month" | "year";
 }
@@ -18875,11 +18376,7 @@ export type CategoryUplayResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryDiscordParams {
@@ -18941,15 +18438,15 @@ export interface CategoryDiscordParams {
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
 	item_domain?: string;
 	tel?: "yes" | "no" | "nomatter";
-	nitro?: "yes" | "no" | "nomatter";
+	nitro?: YesNoNoMatterScheme;
 	"nitro_type[]"?: Array<"basic" | "classic" | "full" | "none" | "trial">;
 	nitro_length?: number;
 	nitro_period?: "day" | "month" | "year";
 	boosts_min?: number;
 	boosts_max?: number;
-	billing?: "yes" | "no" | "nomatter";
-	gifts?: "yes" | "no" | "nomatter";
-	transactions?: "yes" | "no" | "nomatter";
+	billing?: YesNoNoMatterScheme;
+	gifts?: YesNoNoMatterScheme;
+	transactions?: YesNoNoMatterScheme;
 	"badge[]"?: Array<
 		| "bug_hunter"
 		| "bug_hunter_level_2"
@@ -18971,7 +18468,7 @@ export interface CategoryDiscordParams {
 	reg_period?: "day" | "month" | "year";
 	"language[]"?: Array<string>;
 	"not_language[]"?: Array<string>;
-	clans?: "yes" | "no" | "nomatter";
+	clans?: YesNoNoMatterScheme;
 	min_admin_clans?: number;
 	max_admin_clans?: number;
 	min_owner_clans?: number;
@@ -18980,7 +18477,7 @@ export interface CategoryDiscordParams {
 	"not_country[]"?: Array<string>;
 	min_servers?: number;
 	max_servers?: number;
-	"2fa"?: "yes" | "no" | "nomatter";
+	"2fa"?: YesNoNoMatterScheme;
 	min_full_credits?: number;
 	max_full_credits?: number;
 	min_basic_credits?: number;
@@ -19091,11 +18588,7 @@ export type CategoryDiscordResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryTikTokParams {
@@ -19167,7 +18660,7 @@ export interface CategoryTikTokParams {
 	like_max?: number;
 	coins_min?: number;
 	coins_max?: number;
-	cookie_login?: "yes" | "no" | "nomatter";
+	cookie_login?: YesNoNoMatterScheme;
 	verified?: "yes" | "no" | "nomatter";
 	email?: "yes" | "no" | "nomatter";
 }
@@ -19283,11 +18776,7 @@ export type CategoryTikTokResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryInstagramParams {
@@ -19352,7 +18841,7 @@ export interface CategoryInstagramParams {
 	"country[]"?: Array<string>;
 	"not_country[]"?: Array<string>;
 	cookies?: "yes" | "no" | "nomatter";
-	login_without_cookies?: "yes" | "no" | "nomatter";
+	login_without_cookies?: YesNoNoMatterScheme;
 	followers_min?: number;
 	followers_max?: number;
 	post_min?: number;
@@ -19463,11 +18952,7 @@ export type CategoryInstagramResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryBattleNetParams {
@@ -19534,11 +19019,11 @@ export interface CategoryBattleNetParams {
 	"country[]"?: Array<string>;
 	"not_country[]"?: Array<string>;
 	tel?: "yes" | "no" | "nomatter";
-	edit_btag?: "yes" | "no" | "nomatter";
-	changeable_fn?: "yes" | "no" | "nomatter";
-	real_id?: "yes" | "no" | "nomatter";
-	parent_control?: "yes" | "no" | "nomatter";
-	no_bans?: "yes" | "no" | "nomatter";
+	edit_btag?: YesNoNoMatterScheme;
+	changeable_fn?: YesNoNoMatterScheme;
+	real_id?: YesNoNoMatterScheme;
+	parent_control?: YesNoNoMatterScheme;
+	no_bans?: YesNoNoMatterScheme;
 	balance_min?: number;
 	balance_max?: number;
 }
@@ -19673,11 +19158,7 @@ export type CategoryBattleNetResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryChatGPTParams {
@@ -19750,7 +19231,7 @@ export interface CategoryChatGPTParams {
 	subscription_period?: "day" | "month" | "year";
 	autorenewal?: "yes" | "no" | "nomatter";
 	tel?: "yes" | "no" | "nomatter";
-	transactions?: "yes" | "no" | "nomatter";
+	transactions?: YesNoNoMatterScheme;
 	reg?: number;
 	reg_period?: "day" | "month" | "year";
 	"openai_tier[]"?: Array<"tier1" | "tier2" | "tier3" | "tier4" | "tier5">;
@@ -19859,11 +19340,7 @@ export type CategoryChatGPTResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryVpnParams {
@@ -20032,11 +19509,7 @@ export type CategoryVpnResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryRobloxParams {
@@ -20095,7 +19568,7 @@ export interface CategoryRobloxParams {
 	>;
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
 	parse_same_item_ids?: boolean;
-	email?: "yes" | "no" | "nomatter";
+	email?: YesNoNoMatterScheme;
 	robux_min?: number;
 	robux_max?: number;
 	friends_min?: number;
@@ -20117,17 +19590,17 @@ export interface CategoryRobloxParams {
 	subscription_length?: number;
 	subscription_period?: "day" | "month" | "year";
 	autorenewal?: "yes" | "no" | "nomatter";
-	xbox_connected?: "yes" | "no" | "nomatter";
-	psn_connected?: "yes" | "no" | "nomatter";
+	xbox_connected?: YesNoNoMatterScheme;
+	psn_connected?: YesNoNoMatterScheme;
 	verified?: "yes" | "no" | "nomatter";
-	age_verified?: "yes" | "no" | "nomatter";
+	age_verified?: YesNoNoMatterScheme;
 	incoming_robux_total_min?: number;
 	incoming_robux_total_max?: number;
 	limited_price_min?: number;
 	limited_price_max?: number;
 	gamepass_min?: number;
 	gamepass_max?: number;
-	game_donations?: "yes" | "no" | "nomatter";
+	game_donations?: YesNoNoMatterScheme;
 	inv_min?: number;
 	inv_max?: number;
 	ugc_limited_price_min?: number;
@@ -20136,7 +19609,7 @@ export interface CategoryRobloxParams {
 	credit_balance_max?: number;
 	offsale_min?: number;
 	offsale_max?: number;
-	voice?: "yes" | "no" | "nomatter";
+	voice?: YesNoNoMatterScheme;
 	"age_group[]"?: Array<string>;
 	"not_age_group[]"?: Array<string>;
 }
@@ -20269,11 +19742,7 @@ export type CategoryRobloxResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryWarfaceParams {
@@ -20450,11 +19919,7 @@ export type CategoryWarfaceResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryMinecraftParams {
@@ -20517,18 +19982,18 @@ export interface CategoryMinecraftParams {
 	subscription_length?: number;
 	subscription_period?: "day" | "month" | "year";
 	autorenewal?: "yes" | "no" | "nomatter";
-	java?: "yes" | "no" | "nomatter";
-	bedrock?: "yes" | "no" | "nomatter";
-	dungeons?: "yes" | "no" | "nomatter";
-	legends?: "yes" | "no" | "nomatter";
-	change_nickname?: "yes" | "no" | "nomatter";
+	java?: YesNoNoMatterScheme;
+	bedrock?: YesNoNoMatterScheme;
+	dungeons?: YesNoNoMatterScheme;
+	legends?: YesNoNoMatterScheme;
+	change_nickname?: YesNoNoMatterScheme;
 	"capes[]"?: Array<string>;
 	capes_min?: number;
 	capes_max?: number;
 	"country[]"?: Array<string>;
 	"not_country[]"?: Array<string>;
-	hypixel_ban?: "yes" | "no" | "nomatter";
-	hypixel_skyblock_api_enabled?: "yes" | "no" | "nomatter";
+	hypixel_ban?: YesNoNoMatterScheme;
+	hypixel_skyblock_api_enabled?: YesNoNoMatterScheme;
 	"rank_hypixel[]"?: Array<"MVP" | "MVP+" | "MVP++" | "VIP" | "VIP+" | "YOUTUBE">;
 	level_hypixel_min?: number;
 	level_hypixel_max?: number;
@@ -20542,10 +20007,10 @@ export interface CategoryMinecraftParams {
 	reg_period?: "day" | "month" | "year";
 	last_login_hypixel?: number;
 	last_login_hypixel_period?: "day" | "month" | "year";
-	can_change_details?: "yes" | "no" | "nomatter";
+	can_change_details?: YesNoNoMatterScheme;
 	nickname_length_min?: number;
 	nickname_length_max?: number;
-	hypixel_ban_parsed?: "yes" | "no" | "nomatter";
+	hypixel_ban_parsed?: YesNoNoMatterScheme;
 	minecoins_min?: number;
 	minecoins_max?: number;
 }
@@ -20667,11 +20132,7 @@ export type CategoryMinecraftResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryHytaleParams {
@@ -20841,11 +20302,7 @@ export type CategoryHytaleResponse = {
 	serverTime: number;
 	searchUrl: string;
 	stickyItems: Array<unknown>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CategoryListParams {
@@ -20864,11 +20321,7 @@ export type CategoryListResponse = {
 			"sub-forums": string;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type CategoryParamsResponse = {
@@ -20922,11 +20375,7 @@ export type CategoryParamsResponse = {
 			description: string;
 		};
 	};
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type CategoryGamesResponse = {
@@ -20939,42 +20388,14 @@ export type CategoryGamesResponse = {
 		url: string;
 		ru: string;
 	}>;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── ListApi Types ────────────────────────────────────────
 
 export interface ListUserParams {
 	user_id?: number;
-	category_id?:
-		| 1
-		| 3
-		| 4
-		| 5
-		| 6
-		| 7
-		| 8
-		| 9
-		| 10
-		| 11
-		| 12
-		| 13
-		| 14
-		| 15
-		| 16
-		| 17
-		| 18
-		| 19
-		| 20
-		| 22
-		| 24
-		| 28
-		| 30
-		| 31;
+	category_id?: CategoryIDModel;
 	page?: number;
 	show?:
 		| "active"
@@ -21041,171 +20462,11 @@ export interface ListUserParams {
 	filter_by_delete_date?: boolean;
 }
 
-export type ListUserResponse = {
-	items: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	totalItems: number;
-	totalItemsPrice: unknown;
-	hasNextPage: boolean;
-	perPage: number;
-	page: number;
-	searchUrl: string;
-	stickyItems: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
-};
+export type ListUserResponse = unknown;
 
 export interface ListOrdersParams {
 	user_id?: number;
-	category_id?:
-		| 1
-		| 3
-		| 4
-		| 5
-		| 6
-		| 7
-		| 8
-		| 9
-		| 10
-		| 11
-		| 12
-		| 13
-		| 14
-		| 15
-		| 16
-		| 17
-		| 18
-		| 19
-		| 20
-		| 22
-		| 24
-		| 28
-		| 30
-		| 31;
+	category_id?: CategoryIDModel;
 	page?: number;
 	show?:
 		| "active"
@@ -21261,143 +20522,7 @@ export interface ListOrdersParams {
 	nsb_by_me?: boolean;
 }
 
-export type ListOrdersResponse = {
-	items: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	totalItems: number;
-	totalItemsPrice: unknown;
-	hasNextPage: boolean;
-	perPage: number;
-	page: number;
-	searchUrl: string;
-	stickyItems: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
-};
+export type ListOrdersResponse = unknown;
 
 export interface ListStatesParams {
 	user_id?: number | string;
@@ -21472,41 +20597,13 @@ export type ListStatesResponse = {
 			title: string;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ListDownloadParams {
 	format?: "short" | "custom" | "mfa_file_steam_id" | "mfa_file_login";
 	custom_format?: string;
-	category_id?:
-		| 1
-		| 3
-		| 4
-		| 5
-		| 6
-		| 7
-		| 8
-		| 9
-		| 10
-		| 11
-		| 12
-		| 13
-		| 14
-		| 15
-		| 16
-		| 17
-		| 18
-		| 19
-		| 20
-		| 22
-		| 24
-		| 28
-		| 30
-		| 31;
+	category_id?: CategoryIDModel;
 	page?: number;
 	show?:
 		| "active"
@@ -21629,143 +20726,7 @@ export interface ListFavoritesParams {
 	nsb_by_me?: boolean;
 }
 
-export type ListFavoritesResponse = {
-	items: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	totalItems: number;
-	totalItemsPrice: unknown;
-	hasNextPage: boolean;
-	perPage: number;
-	page: number;
-	searchUrl: string;
-	stickyItems: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
-};
+export type ListFavoritesResponse = unknown;
 
 export interface ListViewedParams {
 	page?: number;
@@ -21822,143 +20783,7 @@ export interface ListViewedParams {
 	nsb_by_me?: boolean;
 }
 
-export type ListViewedResponse = {
-	items: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	totalItems: number;
-	totalItemsPrice: unknown;
-	hasNextPage: boolean;
-	perPage: number;
-	page: number;
-	searchUrl: string;
-	stickyItems: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
-};
+export type ListViewedResponse = unknown;
 
 // ─── ManagingApi Types ────────────────────────────────────────
 
@@ -21967,192 +20792,7 @@ export interface ManagingGetParams {
 }
 
 export type ManagingGetResponse = {
-	item: {
-		item_id: number;
-		item_state: string;
-		category_id: number;
-		published_date: number;
-		title: string;
-		description: string;
-		price: number;
-		update_stat_date: number;
-		refreshed_date: number;
-		edit_date: number;
-		pending_deletion_date: number;
-		login: string;
-		temp_email: string;
-		view_count: number;
-		is_sticky: number;
-		information: string;
-		item_origin: string;
-		extended_guarantee: number;
-		nsb: number;
-		allow_ask_discount: number;
-		title_en: string;
-		description_en: string;
-		information_en: string;
-		email_type: string;
-		email_provider: string;
-		item_domain: string;
-		resale_item_origin: string;
-		note_text: string;
-		content_type: unknown;
-		content_id: unknown;
-		delete_date: number;
-		delete_user_id: number;
-		delete_username: string;
-		delete_reason: string;
-		user_allow_ask_discount: number;
-		max_discount_percent: number;
-		market_custom_title: string;
-		feedback_data: string;
-		buyer_display_icon_group_id: number;
-		buyer_uniq_banner: string;
-		buyer_avatar_date: number;
-		buyer_user_group_id: number;
-		is_fave: unknown;
-		in_cart: unknown;
-		cart_price: unknown;
-		canResellItem: boolean;
-		priceWithSellerFee: number;
-		guarantee: {
-			duration: number;
-			class: string;
-			durationPhrase: string;
-			endDate: number;
-			active: boolean;
-			cancelled: boolean;
-			remainingTime: number;
-			remainingTimePhrase: string;
-			cancelledReason: string;
-			cancelledReasonPhrase: string;
-		};
-		canViewLoginData: boolean;
-		canUpdateItemStats: boolean;
-		canReportItem: boolean;
-		canViewItemViews: boolean;
-		loginData: {
-			raw: string;
-			encodedRaw: string;
-			login: string;
-			password: string;
-			encodedPassword: string;
-			oldPassword: string;
-			encodedOldPassword: unknown;
-		};
-		canViewEmailLoginData: boolean;
-		copyFormatData: {
-			title_link: string;
-			login_data: string;
-			full: string;
-		};
-		showGetEmailCodeButton: boolean;
-		getEmailCodeDisplayLogin: unknown;
-		buyer: {
-			user_id: number;
-			operation_date: number;
-			visitorIsBuyer: boolean;
-			username: string;
-			is_banned: number;
-			display_style_group_id: number;
-			display_icon_group_id: number;
-			uniq_username_css: string;
-			uniq_banner: string;
-			user_group_id: number;
-		};
-		isPersonalAccount: boolean;
-		rub_price: number;
-		price_currency: string;
-		priceWithSellerFeeLabel: string;
-		canValidateAccount: boolean;
-		canResellItemAfterPurchase: boolean;
-		isSmallExf: boolean;
-		account_last_activity: number;
-		canViewAccountLink: boolean;
-		accountLinks: Array<{
-			link: string;
-			text: string;
-			iconClass: string;
-		}>;
-		accountLink: string;
-		imagePreviewLinks: Array<string>;
-		canChangePassword: boolean;
-		canChangeEmailPassword: boolean;
-		uniqueKeyExists: boolean;
-		itemOriginPhrase: string;
-		visitorIsAuthor: boolean;
-		canAskDiscount: boolean;
-		tags: {
-			"1234567890": {
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			};
-		};
-		customFields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztUnbanAmount: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-		};
-		externalAuth: Array<unknown>;
-		isTrusted: boolean;
-		isBirthdayToday: boolean;
-		isIgnored: boolean;
-		deposit: number;
-		extraPrices: Array<{
-			currency: string;
-			price: string;
-			priceValue: number;
-		}>;
-		canViewAccountLoginAndTempEmail: boolean;
-		bumpSettings: {
-			canBumpItem: boolean;
-			canBumpItemGlobally: boolean;
-			shortErrorPhrase: unknown;
-			nextAllowedBumpDate: unknown;
-			errorPhrase: unknown;
-		};
-		canCheckGuarantee: boolean;
-		canShareItem: boolean;
-		canCheckAiPrice: boolean;
-		aiPrice: number;
-		aiPriceCheckDate: number;
-		needToRequireVideoToViewLoginData: boolean;
-		canCheckAutoBuyPrice: boolean;
-		autoBuyPrice: number;
-		autoBuyPriceCheckDate: number;
-		descriptionHtml: string;
-		descriptionEnHtml: string;
-		descriptionPlain: string;
-		descriptionEnPlain: string;
-		seller: {
-			user_id: number;
-			username: string;
-			avatar_date: number;
-			is_banned: number;
-			display_style_group_id: number;
-			joined_date: number;
-			sold_items_count: number;
-			active_items_count: number;
-			restore_data: string;
-			effective_last_activity: number;
-			restore_percents: unknown;
-			isOnline: boolean;
-			contacts: {
-				ban_reason: string;
-				telegram: string;
-			};
-		};
-	};
+	item: ItemModel;
 	canStickItem: boolean;
 	canUnstickItem: boolean;
 	canBuyItem: boolean;
@@ -22172,11 +20812,7 @@ export type ManagingGetResponse = {
 	canChangeOwner: boolean;
 	sameItemsIds: Array<number>;
 	sameItemsCount: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingDeleteBody {
@@ -22186,15 +20822,11 @@ export interface ManagingDeleteBody {
 export type ManagingDeleteResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingCreateClaimBody {
-	item_id: number;
+	item_id: ItemIDModel;
 	post_body: string;
 }
 
@@ -22324,210 +20956,21 @@ export type ManagingCreateClaimResponse = {
 };
 
 export interface ManagingBulkGetBody {
-	item_id?: Array<number>;
+	item_id?: Array<ItemIDModel>;
 	parse_same_item_ids?: boolean;
 }
 
 export type ManagingBulkGetResponse = {
 	items: Array<{
-		"0"?: {
-			item_id: number;
-			item_state: string;
-			category_id: number;
-			published_date: number;
-			title: string;
-			description: string;
-			price: number;
-			update_stat_date: number;
-			refreshed_date: number;
-			edit_date: number;
-			pending_deletion_date: number;
-			login: string;
-			temp_email: string;
-			view_count: number;
-			is_sticky: number;
-			information: string;
-			item_origin: string;
-			extended_guarantee: number;
-			nsb: number;
-			allow_ask_discount: number;
-			title_en: string;
-			description_en: string;
-			information_en: string;
-			email_type: string;
-			email_provider: string;
-			item_domain: string;
-			resale_item_origin: string;
-			note_text: string;
-			content_type: unknown;
-			content_id: unknown;
-			delete_date: number;
-			delete_user_id: number;
-			delete_username: string;
-			delete_reason: string;
-			user_allow_ask_discount: number;
-			max_discount_percent: number;
-			market_custom_title: string;
-			feedback_data: string;
-			buyer_display_icon_group_id: number;
-			buyer_uniq_banner: string;
-			buyer_avatar_date: number;
-			buyer_user_group_id: number;
-			is_fave: unknown;
-			in_cart: unknown;
-			cart_price: unknown;
-			canResellItem: boolean;
-			priceWithSellerFee: number;
-			guarantee: {
-				duration: number;
-				class: string;
-				durationPhrase: string;
-				endDate: number;
-				active: boolean;
-				cancelled: boolean;
-				remainingTime: number;
-				remainingTimePhrase: string;
-				cancelledReason: string;
-				cancelledReasonPhrase: string;
-			};
-			canViewLoginData: boolean;
-			canUpdateItemStats: boolean;
-			canReportItem: boolean;
-			canViewItemViews: boolean;
-			loginData: {
-				raw: string;
-				encodedRaw: string;
-				login: string;
-				password: string;
-				encodedPassword: string;
-				oldPassword: string;
-				encodedOldPassword: unknown;
-			};
-			canViewEmailLoginData: boolean;
-			copyFormatData: {
-				title_link: string;
-				login_data: string;
-				full: string;
-			};
-			showGetEmailCodeButton: boolean;
-			getEmailCodeDisplayLogin: unknown;
-			buyer: {
-				user_id: number;
-				operation_date: number;
-				visitorIsBuyer: boolean;
-				username: string;
-				is_banned: number;
-				display_style_group_id: number;
-				display_icon_group_id: number;
-				uniq_username_css: string;
-				uniq_banner: string;
-				user_group_id: number;
-			};
-			isPersonalAccount: boolean;
-			rub_price: number;
-			price_currency: string;
-			priceWithSellerFeeLabel: string;
-			canValidateAccount: boolean;
-			canResellItemAfterPurchase: boolean;
-			isSmallExf: boolean;
-			account_last_activity: number;
-			canViewAccountLink: boolean;
-			accountLinks: Array<{
-				link: string;
-				text: string;
-				iconClass: string;
-			}>;
-			accountLink: string;
-			imagePreviewLinks: Array<string>;
-			canChangePassword: boolean;
-			canChangeEmailPassword: boolean;
-			uniqueKeyExists: boolean;
-			itemOriginPhrase: string;
-			visitorIsAuthor: boolean;
-			canAskDiscount: boolean;
-			tags: {
-				"1234567890": {
-					tag_id: number;
-					title: string;
-					isDefault: boolean;
-					forOwnedAccountsOnly: boolean;
-					bc: string;
-				};
-			};
-			customFields: {
-				_4: string;
-				allowSelfUnban: Array<unknown>;
-				ban_reason: string;
-				discord: string;
-				github: string;
-				jabber: string;
-				lztUnbanAmount: string;
-				steam: string;
-				telegram: string;
-				vk: string;
-			};
-			externalAuth: Array<unknown>;
-			isTrusted: boolean;
-			isBirthdayToday: boolean;
-			isIgnored: boolean;
-			deposit: number;
-			extraPrices: Array<{
-				currency: string;
-				price: string;
-				priceValue: number;
-			}>;
-			canViewAccountLoginAndTempEmail: boolean;
-			bumpSettings: {
-				canBumpItem: boolean;
-				canBumpItemGlobally: boolean;
-				shortErrorPhrase: unknown;
-				nextAllowedBumpDate: unknown;
-				errorPhrase: unknown;
-			};
-			canCheckGuarantee: boolean;
-			canShareItem: boolean;
-			canCheckAiPrice: boolean;
-			aiPrice: number;
-			aiPriceCheckDate: number;
-			needToRequireVideoToViewLoginData: boolean;
-			canCheckAutoBuyPrice: boolean;
-			autoBuyPrice: number;
-			autoBuyPriceCheckDate: number;
-			descriptionHtml: string;
-			descriptionEnHtml: string;
-			descriptionPlain: string;
-			descriptionEnPlain: string;
-			seller: {
-				user_id: number;
-				username: string;
-				avatar_date: number;
-				is_banned: number;
-				display_style_group_id: number;
-				joined_date: number;
-				sold_items_count: number;
-				active_items_count: number;
-				restore_data: string;
-				effective_last_activity: number;
-				restore_percents: unknown;
-				isOnline: boolean;
-				contacts: {
-					ban_reason: string;
-					telegram: string;
-				};
-			};
-		};
+		"0"?: ItemModel;
 	}>;
 	left_item_id: Array<number>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingSteamInventoryValueParams {
 	app_id?: 730 | 578080 | 753 | 570 | 440 | 252490 | 304930 | 232090 | 322330;
-	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency?: CurrencyModel;
 	ignore_cache?: boolean;
 }
 
@@ -22566,17 +21009,13 @@ export type ManagingSteamInventoryValueResponse = {
 		time: number;
 	};
 	appId?: number;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ManagingSteamValueParams {
 	link: string;
 	app_id?: 730 | 578080 | 753 | 570 | 440 | 252490 | 304930 | 232090 | 322330;
-	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency?: CurrencyModel;
 	ignore_cache?: boolean;
 }
 
@@ -22615,11 +21054,7 @@ export type ManagingSteamValueResponse = {
 		time: number;
 	};
 	appId?: number;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ManagingSteamPreviewParams {
@@ -22632,7 +21067,7 @@ export interface ManagingEditBody {
 	title?: string;
 	title_en?: string;
 	price?: number;
-	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency?: CurrencyModel;
 	item_origin?: "brute" | "phishing" | "stealer" | "personal" | "resale" | "autoreg" | "dummy";
 	email_login_data?: string;
 	email_type?: "native" | "autoreg";
@@ -22645,29 +21080,17 @@ export interface ManagingEditBody {
 export type ManagingEditResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ManagingAIPriceResponse = {
 	price: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingAutoBuyPriceResponse = {
 	price: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingNoteBody {
@@ -22677,11 +21100,7 @@ export interface ManagingNoteBody {
 export type ManagingNoteResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingSteamUpdateValueBody {
@@ -22692,207 +21111,14 @@ export interface ManagingSteamUpdateValueBody {
 
 export type ManagingSteamUpdateValueResponse = {
 	status: string;
-	item: {
-		item_id: number;
-		item_state: string;
-		category_id: number;
-		published_date: number;
-		title: string;
-		description: string;
-		price: number;
-		update_stat_date: number;
-		refreshed_date: number;
-		edit_date: number;
-		pending_deletion_date: number;
-		login: string;
-		temp_email: string;
-		view_count: number;
-		is_sticky: number;
-		information: string;
-		item_origin: string;
-		extended_guarantee: number;
-		nsb: number;
-		allow_ask_discount: number;
-		title_en: string;
-		description_en: string;
-		information_en: string;
-		email_type: string;
-		email_provider: string;
-		item_domain: string;
-		resale_item_origin: string;
-		note_text: string;
-		content_type: unknown;
-		content_id: unknown;
-		delete_date: number;
-		delete_user_id: number;
-		delete_username: string;
-		delete_reason: string;
-		user_allow_ask_discount: number;
-		max_discount_percent: number;
-		market_custom_title: string;
-		feedback_data: string;
-		buyer_display_icon_group_id: number;
-		buyer_uniq_banner: string;
-		buyer_avatar_date: number;
-		buyer_user_group_id: number;
-		is_fave: unknown;
-		in_cart: unknown;
-		cart_price: unknown;
-		canResellItem: boolean;
-		priceWithSellerFee: number;
-		guarantee: {
-			duration: number;
-			class: string;
-			durationPhrase: string;
-			endDate: number;
-			active: boolean;
-			cancelled: boolean;
-			remainingTime: number;
-			remainingTimePhrase: string;
-			cancelledReason: string;
-			cancelledReasonPhrase: string;
-		};
-		canViewLoginData: boolean;
-		canUpdateItemStats: boolean;
-		canReportItem: boolean;
-		canViewItemViews: boolean;
-		loginData: {
-			raw: string;
-			encodedRaw: string;
-			login: string;
-			password: string;
-			encodedPassword: string;
-			oldPassword: string;
-			encodedOldPassword: unknown;
-		};
-		canViewEmailLoginData: boolean;
-		copyFormatData: {
-			title_link: string;
-			login_data: string;
-			full: string;
-		};
-		showGetEmailCodeButton: boolean;
-		getEmailCodeDisplayLogin: unknown;
-		buyer: {
-			user_id: number;
-			operation_date: number;
-			visitorIsBuyer: boolean;
-			username: string;
-			is_banned: number;
-			display_style_group_id: number;
-			display_icon_group_id: number;
-			uniq_username_css: string;
-			uniq_banner: string;
-			user_group_id: number;
-		};
-		isPersonalAccount: boolean;
-		rub_price: number;
-		price_currency: string;
-		priceWithSellerFeeLabel: string;
-		canValidateAccount: boolean;
-		canResellItemAfterPurchase: boolean;
-		isSmallExf: boolean;
-		account_last_activity: number;
-		canViewAccountLink: boolean;
-		accountLinks: Array<{
-			link: string;
-			text: string;
-			iconClass: string;
-		}>;
-		accountLink: string;
-		imagePreviewLinks: Array<string>;
-		canChangePassword: boolean;
-		canChangeEmailPassword: boolean;
-		uniqueKeyExists: boolean;
-		itemOriginPhrase: string;
-		visitorIsAuthor: boolean;
-		canAskDiscount: boolean;
-		tags: {
-			"1234567890": {
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			};
-		};
-		customFields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztUnbanAmount: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-		};
-		externalAuth: Array<unknown>;
-		isTrusted: boolean;
-		isBirthdayToday: boolean;
-		isIgnored: boolean;
-		deposit: number;
-		extraPrices: Array<{
-			currency: string;
-			price: string;
-			priceValue: number;
-		}>;
-		canViewAccountLoginAndTempEmail: boolean;
-		bumpSettings: {
-			canBumpItem: boolean;
-			canBumpItemGlobally: boolean;
-			shortErrorPhrase: unknown;
-			nextAllowedBumpDate: unknown;
-			errorPhrase: unknown;
-		};
-		canCheckGuarantee: boolean;
-		canShareItem: boolean;
-		canCheckAiPrice: boolean;
-		aiPrice: number;
-		aiPriceCheckDate: number;
-		needToRequireVideoToViewLoginData: boolean;
-		canCheckAutoBuyPrice: boolean;
-		autoBuyPrice: number;
-		autoBuyPriceCheckDate: number;
-		descriptionHtml: string;
-		descriptionEnHtml: string;
-		descriptionPlain: string;
-		descriptionEnPlain: string;
-		seller: {
-			user_id: number;
-			username: string;
-			avatar_date: number;
-			is_banned: number;
-			display_style_group_id: number;
-			joined_date: number;
-			sold_items_count: number;
-			active_items_count: number;
-			restore_data: string;
-			effective_last_activity: number;
-			restore_percents: unknown;
-			isOnline: boolean;
-			contacts: {
-				ban_reason: string;
-				telegram: string;
-			};
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	item: ItemModel;
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingBumpResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingAutoBumpBody {
@@ -22902,41 +21128,25 @@ export interface ManagingAutoBumpBody {
 export type ManagingAutoBumpResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingAutoBumpDisableResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingOpenResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingCloseResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingImageParams {
@@ -22945,206 +21155,10 @@ export interface ManagingImageParams {
 
 export type ManagingImageResponse = {
 	base64: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
-export type ManagingEmailCodeResponse = {
-	item: {
-		item_id: number;
-		item_state: string;
-		category_id: number;
-		published_date: number;
-		title: string;
-		description: string;
-		price: number;
-		update_stat_date: number;
-		refreshed_date: number;
-		edit_date: number;
-		pending_deletion_date: number;
-		login: string;
-		temp_email: string;
-		view_count: number;
-		is_sticky: number;
-		information: string;
-		item_origin: string;
-		extended_guarantee: number;
-		nsb: number;
-		allow_ask_discount: number;
-		title_en: string;
-		description_en: string;
-		information_en: string;
-		email_type: string;
-		email_provider: string;
-		item_domain: string;
-		resale_item_origin: string;
-		note_text: string;
-		content_type: unknown;
-		content_id: unknown;
-		delete_date: number;
-		delete_user_id: number;
-		delete_username: string;
-		delete_reason: string;
-		user_allow_ask_discount: number;
-		max_discount_percent: number;
-		market_custom_title: string;
-		feedback_data: string;
-		buyer_display_icon_group_id: number;
-		buyer_uniq_banner: string;
-		buyer_avatar_date: number;
-		buyer_user_group_id: number;
-		is_fave: unknown;
-		in_cart: unknown;
-		cart_price: unknown;
-		canResellItem: boolean;
-		priceWithSellerFee: number;
-		guarantee: {
-			duration: number;
-			class: string;
-			durationPhrase: string;
-			endDate: number;
-			active: boolean;
-			cancelled: boolean;
-			remainingTime: number;
-			remainingTimePhrase: string;
-			cancelledReason: string;
-			cancelledReasonPhrase: string;
-		};
-		canViewLoginData: boolean;
-		canUpdateItemStats: boolean;
-		canReportItem: boolean;
-		canViewItemViews: boolean;
-		loginData: {
-			raw: string;
-			encodedRaw: string;
-			login: string;
-			password: string;
-			encodedPassword: string;
-			oldPassword: string;
-			encodedOldPassword: unknown;
-		};
-		canViewEmailLoginData: boolean;
-		copyFormatData: {
-			title_link: string;
-			login_data: string;
-			full: string;
-		};
-		showGetEmailCodeButton: boolean;
-		getEmailCodeDisplayLogin: unknown;
-		buyer: {
-			user_id: number;
-			operation_date: number;
-			visitorIsBuyer: boolean;
-			username: string;
-			is_banned: number;
-			display_style_group_id: number;
-			display_icon_group_id: number;
-			uniq_username_css: string;
-			uniq_banner: string;
-			user_group_id: number;
-		};
-		isPersonalAccount: boolean;
-		rub_price: number;
-		price_currency: string;
-		priceWithSellerFeeLabel: string;
-		canValidateAccount: boolean;
-		canResellItemAfterPurchase: boolean;
-		isSmallExf: boolean;
-		account_last_activity: number;
-		canViewAccountLink: boolean;
-		accountLinks: Array<{
-			link: string;
-			text: string;
-			iconClass: string;
-		}>;
-		accountLink: string;
-		imagePreviewLinks: Array<string>;
-		canChangePassword: boolean;
-		canChangeEmailPassword: boolean;
-		uniqueKeyExists: boolean;
-		itemOriginPhrase: string;
-		visitorIsAuthor: boolean;
-		canAskDiscount: boolean;
-		tags: {
-			"1234567890": {
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			};
-		};
-		customFields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztUnbanAmount: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-		};
-		externalAuth: Array<unknown>;
-		isTrusted: boolean;
-		isBirthdayToday: boolean;
-		isIgnored: boolean;
-		deposit: number;
-		extraPrices: Array<{
-			currency: string;
-			price: string;
-			priceValue: number;
-		}>;
-		canViewAccountLoginAndTempEmail: boolean;
-		bumpSettings: {
-			canBumpItem: boolean;
-			canBumpItemGlobally: boolean;
-			shortErrorPhrase: unknown;
-			nextAllowedBumpDate: unknown;
-			errorPhrase: unknown;
-		};
-		canCheckGuarantee: boolean;
-		canShareItem: boolean;
-		canCheckAiPrice: boolean;
-		aiPrice: number;
-		aiPriceCheckDate: number;
-		needToRequireVideoToViewLoginData: boolean;
-		canCheckAutoBuyPrice: boolean;
-		autoBuyPrice: number;
-		autoBuyPriceCheckDate: number;
-		descriptionHtml: string;
-		descriptionEnHtml: string;
-		descriptionPlain: string;
-		descriptionEnPlain: string;
-		seller: {
-			user_id: number;
-			username: string;
-			avatar_date: number;
-			is_banned: number;
-			display_style_group_id: number;
-			joined_date: number;
-			sold_items_count: number;
-			active_items_count: number;
-			restore_data: string;
-			effective_last_activity: number;
-			restore_percents: unknown;
-			isOnline: boolean;
-			contacts: {
-				ban_reason: string;
-				telegram: string;
-			};
-		};
-	};
-	codeData: {
-		code: string;
-		date: number;
-		textPlain: string;
-	};
-};
+export type ManagingEmailCodeResponse = unknown;
 
 export interface ManagingGetLetters2Params {
 	email_password?: string;
@@ -23161,11 +21175,7 @@ export type ManagingGetLetters2Response = {
 		from: string;
 		date: number;
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingSteamGetMafileResponse = {
@@ -23188,598 +21198,24 @@ export type ManagingSteamGetMafileResponse = {
 			SteamLoginSecure: string;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingSteamAddMafileResponse = {
 	status: string;
 	message: string;
-	item: {
-		item_id: number;
-		item_state: string;
-		category_id: number;
-		published_date: number;
-		title: string;
-		description: string;
-		price: number;
-		update_stat_date: number;
-		refreshed_date: number;
-		edit_date: number;
-		pending_deletion_date: number;
-		login: string;
-		temp_email: string;
-		view_count: number;
-		is_sticky: number;
-		information: string;
-		item_origin: string;
-		extended_guarantee: number;
-		nsb: number;
-		allow_ask_discount: number;
-		title_en: string;
-		description_en: string;
-		information_en: string;
-		email_type: string;
-		email_provider: string;
-		item_domain: string;
-		resale_item_origin: string;
-		note_text: string;
-		content_type: unknown;
-		content_id: unknown;
-		delete_date: number;
-		delete_user_id: number;
-		delete_username: string;
-		delete_reason: string;
-		user_allow_ask_discount: number;
-		max_discount_percent: number;
-		market_custom_title: string;
-		feedback_data: string;
-		buyer_display_icon_group_id: number;
-		buyer_uniq_banner: string;
-		buyer_avatar_date: number;
-		buyer_user_group_id: number;
-		is_fave: unknown;
-		in_cart: unknown;
-		cart_price: unknown;
-		canResellItem: boolean;
-		priceWithSellerFee: number;
-		guarantee: {
-			duration: number;
-			class: string;
-			durationPhrase: string;
-			endDate: number;
-			active: boolean;
-			cancelled: boolean;
-			remainingTime: number;
-			remainingTimePhrase: string;
-			cancelledReason: string;
-			cancelledReasonPhrase: string;
-		};
-		canViewLoginData: boolean;
-		canUpdateItemStats: boolean;
-		canReportItem: boolean;
-		canViewItemViews: boolean;
-		loginData: {
-			raw: string;
-			encodedRaw: string;
-			login: string;
-			password: string;
-			encodedPassword: string;
-			oldPassword: string;
-			encodedOldPassword: unknown;
-		};
-		canViewEmailLoginData: boolean;
-		copyFormatData: {
-			title_link: string;
-			login_data: string;
-			full: string;
-		};
-		showGetEmailCodeButton: boolean;
-		getEmailCodeDisplayLogin: unknown;
-		buyer: {
-			user_id: number;
-			operation_date: number;
-			visitorIsBuyer: boolean;
-			username: string;
-			is_banned: number;
-			display_style_group_id: number;
-			display_icon_group_id: number;
-			uniq_username_css: string;
-			uniq_banner: string;
-			user_group_id: number;
-		};
-		isPersonalAccount: boolean;
-		rub_price: number;
-		price_currency: string;
-		priceWithSellerFeeLabel: string;
-		canValidateAccount: boolean;
-		canResellItemAfterPurchase: boolean;
-		isSmallExf: boolean;
-		account_last_activity: number;
-		canViewAccountLink: boolean;
-		accountLinks: Array<{
-			link: string;
-			text: string;
-			iconClass: string;
-		}>;
-		accountLink: string;
-		imagePreviewLinks: Array<string>;
-		canChangePassword: boolean;
-		canChangeEmailPassword: boolean;
-		uniqueKeyExists: boolean;
-		itemOriginPhrase: string;
-		visitorIsAuthor: boolean;
-		canAskDiscount: boolean;
-		tags: {
-			"1234567890": {
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			};
-		};
-		customFields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztUnbanAmount: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-		};
-		externalAuth: Array<unknown>;
-		isTrusted: boolean;
-		isBirthdayToday: boolean;
-		isIgnored: boolean;
-		deposit: number;
-		extraPrices: Array<{
-			currency: string;
-			price: string;
-			priceValue: number;
-		}>;
-		canViewAccountLoginAndTempEmail: boolean;
-		bumpSettings: {
-			canBumpItem: boolean;
-			canBumpItemGlobally: boolean;
-			shortErrorPhrase: unknown;
-			nextAllowedBumpDate: unknown;
-			errorPhrase: unknown;
-		};
-		canCheckGuarantee: boolean;
-		canShareItem: boolean;
-		canCheckAiPrice: boolean;
-		aiPrice: number;
-		aiPriceCheckDate: number;
-		needToRequireVideoToViewLoginData: boolean;
-		canCheckAutoBuyPrice: boolean;
-		autoBuyPrice: number;
-		autoBuyPriceCheckDate: number;
-		descriptionHtml: string;
-		descriptionEnHtml: string;
-		descriptionPlain: string;
-		descriptionEnPlain: string;
-		seller: {
-			user_id: number;
-			username: string;
-			avatar_date: number;
-			is_banned: number;
-			display_style_group_id: number;
-			joined_date: number;
-			sold_items_count: number;
-			active_items_count: number;
-			restore_data: string;
-			effective_last_activity: number;
-			restore_percents: unknown;
-			isOnline: boolean;
-			contacts: {
-				ban_reason: string;
-				telegram: string;
-			};
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	item: ItemModel;
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingSteamRemoveMafileResponse = {
 	status: string;
 	message: string;
-	item: {
-		item_id: number;
-		item_state: string;
-		category_id: number;
-		published_date: number;
-		title: string;
-		description: string;
-		price: number;
-		update_stat_date: number;
-		refreshed_date: number;
-		edit_date: number;
-		pending_deletion_date: number;
-		login: string;
-		temp_email: string;
-		view_count: number;
-		is_sticky: number;
-		information: string;
-		item_origin: string;
-		extended_guarantee: number;
-		nsb: number;
-		allow_ask_discount: number;
-		title_en: string;
-		description_en: string;
-		information_en: string;
-		email_type: string;
-		email_provider: string;
-		item_domain: string;
-		resale_item_origin: string;
-		note_text: string;
-		content_type: unknown;
-		content_id: unknown;
-		delete_date: number;
-		delete_user_id: number;
-		delete_username: string;
-		delete_reason: string;
-		user_allow_ask_discount: number;
-		max_discount_percent: number;
-		market_custom_title: string;
-		feedback_data: string;
-		buyer_display_icon_group_id: number;
-		buyer_uniq_banner: string;
-		buyer_avatar_date: number;
-		buyer_user_group_id: number;
-		is_fave: unknown;
-		in_cart: unknown;
-		cart_price: unknown;
-		canResellItem: boolean;
-		priceWithSellerFee: number;
-		guarantee: {
-			duration: number;
-			class: string;
-			durationPhrase: string;
-			endDate: number;
-			active: boolean;
-			cancelled: boolean;
-			remainingTime: number;
-			remainingTimePhrase: string;
-			cancelledReason: string;
-			cancelledReasonPhrase: string;
-		};
-		canViewLoginData: boolean;
-		canUpdateItemStats: boolean;
-		canReportItem: boolean;
-		canViewItemViews: boolean;
-		loginData: {
-			raw: string;
-			encodedRaw: string;
-			login: string;
-			password: string;
-			encodedPassword: string;
-			oldPassword: string;
-			encodedOldPassword: unknown;
-		};
-		canViewEmailLoginData: boolean;
-		copyFormatData: {
-			title_link: string;
-			login_data: string;
-			full: string;
-		};
-		showGetEmailCodeButton: boolean;
-		getEmailCodeDisplayLogin: unknown;
-		buyer: {
-			user_id: number;
-			operation_date: number;
-			visitorIsBuyer: boolean;
-			username: string;
-			is_banned: number;
-			display_style_group_id: number;
-			display_icon_group_id: number;
-			uniq_username_css: string;
-			uniq_banner: string;
-			user_group_id: number;
-		};
-		isPersonalAccount: boolean;
-		rub_price: number;
-		price_currency: string;
-		priceWithSellerFeeLabel: string;
-		canValidateAccount: boolean;
-		canResellItemAfterPurchase: boolean;
-		isSmallExf: boolean;
-		account_last_activity: number;
-		canViewAccountLink: boolean;
-		accountLinks: Array<{
-			link: string;
-			text: string;
-			iconClass: string;
-		}>;
-		accountLink: string;
-		imagePreviewLinks: Array<string>;
-		canChangePassword: boolean;
-		canChangeEmailPassword: boolean;
-		uniqueKeyExists: boolean;
-		itemOriginPhrase: string;
-		visitorIsAuthor: boolean;
-		canAskDiscount: boolean;
-		tags: {
-			"1234567890": {
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			};
-		};
-		customFields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztUnbanAmount: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-		};
-		externalAuth: Array<unknown>;
-		isTrusted: boolean;
-		isBirthdayToday: boolean;
-		isIgnored: boolean;
-		deposit: number;
-		extraPrices: Array<{
-			currency: string;
-			price: string;
-			priceValue: number;
-		}>;
-		canViewAccountLoginAndTempEmail: boolean;
-		bumpSettings: {
-			canBumpItem: boolean;
-			canBumpItemGlobally: boolean;
-			shortErrorPhrase: unknown;
-			nextAllowedBumpDate: unknown;
-			errorPhrase: unknown;
-		};
-		canCheckGuarantee: boolean;
-		canShareItem: boolean;
-		canCheckAiPrice: boolean;
-		aiPrice: number;
-		aiPriceCheckDate: number;
-		needToRequireVideoToViewLoginData: boolean;
-		canCheckAutoBuyPrice: boolean;
-		autoBuyPrice: number;
-		autoBuyPriceCheckDate: number;
-		descriptionHtml: string;
-		descriptionEnHtml: string;
-		descriptionPlain: string;
-		descriptionEnPlain: string;
-		seller: {
-			user_id: number;
-			username: string;
-			avatar_date: number;
-			is_banned: number;
-			display_style_group_id: number;
-			joined_date: number;
-			sold_items_count: number;
-			active_items_count: number;
-			restore_data: string;
-			effective_last_activity: number;
-			restore_percents: unknown;
-			isOnline: boolean;
-			contacts: {
-				ban_reason: string;
-				telegram: string;
-			};
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	item: ItemModel;
+	system_info: Resp_SystemInfo;
 };
 
-export type ManagingSteamMafileCodeResponse = {
-	item: {
-		item_id: number;
-		item_state: string;
-		category_id: number;
-		published_date: number;
-		title: string;
-		description: string;
-		price: number;
-		update_stat_date: number;
-		refreshed_date: number;
-		edit_date: number;
-		pending_deletion_date: number;
-		login: string;
-		temp_email: string;
-		view_count: number;
-		is_sticky: number;
-		information: string;
-		item_origin: string;
-		extended_guarantee: number;
-		nsb: number;
-		allow_ask_discount: number;
-		title_en: string;
-		description_en: string;
-		information_en: string;
-		email_type: string;
-		email_provider: string;
-		item_domain: string;
-		resale_item_origin: string;
-		note_text: string;
-		content_type: unknown;
-		content_id: unknown;
-		delete_date: number;
-		delete_user_id: number;
-		delete_username: string;
-		delete_reason: string;
-		user_allow_ask_discount: number;
-		max_discount_percent: number;
-		market_custom_title: string;
-		feedback_data: string;
-		buyer_display_icon_group_id: number;
-		buyer_uniq_banner: string;
-		buyer_avatar_date: number;
-		buyer_user_group_id: number;
-		is_fave: unknown;
-		in_cart: unknown;
-		cart_price: unknown;
-		canResellItem: boolean;
-		priceWithSellerFee: number;
-		guarantee: {
-			duration: number;
-			class: string;
-			durationPhrase: string;
-			endDate: number;
-			active: boolean;
-			cancelled: boolean;
-			remainingTime: number;
-			remainingTimePhrase: string;
-			cancelledReason: string;
-			cancelledReasonPhrase: string;
-		};
-		canViewLoginData: boolean;
-		canUpdateItemStats: boolean;
-		canReportItem: boolean;
-		canViewItemViews: boolean;
-		loginData: {
-			raw: string;
-			encodedRaw: string;
-			login: string;
-			password: string;
-			encodedPassword: string;
-			oldPassword: string;
-			encodedOldPassword: unknown;
-		};
-		canViewEmailLoginData: boolean;
-		copyFormatData: {
-			title_link: string;
-			login_data: string;
-			full: string;
-		};
-		showGetEmailCodeButton: boolean;
-		getEmailCodeDisplayLogin: unknown;
-		buyer: {
-			user_id: number;
-			operation_date: number;
-			visitorIsBuyer: boolean;
-			username: string;
-			is_banned: number;
-			display_style_group_id: number;
-			display_icon_group_id: number;
-			uniq_username_css: string;
-			uniq_banner: string;
-			user_group_id: number;
-		};
-		isPersonalAccount: boolean;
-		rub_price: number;
-		price_currency: string;
-		priceWithSellerFeeLabel: string;
-		canValidateAccount: boolean;
-		canResellItemAfterPurchase: boolean;
-		isSmallExf: boolean;
-		account_last_activity: number;
-		canViewAccountLink: boolean;
-		accountLinks: Array<{
-			link: string;
-			text: string;
-			iconClass: string;
-		}>;
-		accountLink: string;
-		imagePreviewLinks: Array<string>;
-		canChangePassword: boolean;
-		canChangeEmailPassword: boolean;
-		uniqueKeyExists: boolean;
-		itemOriginPhrase: string;
-		visitorIsAuthor: boolean;
-		canAskDiscount: boolean;
-		tags: {
-			"1234567890": {
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			};
-		};
-		customFields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztUnbanAmount: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-		};
-		externalAuth: Array<unknown>;
-		isTrusted: boolean;
-		isBirthdayToday: boolean;
-		isIgnored: boolean;
-		deposit: number;
-		extraPrices: Array<{
-			currency: string;
-			price: string;
-			priceValue: number;
-		}>;
-		canViewAccountLoginAndTempEmail: boolean;
-		bumpSettings: {
-			canBumpItem: boolean;
-			canBumpItemGlobally: boolean;
-			shortErrorPhrase: unknown;
-			nextAllowedBumpDate: unknown;
-			errorPhrase: unknown;
-		};
-		canCheckGuarantee: boolean;
-		canShareItem: boolean;
-		canCheckAiPrice: boolean;
-		aiPrice: number;
-		aiPriceCheckDate: number;
-		needToRequireVideoToViewLoginData: boolean;
-		canCheckAutoBuyPrice: boolean;
-		autoBuyPrice: number;
-		autoBuyPriceCheckDate: number;
-		descriptionHtml: string;
-		descriptionEnHtml: string;
-		descriptionPlain: string;
-		descriptionEnPlain: string;
-		seller: {
-			user_id: number;
-			username: string;
-			avatar_date: number;
-			is_banned: number;
-			display_style_group_id: number;
-			joined_date: number;
-			sold_items_count: number;
-			active_items_count: number;
-			restore_data: string;
-			effective_last_activity: number;
-			restore_percents: unknown;
-			isOnline: boolean;
-			contacts: {
-				ban_reason: string;
-				telegram: string;
-			};
-		};
-	};
-	codeData: {
-		code: string;
-		date: number;
-		textPlain: string;
-	};
-};
+export type ManagingSteamMafileCodeResponse = unknown;
 
 export interface ManagingSteamSDABody {
 	id?: number;
@@ -23789,200 +21225,11 @@ export interface ManagingSteamSDABody {
 export type ManagingSteamSDAResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingTelegramCodeResponse = {
-	item: {
-		item_id: number;
-		item_state: string;
-		category_id: number;
-		published_date: number;
-		title: string;
-		description: string;
-		price: number;
-		update_stat_date: number;
-		refreshed_date: number;
-		edit_date: number;
-		pending_deletion_date: number;
-		login: string;
-		temp_email: string;
-		view_count: number;
-		is_sticky: number;
-		information: string;
-		item_origin: string;
-		extended_guarantee: number;
-		nsb: number;
-		allow_ask_discount: number;
-		title_en: string;
-		description_en: string;
-		information_en: string;
-		email_type: string;
-		email_provider: string;
-		item_domain: string;
-		resale_item_origin: string;
-		note_text: string;
-		content_type: unknown;
-		content_id: unknown;
-		delete_date: number;
-		delete_user_id: number;
-		delete_username: string;
-		delete_reason: string;
-		user_allow_ask_discount: number;
-		max_discount_percent: number;
-		market_custom_title: string;
-		feedback_data: string;
-		buyer_display_icon_group_id: number;
-		buyer_uniq_banner: string;
-		buyer_avatar_date: number;
-		buyer_user_group_id: number;
-		is_fave: unknown;
-		in_cart: unknown;
-		cart_price: unknown;
-		canResellItem: boolean;
-		priceWithSellerFee: number;
-		guarantee: {
-			duration: number;
-			class: string;
-			durationPhrase: string;
-			endDate: number;
-			active: boolean;
-			cancelled: boolean;
-			remainingTime: number;
-			remainingTimePhrase: string;
-			cancelledReason: string;
-			cancelledReasonPhrase: string;
-		};
-		canViewLoginData: boolean;
-		canUpdateItemStats: boolean;
-		canReportItem: boolean;
-		canViewItemViews: boolean;
-		loginData: {
-			raw: string;
-			encodedRaw: string;
-			login: string;
-			password: string;
-			encodedPassword: string;
-			oldPassword: string;
-			encodedOldPassword: unknown;
-		};
-		canViewEmailLoginData: boolean;
-		copyFormatData: {
-			title_link: string;
-			login_data: string;
-			full: string;
-		};
-		showGetEmailCodeButton: boolean;
-		getEmailCodeDisplayLogin: unknown;
-		buyer: {
-			user_id: number;
-			operation_date: number;
-			visitorIsBuyer: boolean;
-			username: string;
-			is_banned: number;
-			display_style_group_id: number;
-			display_icon_group_id: number;
-			uniq_username_css: string;
-			uniq_banner: string;
-			user_group_id: number;
-		};
-		isPersonalAccount: boolean;
-		rub_price: number;
-		price_currency: string;
-		priceWithSellerFeeLabel: string;
-		canValidateAccount: boolean;
-		canResellItemAfterPurchase: boolean;
-		isSmallExf: boolean;
-		account_last_activity: number;
-		canViewAccountLink: boolean;
-		accountLinks: Array<{
-			link: string;
-			text: string;
-			iconClass: string;
-		}>;
-		accountLink: string;
-		imagePreviewLinks: Array<string>;
-		canChangePassword: boolean;
-		canChangeEmailPassword: boolean;
-		uniqueKeyExists: boolean;
-		itemOriginPhrase: string;
-		visitorIsAuthor: boolean;
-		canAskDiscount: boolean;
-		tags: {
-			"1234567890": {
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			};
-		};
-		customFields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztUnbanAmount: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-		};
-		externalAuth: Array<unknown>;
-		isTrusted: boolean;
-		isBirthdayToday: boolean;
-		isIgnored: boolean;
-		deposit: number;
-		extraPrices: Array<{
-			currency: string;
-			price: string;
-			priceValue: number;
-		}>;
-		canViewAccountLoginAndTempEmail: boolean;
-		bumpSettings: {
-			canBumpItem: boolean;
-			canBumpItemGlobally: boolean;
-			shortErrorPhrase: unknown;
-			nextAllowedBumpDate: unknown;
-			errorPhrase: unknown;
-		};
-		canCheckGuarantee: boolean;
-		canShareItem: boolean;
-		canCheckAiPrice: boolean;
-		aiPrice: number;
-		aiPriceCheckDate: number;
-		needToRequireVideoToViewLoginData: boolean;
-		canCheckAutoBuyPrice: boolean;
-		autoBuyPrice: number;
-		autoBuyPriceCheckDate: number;
-		descriptionHtml: string;
-		descriptionEnHtml: string;
-		descriptionPlain: string;
-		descriptionEnPlain: string;
-		seller: {
-			user_id: number;
-			username: string;
-			avatar_date: number;
-			is_banned: number;
-			display_style_group_id: number;
-			joined_date: number;
-			sold_items_count: number;
-			active_items_count: number;
-			restore_data: string;
-			effective_last_activity: number;
-			restore_percents: unknown;
-			isOnline: boolean;
-			contacts: {
-				ban_reason: string;
-				telegram: string;
-			};
-		};
-	};
+	item: ItemModel;
 	codes: {
 		code?: string;
 		date?: number;
@@ -23992,21 +21239,13 @@ export type ManagingTelegramCodeResponse = {
 export type ManagingTelegramResetAuthResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ManagingRefuseGuaranteeResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ManagingDeclineVideoRecordingBody {
@@ -24016,20 +21255,12 @@ export interface ManagingDeclineVideoRecordingBody {
 export type ManagingDeclineVideoRecordingResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ManagingCheckGuaranteeResponse = {
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingChangePasswordBody {
@@ -24063,11 +21294,7 @@ export type ManagingTagResponse = {
 	};
 	addedTagId: number;
 	deleteTags: Array<number>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingUntagBody {
@@ -24085,11 +21312,7 @@ export type ManagingUntagResponse = {
 	};
 	addedTagId: number;
 	deleteTags: Array<number>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingPublicTagBody {
@@ -24107,11 +21330,7 @@ export type ManagingPublicTagResponse = {
 	};
 	addedTagId: number;
 	deleteTags: Array<number>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ManagingPublicUntagBody {
@@ -24129,51 +21348,31 @@ export type ManagingPublicUntagResponse = {
 	};
 	addedTagId: number;
 	deleteTags: Array<number>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingFavoriteResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type ManagingUnfavoriteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ManagingStickResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type ManagingUnstickResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ManagingTransferBody {
@@ -24184,11 +21383,7 @@ export interface ManagingTransferBody {
 export type ManagingTransferResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── ProfileApi Types ────────────────────────────────────────
@@ -24265,11 +21460,7 @@ export type ProfileClaimsResponse = {
 			rejected: number;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ProfileGetParams {
@@ -24277,172 +21468,13 @@ export interface ProfileGetParams {
 }
 
 export type ProfileGetResponse = {
-	user: {
-		active_items_count: number;
-		activity_visible: boolean;
-		age: number;
-		balance: string;
-		balances: Array<{
-			balance: string;
-			balance_id: number;
-			convertedBalance: number;
-			custom_title: unknown;
-			fullTitle: string;
-			merchant_id: number;
-			title: string;
-			type: string;
-			user_id: number;
-		}>;
-		bump_item_period: number;
-		can_edit: boolean;
-		can_follow: boolean;
-		can_ignore: boolean;
-		can_post_profile: boolean;
-		can_view_profile: boolean;
-		can_view_profile_posts: boolean;
-		can_warn: boolean;
-		contest_count: number;
-		conv_welcome_message: string;
-		convertedBalance: number;
-		convertedDeposit: number;
-		convertedHold: number;
-		currency: string;
-		currencyPhrase: string;
-		custom_account_download_format: string;
-		custom_fields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztAwardUserTrophy: string;
-			lztLikesIncreasing: string;
-			lztLikesZeroing: string;
-			lztSympathyIncreasing: string;
-			lztSympathyZeroing: string;
-			lztUnbanAmount: string;
-			maecenasValue: string;
-			scamURL: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-			favoritePorn: string;
-			favoriteVape: string;
-			favoriteAnime: string;
-			matrix: string;
-		};
-		custom_title: string;
-		deposit: number;
-		dob: {
-			year: number;
-			month: number;
-			day: number;
-		};
-		feedback_data: {
-			"12345": {
-				positive: number;
-				negative: number;
-			};
-		};
-		hold: string;
-		homepage: string;
-		imap_data: {
-			"domain.zone": {
-				domain: string;
-				imap_server: string;
-				port: number;
-				secure: boolean;
-			};
-		};
-		is_admin: boolean;
-		is_banned: boolean;
-		is_followed: boolean;
-		is_ignored: boolean;
-		is_moderator: boolean;
-		is_staff: boolean;
-		is_super_admin: boolean;
-		joined_date: number;
-		last_activity: number;
-		like2_count: number;
-		like_count: number;
-		location: string;
-		market_custom_title: string;
-		max_discount_percent: number;
-		message_count: number;
-		paid_mail_left: number;
-		public_tags: Array<{
-			background_color: string;
-			tag_id: number;
-			title: string;
-		}>;
-		register_date: number;
-		rendered: {
-			username: string;
-			avatars: {
-				l: string;
-				m: string;
-				s: string;
-			};
-			backgrounds: {
-				l: string;
-				m: string;
-			};
-			link: string;
-		};
-		restore_count: number;
-		restore_data: {
-			"12345": number;
-		};
-		short_link: string;
-		sold_items_count: number;
-		tags: Array<{
-			tag_id: number;
-			title: string;
-			isDefault: boolean;
-			forOwnedAccountsOnly: boolean;
-			bc: string;
-		}>;
-		telegram_client: {
-			telegram_api_id: string;
-			telegram_api_hash: string;
-			telegram_device_model: string;
-			telegram_system_version: string;
-			telegram_app_version: string;
-			telegram_system_lang_code: string;
-			telegram_lang_code: string;
-			telegram_lang_pack: string;
-		};
-		trophy_points: number;
-		user_allow_ask_discount: boolean;
-		user_id: number;
-		user_title: string;
-		username: string;
-		view_url: string;
-		visible: boolean;
-		warning_points: number;
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	user: UserModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface ProfileEditBody {
 	user?: {
-		currency?:
-			| "rub"
-			| "uah"
-			| "kzt"
-			| "byn"
-			| "usd"
-			| "eur"
-			| "gbp"
-			| "cny"
-			| "try"
-			| "jpy"
-			| "brl";
+		currency?: CurrencyModel;
 		user_allow_ask_discount?: boolean;
 		max_discount_percent?: number;
 		market_custom_title?: string;
@@ -24469,41 +21501,13 @@ export interface ProfileEditBody {
 export type ProfileEditResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── CartApi Types ────────────────────────────────────────
 
 export interface CartGetParams {
-	category_id?:
-		| 1
-		| 3
-		| 4
-		| 5
-		| 6
-		| 7
-		| 8
-		| 9
-		| 10
-		| 11
-		| 12
-		| 13
-		| 14
-		| 15
-		| 16
-		| 17
-		| 18
-		| 19
-		| 20
-		| 22
-		| 24
-		| 28
-		| 30
-		| 31;
+	category_id?: CategoryIDModel;
 	page?: number;
 	pmin?: number;
 	pmax?: number;
@@ -24561,168 +21565,24 @@ export interface CartGetParams {
 	parse_same_item_ids?: boolean;
 }
 
-export type CartGetResponse = {
-	items: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	totalItems: number;
-	totalItemsPrice: unknown;
-	hasNextPage: boolean;
-	perPage: number;
-	page: number;
-	searchUrl: string;
-	stickyItems: Array<{
-		item_id?: number;
-		item_state?: string;
-		category_id?: number;
-		published_date?: number;
-		title?: string;
-		description?: string;
-		price?: number;
-		update_stat_date?: number;
-		refreshed_date?: number;
-		view_count?: number;
-		is_sticky?: number;
-		item_origin?: string;
-		extended_guarantee?: number;
-		nsb?: number;
-		allow_ask_discount?: number;
-		title_en?: string;
-		description_en?: string;
-		item_domain?: string;
-		resale_item_origin?: string;
-		isIgnored?: number;
-		guarantee?: boolean;
-		canViewLoginData?: boolean;
-		canUpdateItemStats?: boolean;
-		canViewEmailLoginData?: boolean;
-		showGetEmailCodeButton?: boolean;
-		canOpenItem?: boolean;
-		canCloseItem?: boolean;
-		canEditItem?: boolean;
-		canDeleteItem?: boolean;
-		canStickItem?: boolean;
-		canUnstickItem?: boolean;
-		bumpSettings?: {
-			canBumpItem?: boolean;
-			canBumpItemGlobally?: boolean;
-			shortErrorPhrase?: string;
-			errorPhrase?: string;
-		};
-		canBumpItem?: boolean;
-		canBuyItem?: boolean;
-		rub_price?: number;
-		price_currency?: string;
-		canValidateAccount?: boolean;
-		canResellItemAfterPurchase?: boolean;
-		canViewAccountLink?: boolean;
-		itemOriginPhrase?: string;
-		tags?: Array<string>;
-		note_text?: string;
-		description_html?: string;
-		description_html_en?: string;
-		seller?: {
-			user_id?: number;
-			sold_items_count?: number;
-			active_item_count?: number;
-			restore_data?: string;
-			username?: string;
-			avatar_date?: number;
-			is_banned?: number;
-			display_style_group_id?: number;
-			restore_percents?: number;
-		};
-	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
-};
+export type CartGetResponse = unknown;
 
 export interface CartAddBody {
-	item_id: number;
+	item_id: ItemIDModel;
 }
 
 export type CartAddResponse = {
 	success: boolean;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CartDeleteBody {
-	item_id?: number;
+	item_id?: ItemIDModel;
 }
 
 export type CartDeleteResponse = {
 	success: boolean;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 // ─── PurchasingApi Types ────────────────────────────────────────
@@ -24879,11 +21739,7 @@ export type PurchasingFastBuyResponse = {
 			isOnline: boolean;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type PurchasingCheckResponse = {
@@ -25009,11 +21865,7 @@ export type PurchasingCheckResponse = {
 		};
 	};
 	requireVideoRecording: boolean;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PurchasingConfirmBody {
@@ -25035,11 +21887,7 @@ export type PurchasingConfirmResponse = {
 			adviceToChangePassword: boolean;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PurchasingDiscountRequestBody {
@@ -25050,92 +21898,36 @@ export interface PurchasingDiscountRequestBody {
 export type PurchasingDiscountRequestResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export type PurchasingDiscountCancelResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── CustomDiscountsApi Types ────────────────────────────────────────
 
 export type CustomDiscountsGetResponse = {
-	discounts: Array<{
-		category_id: number;
-		discount_id: number;
-		discount_percent: number;
-		discount_user_id: number;
-		max_price: number;
-		min_price: number;
-		user_id: number;
-	}>;
+	discounts: Array<DiscountModel>;
 	total: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CustomDiscountsCreateBody {
 	user_id: number;
-	category_id:
-		| 1
-		| 3
-		| 4
-		| 5
-		| 6
-		| 7
-		| 8
-		| 9
-		| 10
-		| 11
-		| 12
-		| 13
-		| 14
-		| 15
-		| 16
-		| 17
-		| 18
-		| 19
-		| 20
-		| 22
-		| 24
-		| 28
-		| 30
-		| 31;
+	category_id: CategoryIDModel;
 	discount_percent: number;
 	min_price: number;
 	max_price?: number;
-	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency?: CurrencyModel;
 }
 
 export type CustomDiscountsCreateResponse = {
-	discount: {
-		category_id: number;
-		discount_id: number;
-		discount_percent: number;
-		discount_user_id: number;
-		max_price: number;
-		min_price: number;
-		user_id: number;
-	};
+	discount: DiscountModel;
 	total: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CustomDiscountsEditBody {
@@ -25146,21 +21938,9 @@ export interface CustomDiscountsEditBody {
 }
 
 export type CustomDiscountsEditResponse = {
-	discounts: Array<{
-		category_id: number;
-		discount_id: number;
-		discount_percent: number;
-		discount_user_id: number;
-		max_price: number;
-		min_price: number;
-		user_id: number;
-	}>;
+	discounts: Array<DiscountModel>;
 	total: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface CustomDiscountsDeleteBody {
@@ -25170,11 +21950,7 @@ export interface CustomDiscountsDeleteBody {
 export type CustomDiscountsDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── PublishingApi Types ────────────────────────────────────────
@@ -25208,7 +21984,7 @@ export interface PublishingFastSellBody {
 		| 28
 		| 30
 		| 31;
-	currency: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency: CurrencyModel;
 	item_origin:
 		| "brute"
 		| "phishing"
@@ -25230,246 +22006,13 @@ export interface PublishingFastSellBody {
 	has_email_login_data?: boolean;
 	email_login_data?: string;
 	email_type?: "native" | "autoreg";
-	extra?: {
-		proxy?: string;
-		close_item?: boolean;
-		region?: string;
-		service?:
-			| "AdguardVPN"
-			| "PIAVPN"
-			| "cyberghostVPN"
-			| "hotspotShieldVPN"
-			| "mullvadVPN"
-			| "pureVPN"
-			| "tunnelbearVPN"
-			| "ultraVPN"
-			| "vanishVPN"
-			| "vyprVPN"
-			| "windscribeVPN"
-			| "planetVPN"
-			| "start"
-			| "ivi"
-			| "telegram"
-			| "discord"
-			| "discord_trial";
-		system?: "laser" | "scroll" | "magic";
-		confirmationCode?: string;
-		cookies?: string;
-		login_without_cookies?: boolean;
-		cookie_login?: boolean;
-		mfa_file?: string;
-		dota2_mmr?: number;
-		ea_games?: boolean;
-		uplay_games?: boolean;
-		the_quarry?: boolean;
-		warframe?: boolean;
-		ark?: boolean;
-		ark_ascended?: boolean;
-		genshin_currency?: number;
-		honkai_currency?: number;
-		zenless_currency?: number;
-		password?: string;
-		telegramClient?: string;
-		telegramJson?: string;
-		checkChannels?: boolean;
-		checkSpam?: boolean;
-		checkHypixelBan?: boolean;
-	};
+	extra?: ExtraModel;
 }
 
 export type PublishingFastSellResponse = {
-	item: {
-		item_id: number;
-		item_state: string;
-		category_id: number;
-		published_date: number;
-		title: string;
-		description: string;
-		price: number;
-		update_stat_date: number;
-		refreshed_date: number;
-		edit_date: number;
-		pending_deletion_date: number;
-		login: string;
-		temp_email: string;
-		view_count: number;
-		is_sticky: number;
-		information: string;
-		item_origin: string;
-		extended_guarantee: number;
-		nsb: number;
-		allow_ask_discount: number;
-		title_en: string;
-		description_en: string;
-		information_en: string;
-		email_type: string;
-		email_provider: string;
-		item_domain: string;
-		resale_item_origin: string;
-		note_text: string;
-		content_type: unknown;
-		content_id: unknown;
-		delete_date: number;
-		delete_user_id: number;
-		delete_username: string;
-		delete_reason: string;
-		user_allow_ask_discount: number;
-		max_discount_percent: number;
-		market_custom_title: string;
-		feedback_data: string;
-		buyer_display_icon_group_id: number;
-		buyer_uniq_banner: string;
-		buyer_avatar_date: number;
-		buyer_user_group_id: number;
-		is_fave: unknown;
-		in_cart: unknown;
-		cart_price: unknown;
-		canResellItem: boolean;
-		priceWithSellerFee: number;
-		guarantee: {
-			duration: number;
-			class: string;
-			durationPhrase: string;
-			endDate: number;
-			active: boolean;
-			cancelled: boolean;
-			remainingTime: number;
-			remainingTimePhrase: string;
-			cancelledReason: string;
-			cancelledReasonPhrase: string;
-		};
-		canViewLoginData: boolean;
-		canUpdateItemStats: boolean;
-		canReportItem: boolean;
-		canViewItemViews: boolean;
-		loginData: {
-			raw: string;
-			encodedRaw: string;
-			login: string;
-			password: string;
-			encodedPassword: string;
-			oldPassword: string;
-			encodedOldPassword: unknown;
-		};
-		canViewEmailLoginData: boolean;
-		copyFormatData: {
-			title_link: string;
-			login_data: string;
-			full: string;
-		};
-		showGetEmailCodeButton: boolean;
-		getEmailCodeDisplayLogin: unknown;
-		buyer: {
-			user_id: number;
-			operation_date: number;
-			visitorIsBuyer: boolean;
-			username: string;
-			is_banned: number;
-			display_style_group_id: number;
-			display_icon_group_id: number;
-			uniq_username_css: string;
-			uniq_banner: string;
-			user_group_id: number;
-		};
-		isPersonalAccount: boolean;
-		rub_price: number;
-		price_currency: string;
-		priceWithSellerFeeLabel: string;
-		canValidateAccount: boolean;
-		canResellItemAfterPurchase: boolean;
-		isSmallExf: boolean;
-		account_last_activity: number;
-		canViewAccountLink: boolean;
-		accountLinks: Array<{
-			link: string;
-			text: string;
-			iconClass: string;
-		}>;
-		accountLink: string;
-		imagePreviewLinks: Array<string>;
-		canChangePassword: boolean;
-		canChangeEmailPassword: boolean;
-		uniqueKeyExists: boolean;
-		itemOriginPhrase: string;
-		visitorIsAuthor: boolean;
-		canAskDiscount: boolean;
-		tags: {
-			"1234567890": {
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			};
-		};
-		customFields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztUnbanAmount: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-		};
-		externalAuth: Array<unknown>;
-		isTrusted: boolean;
-		isBirthdayToday: boolean;
-		isIgnored: boolean;
-		deposit: number;
-		extraPrices: Array<{
-			currency: string;
-			price: string;
-			priceValue: number;
-		}>;
-		canViewAccountLoginAndTempEmail: boolean;
-		bumpSettings: {
-			canBumpItem: boolean;
-			canBumpItemGlobally: boolean;
-			shortErrorPhrase: unknown;
-			nextAllowedBumpDate: unknown;
-			errorPhrase: unknown;
-		};
-		canCheckGuarantee: boolean;
-		canShareItem: boolean;
-		canCheckAiPrice: boolean;
-		aiPrice: number;
-		aiPriceCheckDate: number;
-		needToRequireVideoToViewLoginData: boolean;
-		canCheckAutoBuyPrice: boolean;
-		autoBuyPrice: number;
-		autoBuyPriceCheckDate: number;
-		descriptionHtml: string;
-		descriptionEnHtml: string;
-		descriptionPlain: string;
-		descriptionEnPlain: string;
-		seller: {
-			user_id: number;
-			username: string;
-			avatar_date: number;
-			is_banned: number;
-			display_style_group_id: number;
-			joined_date: number;
-			sold_items_count: number;
-			active_items_count: number;
-			restore_data: string;
-			effective_last_activity: number;
-			restore_percents: unknown;
-			isOnline: boolean;
-			contacts: {
-				ban_reason: string;
-				telegram: string;
-			};
-		};
-	};
+	item: ItemModel;
 	itemLink: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PublishingAddBody {
@@ -25501,7 +22044,7 @@ export interface PublishingAddBody {
 		| 28
 		| 30
 		| 31;
-	currency: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency: CurrencyModel;
 	item_origin:
 		| "brute"
 		| "phishing"
@@ -25526,197 +22069,8 @@ export interface PublishingAddBody {
 
 export type PublishingAddResponse = {
 	status: string;
-	item: {
-		item_id: number;
-		item_state: string;
-		category_id: number;
-		published_date: number;
-		title: string;
-		description: string;
-		price: number;
-		update_stat_date: number;
-		refreshed_date: number;
-		edit_date: number;
-		pending_deletion_date: number;
-		login: string;
-		temp_email: string;
-		view_count: number;
-		is_sticky: number;
-		information: string;
-		item_origin: string;
-		extended_guarantee: number;
-		nsb: number;
-		allow_ask_discount: number;
-		title_en: string;
-		description_en: string;
-		information_en: string;
-		email_type: string;
-		email_provider: string;
-		item_domain: string;
-		resale_item_origin: string;
-		note_text: string;
-		content_type: unknown;
-		content_id: unknown;
-		delete_date: number;
-		delete_user_id: number;
-		delete_username: string;
-		delete_reason: string;
-		user_allow_ask_discount: number;
-		max_discount_percent: number;
-		market_custom_title: string;
-		feedback_data: string;
-		buyer_display_icon_group_id: number;
-		buyer_uniq_banner: string;
-		buyer_avatar_date: number;
-		buyer_user_group_id: number;
-		is_fave: unknown;
-		in_cart: unknown;
-		cart_price: unknown;
-		canResellItem: boolean;
-		priceWithSellerFee: number;
-		guarantee: {
-			duration: number;
-			class: string;
-			durationPhrase: string;
-			endDate: number;
-			active: boolean;
-			cancelled: boolean;
-			remainingTime: number;
-			remainingTimePhrase: string;
-			cancelledReason: string;
-			cancelledReasonPhrase: string;
-		};
-		canViewLoginData: boolean;
-		canUpdateItemStats: boolean;
-		canReportItem: boolean;
-		canViewItemViews: boolean;
-		loginData: {
-			raw: string;
-			encodedRaw: string;
-			login: string;
-			password: string;
-			encodedPassword: string;
-			oldPassword: string;
-			encodedOldPassword: unknown;
-		};
-		canViewEmailLoginData: boolean;
-		copyFormatData: {
-			title_link: string;
-			login_data: string;
-			full: string;
-		};
-		showGetEmailCodeButton: boolean;
-		getEmailCodeDisplayLogin: unknown;
-		buyer: {
-			user_id: number;
-			operation_date: number;
-			visitorIsBuyer: boolean;
-			username: string;
-			is_banned: number;
-			display_style_group_id: number;
-			display_icon_group_id: number;
-			uniq_username_css: string;
-			uniq_banner: string;
-			user_group_id: number;
-		};
-		isPersonalAccount: boolean;
-		rub_price: number;
-		price_currency: string;
-		priceWithSellerFeeLabel: string;
-		canValidateAccount: boolean;
-		canResellItemAfterPurchase: boolean;
-		isSmallExf: boolean;
-		account_last_activity: number;
-		canViewAccountLink: boolean;
-		accountLinks: Array<{
-			link: string;
-			text: string;
-			iconClass: string;
-		}>;
-		accountLink: string;
-		imagePreviewLinks: Array<string>;
-		canChangePassword: boolean;
-		canChangeEmailPassword: boolean;
-		uniqueKeyExists: boolean;
-		itemOriginPhrase: string;
-		visitorIsAuthor: boolean;
-		canAskDiscount: boolean;
-		tags: {
-			"1234567890": {
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			};
-		};
-		customFields: {
-			_4: string;
-			allowSelfUnban: Array<unknown>;
-			ban_reason: string;
-			discord: string;
-			github: string;
-			jabber: string;
-			lztUnbanAmount: string;
-			steam: string;
-			telegram: string;
-			vk: string;
-		};
-		externalAuth: Array<unknown>;
-		isTrusted: boolean;
-		isBirthdayToday: boolean;
-		isIgnored: boolean;
-		deposit: number;
-		extraPrices: Array<{
-			currency: string;
-			price: string;
-			priceValue: number;
-		}>;
-		canViewAccountLoginAndTempEmail: boolean;
-		bumpSettings: {
-			canBumpItem: boolean;
-			canBumpItemGlobally: boolean;
-			shortErrorPhrase: unknown;
-			nextAllowedBumpDate: unknown;
-			errorPhrase: unknown;
-		};
-		canCheckGuarantee: boolean;
-		canShareItem: boolean;
-		canCheckAiPrice: boolean;
-		aiPrice: number;
-		aiPriceCheckDate: number;
-		needToRequireVideoToViewLoginData: boolean;
-		canCheckAutoBuyPrice: boolean;
-		autoBuyPrice: number;
-		autoBuyPriceCheckDate: number;
-		descriptionHtml: string;
-		descriptionEnHtml: string;
-		descriptionPlain: string;
-		descriptionEnPlain: string;
-		seller: {
-			user_id: number;
-			username: string;
-			avatar_date: number;
-			is_banned: number;
-			display_style_group_id: number;
-			joined_date: number;
-			sold_items_count: number;
-			active_items_count: number;
-			restore_data: string;
-			effective_last_activity: number;
-			restore_percents: unknown;
-			isOnline: boolean;
-			contacts: {
-				ban_reason: string;
-				telegram: string;
-			};
-		};
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	item: ItemModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface PublishingCheckBody {
@@ -25728,51 +22082,7 @@ export interface PublishingCheckBody {
 	has_email_login_data?: boolean;
 	email_login_data?: string;
 	email_type?: "native" | "autoreg";
-	extra?: {
-		proxy?: string;
-		close_item?: boolean;
-		region?: string;
-		service?:
-			| "AdguardVPN"
-			| "PIAVPN"
-			| "cyberghostVPN"
-			| "hotspotShieldVPN"
-			| "mullvadVPN"
-			| "pureVPN"
-			| "tunnelbearVPN"
-			| "ultraVPN"
-			| "vanishVPN"
-			| "vyprVPN"
-			| "windscribeVPN"
-			| "planetVPN"
-			| "start"
-			| "ivi"
-			| "telegram"
-			| "discord"
-			| "discord_trial";
-		system?: "laser" | "scroll" | "magic";
-		confirmationCode?: string;
-		cookies?: string;
-		login_without_cookies?: boolean;
-		cookie_login?: boolean;
-		mfa_file?: string;
-		dota2_mmr?: number;
-		ea_games?: boolean;
-		uplay_games?: boolean;
-		the_quarry?: boolean;
-		warframe?: boolean;
-		ark?: boolean;
-		ark_ascended?: boolean;
-		genshin_currency?: number;
-		honkai_currency?: number;
-		zenless_currency?: number;
-		password?: string;
-		telegramClient?: string;
-		telegramJson?: string;
-		checkChannels?: boolean;
-		checkSpam?: boolean;
-		checkHypixelBan?: boolean;
-	};
+	extra?: ExtraModel;
 }
 
 export type PublishingCheckResponse = {
@@ -25922,11 +22232,7 @@ export type PublishingCheckResponse = {
 			isOnline: boolean;
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PublishingExternalBody {
@@ -25939,11 +22245,7 @@ export interface PublishingExternalBody {
 export type PublishingExternalResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── PaymentsApi Types ────────────────────────────────────────
@@ -25954,34 +22256,12 @@ export interface PaymentsInvoiceGetParams {
 }
 
 export type PaymentsInvoiceGetResponse = {
-	invoice: {
-		additional_data: string;
-		amount: number;
-		comment: string;
-		expires_at: number;
-		invoice_date: number;
-		invoice_id: number;
-		is_test: boolean;
-		merchant_id: number;
-		paid_date: number;
-		payer_user_id: number;
-		payment_id: string;
-		resend_attempts: number;
-		status: string;
-		url: string;
-		url_callback: string;
-		url_success: string;
-		user_id: number;
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	invoice: InvoiceModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface PaymentsInvoiceCreateBody {
-	currency: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency: CurrencyModel;
 	amount: number;
 	payment_id: string;
 	comment: string;
@@ -25996,68 +22276,24 @@ export interface PaymentsInvoiceCreateBody {
 }
 
 export type PaymentsInvoiceCreateResponse = {
-	invoice: {
-		additional_data: string;
-		amount: number;
-		comment: string;
-		expires_at: number;
-		invoice_date: number;
-		invoice_id: number;
-		is_test: boolean;
-		merchant_id: number;
-		paid_date: number;
-		payer_user_id: number;
-		payment_id: string;
-		resend_attempts: number;
-		status: string;
-		url: string;
-		url_callback: string;
-		url_success: string;
-		user_id: number;
-	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	invoice: InvoiceModel;
+	system_info: Resp_SystemInfo;
 };
 
 export interface PaymentsInvoiceListParams {
 	page?: number;
-	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency?: CurrencyModel;
 	status?: "paid" | "not_paid";
 	amount?: number;
 	merchant_id?: number;
 }
 
 export type PaymentsInvoiceListResponse = {
-	invoices: Array<{
-		additional_data: string;
-		amount: number;
-		comment: string;
-		expires_at: number;
-		invoice_date: number;
-		invoice_id: number;
-		is_test: boolean;
-		merchant_id: number;
-		paid_date: number;
-		payer_user_id: number;
-		payment_id: string;
-		resend_attempts: number;
-		status: string;
-		url: string;
-		url_callback: string;
-		url_success: string;
-		user_id: number;
-	}>;
+	invoices: Array<InvoiceModel>;
 	count: number;
 	page: number;
 	perPage: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type PaymentsCurrencyResponse = {
@@ -26425,25 +22661,12 @@ export type PaymentsCurrencyResponse = {
 	};
 	lastUpdate: number;
 	visitorCurrency: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type PaymentsBalanceListResponse = {
 	from: {
-		"12345": {
-			balance: string;
-			balance_id: number;
-			custom_title: unknown;
-			fullTitle: string;
-			merchant_id: number;
-			title: string;
-			type: string;
-			user_id: number;
-		};
+		"12345": BalanceModel;
 		balance: {
 			balance: string;
 			convertedBalance: number;
@@ -26453,157 +22676,9 @@ export type PaymentsBalanceListResponse = {
 		};
 	};
 	to: {
-		balance: {
-			active_items_count: number;
-			activity_visible: boolean;
-			age: number;
-			balance: string;
-			balances: Array<{
-				balance: string;
-				balance_id: number;
-				convertedBalance: number;
-				custom_title: unknown;
-				fullTitle: string;
-				merchant_id: number;
-				title: string;
-				type: string;
-				user_id: number;
-			}>;
-			bump_item_period: number;
-			can_edit: boolean;
-			can_follow: boolean;
-			can_ignore: boolean;
-			can_post_profile: boolean;
-			can_view_profile: boolean;
-			can_view_profile_posts: boolean;
-			can_warn: boolean;
-			contest_count: number;
-			conv_welcome_message: string;
-			convertedBalance: number;
-			convertedDeposit: number;
-			convertedHold: number;
-			currency: string;
-			currencyPhrase: string;
-			custom_account_download_format: string;
-			custom_fields: {
-				_4: string;
-				allowSelfUnban: Array<unknown>;
-				ban_reason: string;
-				discord: string;
-				github: string;
-				jabber: string;
-				lztAwardUserTrophy: string;
-				lztLikesIncreasing: string;
-				lztLikesZeroing: string;
-				lztSympathyIncreasing: string;
-				lztSympathyZeroing: string;
-				lztUnbanAmount: string;
-				maecenasValue: string;
-				scamURL: string;
-				steam: string;
-				telegram: string;
-				vk: string;
-				favoritePorn: string;
-				favoriteVape: string;
-				favoriteAnime: string;
-				matrix: string;
-			};
-			custom_title: string;
-			deposit: number;
-			dob: {
-				year: number;
-				month: number;
-				day: number;
-			};
-			feedback_data: {
-				"12345": {
-					positive: number;
-					negative: number;
-				};
-			};
-			hold: string;
-			homepage: string;
-			imap_data: {
-				"domain.zone": {
-					domain: string;
-					imap_server: string;
-					port: number;
-					secure: boolean;
-				};
-			};
-			is_admin: boolean;
-			is_banned: boolean;
-			is_followed: boolean;
-			is_ignored: boolean;
-			is_moderator: boolean;
-			is_staff: boolean;
-			is_super_admin: boolean;
-			joined_date: number;
-			last_activity: number;
-			like2_count: number;
-			like_count: number;
-			location: string;
-			market_custom_title: string;
-			max_discount_percent: number;
-			message_count: number;
-			paid_mail_left: number;
-			public_tags: Array<{
-				background_color: string;
-				tag_id: number;
-				title: string;
-			}>;
-			register_date: number;
-			rendered: {
-				username: string;
-				avatars: {
-					l: string;
-					m: string;
-					s: string;
-				};
-				backgrounds: {
-					l: string;
-					m: string;
-				};
-				link: string;
-			};
-			restore_count: number;
-			restore_data: {
-				"12345": number;
-			};
-			short_link: string;
-			sold_items_count: number;
-			tags: Array<{
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			}>;
-			telegram_client: {
-				telegram_api_id: string;
-				telegram_api_hash: string;
-				telegram_device_model: string;
-				telegram_system_version: string;
-				telegram_app_version: string;
-				telegram_system_lang_code: string;
-				telegram_lang_code: string;
-				telegram_lang_pack: string;
-			};
-			trophy_points: number;
-			user_allow_ask_discount: boolean;
-			user_id: number;
-			user_title: string;
-			username: string;
-			view_url: string;
-			visible: boolean;
-			warning_points: number;
-		};
+		balance: UserModel;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PaymentsBalanceExchangeBody {
@@ -26614,16 +22689,7 @@ export interface PaymentsBalanceExchangeBody {
 
 export type PaymentsBalanceExchangeResponse = {
 	from: {
-		"12345": {
-			balance: string;
-			balance_id: number;
-			custom_title: unknown;
-			fullTitle: string;
-			merchant_id: number;
-			title: string;
-			type: string;
-			user_id: number;
-		};
+		"12345": BalanceModel;
 		balance: {
 			balance: string;
 			convertedBalance: number;
@@ -26633,164 +22699,16 @@ export type PaymentsBalanceExchangeResponse = {
 		};
 	};
 	to: {
-		balance: {
-			active_items_count: number;
-			activity_visible: boolean;
-			age: number;
-			balance: string;
-			balances: Array<{
-				balance: string;
-				balance_id: number;
-				convertedBalance: number;
-				custom_title: unknown;
-				fullTitle: string;
-				merchant_id: number;
-				title: string;
-				type: string;
-				user_id: number;
-			}>;
-			bump_item_period: number;
-			can_edit: boolean;
-			can_follow: boolean;
-			can_ignore: boolean;
-			can_post_profile: boolean;
-			can_view_profile: boolean;
-			can_view_profile_posts: boolean;
-			can_warn: boolean;
-			contest_count: number;
-			conv_welcome_message: string;
-			convertedBalance: number;
-			convertedDeposit: number;
-			convertedHold: number;
-			currency: string;
-			currencyPhrase: string;
-			custom_account_download_format: string;
-			custom_fields: {
-				_4: string;
-				allowSelfUnban: Array<unknown>;
-				ban_reason: string;
-				discord: string;
-				github: string;
-				jabber: string;
-				lztAwardUserTrophy: string;
-				lztLikesIncreasing: string;
-				lztLikesZeroing: string;
-				lztSympathyIncreasing: string;
-				lztSympathyZeroing: string;
-				lztUnbanAmount: string;
-				maecenasValue: string;
-				scamURL: string;
-				steam: string;
-				telegram: string;
-				vk: string;
-				favoritePorn: string;
-				favoriteVape: string;
-				favoriteAnime: string;
-				matrix: string;
-			};
-			custom_title: string;
-			deposit: number;
-			dob: {
-				year: number;
-				month: number;
-				day: number;
-			};
-			feedback_data: {
-				"12345": {
-					positive: number;
-					negative: number;
-				};
-			};
-			hold: string;
-			homepage: string;
-			imap_data: {
-				"domain.zone": {
-					domain: string;
-					imap_server: string;
-					port: number;
-					secure: boolean;
-				};
-			};
-			is_admin: boolean;
-			is_banned: boolean;
-			is_followed: boolean;
-			is_ignored: boolean;
-			is_moderator: boolean;
-			is_staff: boolean;
-			is_super_admin: boolean;
-			joined_date: number;
-			last_activity: number;
-			like2_count: number;
-			like_count: number;
-			location: string;
-			market_custom_title: string;
-			max_discount_percent: number;
-			message_count: number;
-			paid_mail_left: number;
-			public_tags: Array<{
-				background_color: string;
-				tag_id: number;
-				title: string;
-			}>;
-			register_date: number;
-			rendered: {
-				username: string;
-				avatars: {
-					l: string;
-					m: string;
-					s: string;
-				};
-				backgrounds: {
-					l: string;
-					m: string;
-				};
-				link: string;
-			};
-			restore_count: number;
-			restore_data: {
-				"12345": number;
-			};
-			short_link: string;
-			sold_items_count: number;
-			tags: Array<{
-				tag_id: number;
-				title: string;
-				isDefault: boolean;
-				forOwnedAccountsOnly: boolean;
-				bc: string;
-			}>;
-			telegram_client: {
-				telegram_api_id: string;
-				telegram_api_hash: string;
-				telegram_device_model: string;
-				telegram_system_version: string;
-				telegram_app_version: string;
-				telegram_system_lang_code: string;
-				telegram_lang_code: string;
-				telegram_lang_pack: string;
-			};
-			trophy_points: number;
-			user_allow_ask_discount: boolean;
-			user_id: number;
-			user_title: string;
-			username: string;
-			view_url: string;
-			visible: boolean;
-			warning_points: number;
-		};
+		balance: UserModel;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PaymentsTransferBody {
 	user_id?: number;
 	username?: string;
 	amount: number;
-	currency: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency: CurrencyModel;
 	comment?: string;
 	telegram_deal?: boolean;
 	telegram_username?: string;
@@ -26802,11 +22720,7 @@ export interface PaymentsTransferBody {
 export type PaymentsTransferResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PaymentsFeeParams {
@@ -26821,11 +22735,7 @@ export type PaymentsFeeResponse = {
 		commissionAmount: number;
 		totalOutputAmount: number;
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PaymentsCancelBody {
@@ -26835,11 +22745,7 @@ export interface PaymentsCancelBody {
 export type PaymentsCancelResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PaymentsHistoryParams {
@@ -26859,7 +22765,7 @@ export interface PaymentsHistoryParams {
 		| "balance_exchange";
 	pmin?: number;
 	pmax?: number;
-	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency?: CurrencyModel;
 	page?: number;
 	operation_id_lt?: number;
 	receiver?: string;
@@ -26971,11 +22877,7 @@ export type PaymentsHistoryResponse = {
 	hasNextPage: boolean;
 	lastOperationId: number;
 	nextPageHref: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export type PaymentsPayoutServicesResponse = {
@@ -27048,18 +22950,14 @@ export type PaymentsPayoutServicesResponse = {
 			};
 		};
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface PaymentsPayoutBody {
 	payment_system: string;
 	wallet: string;
 	amount: number;
-	currency: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency: CurrencyModel;
 	include_fee?: boolean;
 	extra?: {
 		provider?: string;
@@ -27069,11 +22967,7 @@ export interface PaymentsPayoutBody {
 export type PaymentsPayoutResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── AutoPaymentsApi Types ────────────────────────────────────────
@@ -27139,11 +23033,7 @@ export type AutoPaymentsListResponse = {
 			};
 		};
 	};
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface AutoPaymentsCreateBody {
@@ -27180,7 +23070,7 @@ export interface AutoPaymentsCreateBody {
 		| 27
 		| 28;
 	amount: number;
-	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	currency?: CurrencyModel;
 	description?: string;
 }
 
@@ -27188,11 +23078,7 @@ export type AutoPaymentsCreateResponse = {
 	status: string;
 	message: string;
 	auto_payment_id: number;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface AutoPaymentsDeleteBody {
@@ -27202,11 +23088,7 @@ export interface AutoPaymentsDeleteBody {
 export type AutoPaymentsDeleteResponse = {
 	status: string;
 	message: string;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 // ─── ProxyApi Types ────────────────────────────────────────
@@ -27223,11 +23105,7 @@ export type ProxyGetResponse = {
 			proxyString: string;
 		};
 	}>;
-	system_info: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info: Resp_SystemInfo;
 };
 
 export interface ProxyAddBody {
@@ -27241,11 +23119,7 @@ export interface ProxyAddBody {
 export type ProxyAddResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ProxyDeleteBody {
@@ -27256,11 +23130,7 @@ export interface ProxyDeleteBody {
 export type ProxyDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── ImapApi Types ────────────────────────────────────────
@@ -27275,11 +23145,7 @@ export interface ImapCreateBody {
 export type ImapCreateResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 export interface ImapDeleteBody {
@@ -27289,11 +23155,7 @@ export interface ImapDeleteBody {
 export type ImapDeleteResponse = {
 	status?: string;
 	message?: string;
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
 
 // ─── BatchApi Types ────────────────────────────────────────
@@ -27312,9 +23174,5 @@ export type BatchBatchResponse = {
 			_job_error?: string;
 		};
 	};
-	system_info?: {
-		visitor_id: number;
-		time: number;
-		log_id: number;
-	};
+	system_info?: Resp_SystemInfo;
 };
