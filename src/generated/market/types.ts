@@ -617,7 +617,7 @@ export interface CategoryAllParams {
 	parse_same_item_ids?: boolean;
 }
 
-export type CategoryAllResponse = unknown;
+export type CategoryAllResponse = ItemListModel;
 
 export interface CategorySteamParams {
 	page?: number;
@@ -20462,7 +20462,7 @@ export interface ListUserParams {
 	filter_by_delete_date?: boolean;
 }
 
-export type ListUserResponse = unknown;
+export type ListUserResponse = ItemListModel;
 
 export interface ListOrdersParams {
 	user_id?: number;
@@ -20522,7 +20522,7 @@ export interface ListOrdersParams {
 	nsb_by_me?: boolean;
 }
 
-export type ListOrdersResponse = unknown;
+export type ListOrdersResponse = ItemListModel;
 
 export interface ListStatesParams {
 	user_id?: number | string;
@@ -20669,7 +20669,7 @@ export interface ListDownloadParams {
 	filter_by_delete_date?: boolean;
 }
 
-export type ListDownloadResponse = unknown;
+export type ListDownloadResponse = string;
 
 export interface ListFavoritesParams {
 	page?: number;
@@ -20726,7 +20726,7 @@ export interface ListFavoritesParams {
 	nsb_by_me?: boolean;
 }
 
-export type ListFavoritesResponse = unknown;
+export type ListFavoritesResponse = ItemListModel;
 
 export interface ListViewedParams {
 	page?: number;
@@ -20783,7 +20783,7 @@ export interface ListViewedParams {
 	nsb_by_me?: boolean;
 }
 
-export type ListViewedResponse = unknown;
+export type ListViewedResponse = ItemListModel;
 
 // ─── ManagingApi Types ────────────────────────────────────────
 
@@ -21061,7 +21061,7 @@ export interface ManagingSteamPreviewParams {
 	type?: "profiles" | "games";
 }
 
-export type ManagingSteamPreviewResponse = unknown;
+export type ManagingSteamPreviewResponse = string;
 
 export interface ManagingEditBody {
 	title?: string;
@@ -21158,7 +21158,7 @@ export type ManagingImageResponse = {
 	system_info: Resp_SystemInfo;
 };
 
-export type ManagingEmailCodeResponse = unknown;
+export type ManagingEmailCodeResponse = ConfirmationCodeModel;
 
 export interface ManagingGetLetters2Params {
 	email_password?: string;
@@ -21215,7 +21215,7 @@ export type ManagingSteamRemoveMafileResponse = {
 	system_info: Resp_SystemInfo;
 };
 
-export type ManagingSteamMafileCodeResponse = unknown;
+export type ManagingSteamMafileCodeResponse = ConfirmationCodeModel;
 
 export interface ManagingSteamSDABody {
 	id?: number;
@@ -21565,7 +21565,7 @@ export interface CartGetParams {
 	parse_same_item_ids?: boolean;
 }
 
-export type CartGetResponse = unknown;
+export type CartGetResponse = ItemListModel;
 
 export interface CartAddBody {
 	item_id: ItemIDModel;

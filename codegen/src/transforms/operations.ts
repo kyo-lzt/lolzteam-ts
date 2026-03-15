@@ -129,21 +129,78 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 		return { properties: [], bodyEncoding, bodyIsArray: true, bodyArrayItemType: itemType };
 	}
 
-	// Handle oneOf — merge all properties, mark all as optional
+	// Handle oneOf — merge all variant properties (PHP pattern)
 	if (schema.oneOf) {
-		const allProps: Record<string, Record<string, unknown>> = {};
+		const allProps: Record<string, Array<Record<string, unknown>>> = {};
+		const variantRequiredSets: Array<Set<string>> = [];
+
 		for (const variant of schema.oneOf) {
-			const variantProps =
-				(variant as { properties?: Record<string, Record<string, unknown>> }).properties ?? {};
+			const v = variant as {
+				properties?: Record<string, Record<string, unknown>>;
+				required?: string[];
+			};
+			const variantProps = v.properties ?? {};
+			const requiredSet = new Set(v.required ?? []);
+			variantRequiredSets.push(requiredSet);
+
 			for (const [name, propSchema] of Object.entries(variantProps)) {
-				allProps[name] = propSchema;
+				const existing = allProps[name];
+				if (existing) {
+					existing.push(propSchema);
+				} else {
+					allProps[name] = [propSchema];
+				}
 			}
 		}
-		for (const [name, propSchema] of Object.entries(allProps)) {
+
+		for (const [name, propSchemas] of Object.entries(allProps)) {
+			// Required only if required in ALL variants (intersection)
+			const isRequired = variantRequiredSets.every((s) => s.has(name));
+
+			let mergedSchema: Record<string, unknown>;
+			const [firstSchema] = propSchemas;
+			if (propSchemas.length === 1 && firstSchema) {
+				mergedSchema = firstSchema;
+			} else {
+				// Check if all schemas have enums — merge enum values
+				const allEnums: unknown[] = [];
+				let allAreEnums = true;
+				for (const ps of propSchemas) {
+					const e = ps.enum;
+					if (Array.isArray(e)) {
+						allEnums.push(...e);
+					} else {
+						allAreEnums = false;
+						break;
+					}
+				}
+
+				if (allAreEnums && allEnums.length > 0) {
+					// Deduplicate enum values
+					const unique = [...new Set(allEnums.map((v) => JSON.stringify(v)))].map(
+						(s) => JSON.parse(s) as unknown,
+					);
+					mergedSchema = { enum: unique };
+				} else {
+					// Different types — deduplicate and wrap in oneOf if needed
+					const uniqueMap = new Map<string, Record<string, unknown>>();
+					for (const ps of propSchemas) {
+						uniqueMap.set(JSON.stringify(ps), ps);
+					}
+					const uniqueSchemas = [...uniqueMap.values()];
+					const [firstUnique] = uniqueSchemas;
+					if (uniqueSchemas.length === 1 && firstUnique) {
+						mergedSchema = firstUnique;
+					} else {
+						mergedSchema = { oneOf: uniqueSchemas };
+					}
+				}
+			}
+
 			bodyProperties.push({
 				name,
-				type: schemaToTypeString(propSchema, spec),
-				required: false,
+				type: schemaToTypeString(mergedSchema, spec),
+				required: isRequired,
 			});
 		}
 	} else if (schema.properties) {

@@ -38,13 +38,18 @@ export function extractResponseType(operation: OperationObject, spec: OpenApiSpe
 	if (!content) return "unknown";
 
 	const jsonContent = content["application/json"];
-	if (!jsonContent) return "unknown";
+	if (!jsonContent) {
+		// Fallback: text/html or text/plain → string
+		if (content["text/html"] || content["text/plain"]) {
+			return "string";
+		}
+		return "unknown";
+	}
 
 	const rawSchema = jsonContent.schema;
 	if (!rawSchema) return "unknown";
 
-	// Resolve $ref on the schema
-	const schema = derefShallow<Record<string, unknown>>(rawSchema, spec);
-
-	return schemaToTypeString(schema, spec);
+	// Pass rawSchema directly — schemaToTypeString already handles $ref
+	// (derefShallow against empty spec from extractMethodDefinition would lose the ref)
+	return schemaToTypeString(rawSchema, spec);
 }
