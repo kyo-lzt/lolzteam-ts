@@ -6,6 +6,7 @@ export {
 	NotFoundError,
 	ServerError,
 	NetworkError,
+	ConfigError,
 	RetryExhaustedError,
 	ValidationError,
 	createHttpError,

@@ -2462,6 +2462,7 @@ class BatchApi {
 }
 
 export class MarketClient {
+	private readonly http: HttpClient;
 	readonly category: CategoryApi;
 	readonly list: ListApi;
 	readonly managing: ManagingApi;
@@ -2476,26 +2477,32 @@ export class MarketClient {
 	readonly imap: ImapApi;
 	readonly batch: BatchApi;
 
-	constructor(config: Omit<ClientConfig, "baseUrl"> & { baseUrl?: string }) {
-		const http = new HttpClient({
+	constructor(configOrToken: string | (Omit<ClientConfig, "baseUrl"> & { baseUrl?: string })) {
+		const config = typeof configOrToken === "string" ? { token: configOrToken } : configOrToken;
+		this.http = new HttpClient({
 			...config,
 			baseUrl: config.baseUrl ?? "https://prod-api.lzt.market",
 			rateLimit: config.rateLimit ?? { requestsPerMinute: 120 },
 			searchRateLimit: config.searchRateLimit ?? { requestsPerMinute: 20 },
+			timeout: config.timeout ?? 30_000,
 		});
-		this.category = new CategoryApi(http);
-		this.list = new ListApi(http);
-		this.managing = new ManagingApi(http);
-		this.profile = new ProfileApi(http);
-		this.cart = new CartApi(http);
-		this.purchasing = new PurchasingApi(http);
-		this.customDiscounts = new CustomDiscountsApi(http);
-		this.publishing = new PublishingApi(http);
-		this.payments = new PaymentsApi(http);
-		this.autoPayments = new AutoPaymentsApi(http);
-		this.proxy = new ProxyApi(http);
-		this.imap = new ImapApi(http);
-		this.batch = new BatchApi(http);
+		this.category = new CategoryApi(this.http);
+		this.list = new ListApi(this.http);
+		this.managing = new ManagingApi(this.http);
+		this.profile = new ProfileApi(this.http);
+		this.cart = new CartApi(this.http);
+		this.purchasing = new PurchasingApi(this.http);
+		this.customDiscounts = new CustomDiscountsApi(this.http);
+		this.publishing = new PublishingApi(this.http);
+		this.payments = new PaymentsApi(this.http);
+		this.autoPayments = new AutoPaymentsApi(this.http);
+		this.proxy = new ProxyApi(this.http);
+		this.imap = new ImapApi(this.http);
+		this.batch = new BatchApi(this.http);
+	}
+
+	async close(): Promise<void> {
+		await this.http.close();
 	}
 }
 

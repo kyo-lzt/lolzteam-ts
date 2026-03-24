@@ -42,7 +42,18 @@ export class RateLimitError extends HttpError {
 		super(429, body, headers, parseError);
 		this.name = "RateLimitError";
 		const raw = headers.get("retry-after");
-		this.retryAfter = raw !== null ? Number(raw) * 1000 : undefined;
+		if (raw !== null) {
+			const seconds = Number(raw);
+			if (!Number.isNaN(seconds)) {
+				this.retryAfter = seconds * 1000;
+			} else {
+				const date = Date.parse(raw);
+				if (!Number.isNaN(date)) {
+					const delta = date - Date.now();
+					this.retryAfter = delta > 0 ? delta : undefined;
+				}
+			}
+		}
 	}
 }
 

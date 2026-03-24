@@ -1803,6 +1803,7 @@ class FormsApi {
 }
 
 export class ForumClient {
+	private readonly http: HttpClient;
 	readonly oAuth: OAuthApi;
 	readonly assets: AssetsApi;
 	readonly categories: CategoriesApi;
@@ -1822,30 +1823,36 @@ export class ForumClient {
 	readonly chatbox: ChatboxApi;
 	readonly forms: FormsApi;
 
-	constructor(config: Omit<ClientConfig, "baseUrl"> & { baseUrl?: string }) {
-		const http = new HttpClient({
+	constructor(configOrToken: string | (Omit<ClientConfig, "baseUrl"> & { baseUrl?: string })) {
+		const config = typeof configOrToken === "string" ? { token: configOrToken } : configOrToken;
+		this.http = new HttpClient({
 			...config,
 			baseUrl: config.baseUrl ?? "https://prod-api.lolz.live",
 			rateLimit: config.rateLimit ?? { requestsPerMinute: 300 },
+			timeout: config.timeout ?? 30_000,
 		});
-		this.oAuth = new OAuthApi(http);
-		this.assets = new AssetsApi(http);
-		this.categories = new CategoriesApi(http);
-		this.forums = new ForumsApi(http);
-		this.links = new LinksApi(http);
-		this.pages = new PagesApi(http);
-		this.navigation = new NavigationApi(http);
-		this.threads = new ThreadsApi(http);
-		this.posts = new PostsApi(http);
-		this.users = new UsersApi(http);
-		this.profilePosts = new ProfilePostsApi(http);
-		this.conversations = new ConversationsApi(http);
-		this.notifications = new NotificationsApi(http);
-		this.tags = new TagsApi(http);
-		this.search = new SearchApi(http);
-		this.batch = new BatchApi(http);
-		this.chatbox = new ChatboxApi(http);
-		this.forms = new FormsApi(http);
+		this.oAuth = new OAuthApi(this.http);
+		this.assets = new AssetsApi(this.http);
+		this.categories = new CategoriesApi(this.http);
+		this.forums = new ForumsApi(this.http);
+		this.links = new LinksApi(this.http);
+		this.pages = new PagesApi(this.http);
+		this.navigation = new NavigationApi(this.http);
+		this.threads = new ThreadsApi(this.http);
+		this.posts = new PostsApi(this.http);
+		this.users = new UsersApi(this.http);
+		this.profilePosts = new ProfilePostsApi(this.http);
+		this.conversations = new ConversationsApi(this.http);
+		this.notifications = new NotificationsApi(this.http);
+		this.tags = new TagsApi(this.http);
+		this.search = new SearchApi(this.http);
+		this.batch = new BatchApi(this.http);
+		this.chatbox = new ChatboxApi(this.http);
+		this.forms = new FormsApi(this.http);
+	}
+
+	async close(): Promise<void> {
+		await this.http.close();
 	}
 }
 

@@ -12,6 +12,7 @@ export {
 	ServerError,
 	NetworkError,
 	RetryExhaustedError,
+	ValidationError,
 	createHttpError,
 } from "./runtime/index.js";
 

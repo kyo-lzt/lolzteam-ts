@@ -17,7 +17,11 @@ function appendQueryValue(params: URLSearchParams, key: string, value: unknown):
 	}
 	if (typeof value === "object" && !Array.isArray(value) && value !== null) {
 		for (const [subKey, subVal] of Object.entries(value)) {
-			params.append(`${key}[${subKey}]`, String(subVal));
+			if (typeof subVal === "boolean") {
+				params.append(`${key}[${subKey}]`, subVal ? "1" : "0");
+			} else {
+				params.append(`${key}[${subKey}]`, String(subVal));
+			}
 		}
 		return;
 	}
@@ -92,6 +96,22 @@ export class HttpClient {
 				this.dispatcher = d;
 			});
 		}
+	}
+
+	async close(): Promise<void> {
+		if (this.dispatcherReady) {
+			await this.dispatcherReady;
+		}
+		if (
+			this.dispatcher !== undefined &&
+			typeof this.dispatcher === "object" &&
+			this.dispatcher !== null &&
+			"close" in this.dispatcher &&
+			typeof this.dispatcher.close === "function"
+		) {
+			await this.dispatcher.close();
+		}
+		this.dispatcher = undefined;
 	}
 
 	async request<T = unknown>(options: RequestOptions): Promise<T> {

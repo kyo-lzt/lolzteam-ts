@@ -366,6 +366,7 @@ export function emitCombinedIndexFile(
 	// Emit client class
 	lines.push("");
 	lines.push(`export class ${clientName} {`);
+	lines.push("\tprivate readonly http: HttpClient;");
 
 	for (const group of groups) {
 		const className = groupToClassName(group.groupName);
@@ -374,8 +375,13 @@ export function emitCombinedIndexFile(
 	}
 
 	lines.push("");
-	lines.push(`\tconstructor(config: Omit<ClientConfig, "baseUrl"> & { baseUrl?: string }) {`);
-	lines.push("\t\tconst http = new HttpClient({");
+	lines.push(
+		`\tconstructor(configOrToken: string | (Omit<ClientConfig, "baseUrl"> & { baseUrl?: string })) {`,
+	);
+	lines.push(
+		`\t\tconst config = typeof configOrToken === "string" ? { token: configOrToken } : configOrToken;`,
+	);
+	lines.push("\t\tthis.http = new HttpClient({");
 	lines.push("\t\t\t...config,");
 	lines.push(`\t\t\tbaseUrl: config.baseUrl ?? "${defaultBaseUrl}",`);
 	lines.push(`\t\t\trateLimit: config.rateLimit ?? { requestsPerMinute: ${defaultRateLimit} },`);
@@ -384,14 +390,19 @@ export function emitCombinedIndexFile(
 			`\t\t\tsearchRateLimit: config.searchRateLimit ?? { requestsPerMinute: ${defaultSearchRateLimit} },`,
 		);
 	}
+	lines.push("\t\t\ttimeout: config.timeout ?? 30_000,");
 	lines.push("\t\t});");
 
 	for (const group of groups) {
 		const className = groupToClassName(group.groupName);
 		const propName = groupToPropertyName(group.groupName);
-		lines.push(`\t\tthis.${propName} = new ${className}(http);`);
+		lines.push(`\t\tthis.${propName} = new ${className}(this.http);`);
 	}
 
+	lines.push("\t}");
+	lines.push("");
+	lines.push("\tasync close(): Promise<void> {");
+	lines.push("\t\tawait this.http.close();");
 	lines.push("\t}");
 	lines.push("}");
 	lines.push("");
