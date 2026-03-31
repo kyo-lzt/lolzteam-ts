@@ -14,10 +14,6 @@ interface TypeEntry {
 	code: string;
 }
 
-function formatDefaultJsdoc(defaultValue: unknown): string {
-	return `/** @default ${JSON.stringify(defaultValue)} */`;
-}
-
 function emitQueryParamsInterface(group: string, method: MethodDefinition): TypeEntry | undefined {
 	if (method.params.queryParams.length === 0) return undefined;
 
@@ -27,8 +23,15 @@ function emitQueryParamsInterface(group: string, method: MethodDefinition): Type
 
 	for (const param of method.params.queryParams) {
 		const opt = param.required && param.defaultValue === undefined ? "" : "?";
+		const jsdocParts: string[] = [];
+		if (param.description) {
+			jsdocParts.push(param.description);
+		}
 		if (param.defaultValue !== undefined) {
-			lines.push(`\t${formatDefaultJsdoc(param.defaultValue)}`);
+			jsdocParts.push(`@default ${JSON.stringify(param.defaultValue)}`);
+		}
+		if (jsdocParts.length > 0) {
+			lines.push(`\t/** ${jsdocParts.join(" ")} */`);
 		}
 		lines.push(`\t${safePropName(param.name)}${opt}: ${param.type};`);
 	}
@@ -67,8 +70,15 @@ function emitBodyInterface(group: string, method: MethodDefinition): TypeEntry |
 			lines.push(`export interface ${variantTypeName} {`);
 			for (const prop of variant.properties) {
 				const opt = prop.required && prop.defaultValue === undefined ? "" : "?";
+				const jsdocParts: string[] = [];
+				if (prop.description) {
+					jsdocParts.push(prop.description);
+				}
 				if (prop.defaultValue !== undefined) {
-					lines.push(`\t${formatDefaultJsdoc(prop.defaultValue)}`);
+					jsdocParts.push(`@default ${JSON.stringify(prop.defaultValue)}`);
+				}
+				if (jsdocParts.length > 0) {
+					lines.push(`\t/** ${jsdocParts.join(" ")} */`);
 				}
 				lines.push(`\t${safePropName(prop.name)}${opt}: ${prop.type};`);
 			}
@@ -86,8 +96,15 @@ function emitBodyInterface(group: string, method: MethodDefinition): TypeEntry |
 
 	for (const prop of method.bodyProperties) {
 		const opt = prop.required && prop.defaultValue === undefined ? "" : "?";
+		const jsdocParts: string[] = [];
+		if (prop.description) {
+			jsdocParts.push(prop.description);
+		}
 		if (prop.defaultValue !== undefined) {
-			lines.push(`\t${formatDefaultJsdoc(prop.defaultValue)}`);
+			jsdocParts.push(`@default ${JSON.stringify(prop.defaultValue)}`);
+		}
+		if (jsdocParts.length > 0) {
+			lines.push(`\t/** ${jsdocParts.join(" ")} */`);
 		}
 		lines.push(`\t${safePropName(prop.name)}${opt}: ${prop.type};`);
 	}
@@ -192,9 +209,44 @@ function formatDefaultLiteral(value: unknown): string {
 	return String(value);
 }
 
+function buildMethodJsdoc(method: MethodDefinition): string[] {
+	const hasContent = method.summary ?? method.description;
+	if (!hasContent) return [];
+
+	const jsdocLines: string[] = [];
+	jsdocLines.push("\t/**");
+
+	if (method.summary) {
+		jsdocLines.push(`\t * ${method.summary}`);
+	}
+
+	if (method.description) {
+		if (method.summary) {
+			jsdocLines.push("\t *");
+		}
+		for (const line of method.description.split("\n")) {
+			jsdocLines.push(line.length > 0 ? `\t * ${line}` : "\t *");
+		}
+	}
+
+	// Collect @param tags for path params with descriptions
+	for (const param of method.params.pathParams) {
+		if (param.description) {
+			jsdocLines.push(`\t * @param ${param.name} - ${param.description}`);
+		}
+	}
+
+	jsdocLines.push("\t */");
+	return jsdocLines;
+}
+
 function emitMethod(group: string, method: MethodDefinition): string {
 	const lines: string[] = [];
 	const responseName = `${buildTypeName(group, method.methodName)}Response`;
+
+	// JSDoc comment
+	const jsdoc = buildMethodJsdoc(method);
+	lines.push(...jsdoc);
 
 	// Build argument list
 	const args: string[] = [];

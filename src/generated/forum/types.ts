@@ -284,12 +284,11 @@ export interface Resp_ThreadModel {
 		};
 		thread_is_deleted: boolean;
 	};
-	thread_prefixes: Array<unknown>;
-	thread_tags: {
-		"206": string;
-		"97491": string;
-		"193431": string;
-	};
+	thread_prefixes: Array<{
+		prefix_id: number;
+		prefix_title: string;
+	}>;
+	thread_tags: Record<string, string>;
 	links: {
 		permalink: string;
 		detail: string;
@@ -312,55 +311,17 @@ export interface Resp_ThreadModel {
 		bump: {
 			can: boolean;
 			available_count: number;
-			error: unknown;
-			next_available_time: unknown;
+			error: string;
+			next_available_time: number;
 		};
 	};
 	node_title: string;
-	restrictions: {
+	forum?: Resp_ForumModel;
+	restrictions?: {
 		reply_delay: number;
 		max_reply_count: number;
 	};
-	last_post: {
-		post_id: number;
-		thread_id: number;
-		poster_user_id: number;
-		poster_username: string;
-		poster_username_html: string;
-		post_create_date: number;
-		post_body: string;
-		post_body_html: string;
-		post_body_plain_text: string;
-		signature: string;
-		signature_html: string;
-		signature_plain_text: string;
-		post_like_count: number;
-		user_is_ignored: boolean;
-		post_is_published: boolean;
-		post_is_deleted: boolean;
-		post_update_date: number;
-		post_is_first_post: boolean;
-		post_is_liked: boolean;
-		links: {
-			permalink: string;
-			detail: string;
-			thread: string;
-			poster: string;
-			likes: string;
-			report: string;
-			poster_avatar: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			reply: boolean;
-			like: boolean;
-			report: boolean;
-		};
-		thread_is_deleted: boolean;
-	};
-	contest: {
+	contest?: {
 		type: string;
 		finish_date: number;
 		now_count_members: number;
@@ -374,7 +335,7 @@ export interface Resp_ThreadModel {
 		prize_data: number;
 		is_money_places: number;
 		chance_to_win: number;
-		winners: Array<number>;
+		winners?: Array<number>;
 		already_participate: boolean;
 		permissions: {
 			can_finish: boolean;
@@ -612,6 +573,46 @@ export interface Resp_ConversationMessageModel {
 	};
 }
 
+export interface Resp_ForumModel {
+	forum_id: number;
+	forum_title: string;
+	forum_description: string;
+	forum_thread_count: number;
+	forum_post_count: number;
+	parent_node_id: number;
+	node_type_id: string;
+	icon_content: string;
+	active_icon_content: string;
+	forum_rules_thread_id: number;
+	forum_prefixes: Array<{
+		group_title: string;
+		group_prefixes: Array<{
+			prefix_id: number;
+			css_class: string;
+			prefix_title: string;
+		}>;
+	}>;
+	thread_default_prefix_id: number;
+	thread_prefix_is_required: boolean;
+	links: {
+		permalink: string;
+		detail: string;
+		"sub-categories": string;
+		"sub-forums": string;
+		threads: string;
+		followers: string;
+	};
+	permissions: {
+		view: boolean;
+		edit: boolean;
+		delete: boolean;
+		create_thread: boolean;
+		tag_thread: boolean;
+		follow: boolean;
+	};
+	forum_is_followed: boolean;
+}
+
 export interface Resp_SystemInfo {
 	visitor_id: number;
 	time: number;
@@ -620,34 +621,54 @@ export interface Resp_SystemInfo {
 // ─── OAuthApi Types ────────────────────────────────────────
 
 export interface OAuthTokenClientCredentials {
+	/** Grant type. */
 	grant_type: "client_credentials";
+	/** Client ID. */
 	client_id: string;
+	/** Client secret. */
 	client_secret: string;
+	/** Scope. */
 	scope: Array<"basic" | "read" | "post" | "conversate" | "market" | "payment" | "invoice">;
 }
 
 export interface OAuthTokenAuthorizationCode {
+	/** Grant type. */
 	grant_type: "authorization_code";
+	/** Authorization code. */
 	code: string;
+	/** Client ID. */
 	client_id: string;
+	/** Client secret. */
 	client_secret: string;
+	/** Redirect URI. */
 	redirect_uri: string;
+	/** Scope. */
 	scope: Array<"basic" | "read" | "post" | "conversate" | "market" | "payment" | "invoice">;
 }
 
 export interface OAuthTokenRefreshToken {
+	/** Grant type. */
 	grant_type: "refresh_token";
+	/** Refresh token. */
 	refresh_token: string;
+	/** Client ID. */
 	client_id: string;
+	/** Client secret. */
 	client_secret: string;
 }
 
 export interface OAuthTokenPassword {
+	/** Grant type. */
 	grant_type: "password";
+	/** Account username/email. */
 	username: string;
+	/** Account password. */
 	password: string;
+	/** Client ID. */
 	client_id: string;
+	/** Client secret. */
 	client_secret: string;
+	/** Scope. */
 	scope: Array<"basic" | "read" | "post" | "conversate" | "market" | "payment" | "invoice">;
 }
 
@@ -668,6 +689,7 @@ export type OAuthTokenResponse = {
 // ─── AssetsApi Types ────────────────────────────────────────
 
 export interface AssetsCssParams {
+	/** The names or identifiers of the CSS selectors to retrieve. */
 	css?: Array<string>;
 }
 
@@ -679,8 +701,11 @@ export type AssetsCssResponse = {
 // ─── CategoriesApi Types ────────────────────────────────────────
 
 export interface CategoriesListParams {
+	/** Id of parent category. If exists, filter categories that are direct children of that category. */
 	parent_category_id?: number;
+	/** Id of parent forum. If exists, filter categories that are direct children of that forum. */
 	parent_forum_id?: number;
+	/** Ordering of categories. */
 	order?: "natural" | "list";
 }
 
@@ -728,45 +753,16 @@ export type CategoriesGetResponse = {
 // ─── ForumsApi Types ────────────────────────────────────────
 
 export interface ForumsListParams {
+	/** Id of parent category. If exists, filter forums that are direct children of that category. */
 	parent_category_id?: number;
+	/** Id of parent forum. If exists, filter forums that are direct children of that forum. */
 	parent_forum_id?: number;
+	/** Ordering of forums. */
 	order?: "natural" | "list";
 }
 
 export type ForumsListResponse = {
-	forums: Array<{
-		forum_id: number;
-		forum_title: string;
-		forum_description: string;
-		forum_thread_count: number;
-		forum_post_count: number;
-		forum_prefixes: Array<{
-			group_title: string;
-			group_prefixes: Array<{
-				prefix_id: number;
-				prefix_title: string;
-			}>;
-		}>;
-		thread_default_prefix_id: number;
-		thread_prefix_is_required: boolean;
-		links: {
-			permalink: string;
-			detail: string;
-			"sub-categories": string;
-			"sub-forums": string;
-			threads: string;
-			followers: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			create_thread: boolean;
-			tag_thread: boolean;
-			follow: boolean;
-		};
-		forum_is_followed: boolean;
-	}>;
+	forums: Array<Resp_ForumModel>;
 	forums_total: number;
 	tabs: Array<{
 		link_title: string;
@@ -778,79 +774,26 @@ export type ForumsListResponse = {
 };
 
 export type ForumsGroupedResponse = {
-	data: {
-		"0": {
-			"0": {
-				forum_id: number;
-				forum_title: string;
-				forum_description: string;
-				forum_thread_count: number;
-				forum_post_count: number;
-				parent_node_id: number;
-				links: {
-					permalink: string;
-					detail: string;
-					"sub-categories": string;
-					"sub-forums": string;
-					threads: string;
-					followers: string;
-				};
-				permissions: {
-					view: boolean;
-					edit: boolean;
-					delete: boolean;
-					create_thread: boolean;
-					tag_thread: boolean;
-					follow: boolean;
-				};
-				forum_is_followed: boolean;
-			};
-		};
-	};
+	data: Array<Array<Resp_ForumModel>>;
 	tabs: Array<{
-		link_title: string;
-		isDefault: boolean;
+		node_ids: string;
 		title: string;
-		isHidden: boolean;
+		link_title: string;
+		isExtendedTab: boolean;
+		prefixes: Array<unknown>;
+		prefixes_not: Array<unknown>;
+		order: string;
+		direction: string;
+		period: string;
+		state: string;
+		q: string;
+		tabLink: string;
 	}>;
 	system_info: Resp_SystemInfo;
 };
 
 export type ForumsGetResponse = {
-	forum: {
-		forum_id: number;
-		forum_title: string;
-		forum_description: string;
-		forum_thread_count: number;
-		forum_post_count: number;
-		forum_prefixes: Array<{
-			group_title: string;
-			group_prefixes: Array<{
-				prefix_id: number;
-				prefix_title: string;
-			}>;
-		}>;
-		thread_default_prefix_id: number;
-		thread_prefix_is_required: boolean;
-		links: {
-			permalink: string;
-			detail: string;
-			"sub-categories": string;
-			"sub-forums": string;
-			threads: string;
-			followers: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			create_thread: boolean;
-			upload_attachment: boolean;
-			tag_thread: boolean;
-			follow: boolean;
-		};
-		forum_is_followed: boolean;
-	};
+	forum: Resp_ForumModel;
 	system_info: Resp_SystemInfo;
 };
 
@@ -868,10 +811,15 @@ export type ForumsFollowersResponse = {
 };
 
 export interface ForumsFollowBody {
+	/** Whether to receive notification for post. */
 	post?: boolean;
+	/** Whether to receive notification as alert. */
 	alert?: boolean;
+	/** Whether to receive notification as email. */
 	email?: boolean;
+	/** Prefix ids. */
 	prefix_ids?: Array<number>;
+	/** Minimal contest amount. (Only for 766 forumId) */
 	minimal_contest_amount?: number;
 }
 
@@ -888,77 +836,17 @@ export type ForumsUnfollowResponse = {
 };
 
 export interface ForumsFollowedParams {
+	/** If included in the request, only the forum count is returned as **forums_total**. */
 	total?: boolean;
 }
 
 export type ForumsFollowedResponse = {
-	forums: Array<{
-		forum_id: number;
-		forum_title: string;
-		forum_description: string;
-		forum_thread_count: number;
-		forum_post_count: number;
-		forum_prefixes: Array<{
-			group_title: string;
-			group_prefixes: Array<{
-				prefix_id: number;
-				prefix_title: string;
-			}>;
-		}>;
-		thread_default_prefix_id: number;
-		thread_prefix_is_required: boolean;
-		links: {
-			permalink: string;
-			detail: string;
-			"sub-categories": string;
-			"sub-forums": string;
-			threads: string;
-			followers: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			create_thread: boolean;
-			upload_attachment: boolean;
-			tag_thread: boolean;
-			follow: boolean;
-		};
-		forum_is_followed: boolean;
-		follow: {
-			post: boolean;
-			alert: boolean;
-			email: boolean;
-		};
-	}>;
+	forums: Array<Resp_ForumModel>;
 	system_info: Resp_SystemInfo;
 };
 
 export type ForumsGetFeedOptionsResponse = {
-	forums: Array<{
-		forum_id: number;
-		forum_title: string;
-		forum_description: string;
-		parent_node_id: number;
-		links: {
-			permalink: string;
-			detail: string;
-			"sub-categories": string;
-			"sub-forums": string;
-			threads: string;
-			followers: string;
-		};
-		permissions: {
-			view: boolean;
-			edit: boolean;
-			delete: boolean;
-			create_thread: boolean;
-			tag_thread: boolean;
-			follow: boolean;
-		};
-		forum_is_followed: boolean;
-		has_children: boolean;
-	}>;
+	forums: Array<Resp_ForumModel>;
 	excluded_forums_ids: Array<number>;
 	default_excluded_forums_ids: Array<number>;
 	keywords: string;
@@ -966,7 +854,9 @@ export type ForumsGetFeedOptionsResponse = {
 };
 
 export interface ForumsEditFeedOptionsBody {
+	/** Array of forum ids to exclude from the feed. */
 	node_ids?: Array<number>;
+	/** List of keywords to exclude specific threads from the feed. */
 	keywords?: Array<string>;
 }
 
@@ -992,7 +882,9 @@ export type LinksGetResponse = {
 // ─── PagesApi Types ────────────────────────────────────────
 
 export interface PagesListParams {
+	/** Id of parent page. If exists, filter pages that are direct children of that page. */
 	parent_page_id?: number;
+	/** Ordering of pages. */
 	order?: "natural" | "list";
 }
 
@@ -1040,6 +932,7 @@ export type PagesGetResponse = {
 // ─── NavigationApi Types ────────────────────────────────────────
 
 export interface NavigationListParams {
+	/** Id of parent element. If exists, filter elements that are direct children of that element. */
 	parent?: number;
 }
 
@@ -1072,19 +965,33 @@ export type NavigationListResponse = {
 // ─── ThreadsApi Types ────────────────────────────────────────
 
 export interface ThreadsListParams {
+	/** Id of the containing forum. */
 	forum_id?: number;
+	/** Tab to get threads from. */
 	tab?: string;
+	/** Thread state. Works only if **forum_id** is set. */
 	state?: "active" | "closed";
+	/** Filter to get only threads created within the selected period. Works only if **forum_id** is set. */
 	period?: "day" | "week" | "month" | "year";
+	/** Thread title. */
 	title?: string;
+	/** Search only in titles. */
 	title_only?: boolean;
+	/** Filter to get only threads created by the specified user. */
 	creator_user_id?: number;
+	/** Filter to get only sticky or non-sticky threads. By default, all threads will be included and sticky ones will be at the top of the result on the first page. In mixed mode, sticky threads are not counted towards **threads_total** and does not affect pagination. */
 	sticky?: boolean;
+	/** Filter to get only threads with the specified prefix. */
 	"prefix_ids[]"?: Array<number>;
+	/** Filter to get only threads without the specified prefix. */
 	"prefix_ids_not[]"?: Array<number>;
+	/** Filter to get only threads with the specified tag. */
 	thread_tag_id?: number;
+	/** Page number of threads. */
 	page?: number;
+	/** Number of threads in a page. */
 	limit?: number;
+	/** Ordering of threads. */
 	order?:
 		| "post_date"
 		| "last_post_date"
@@ -1092,9 +999,13 @@ export interface ThreadsListParams {
 		| "reply_count_asc"
 		| "first_post_likes"
 		| "vote_count";
+	/** Direction of threads ordering. */
 	direction?: "asc" | "desc";
+	/** Filter threads by creation date. Only works with 'thread_create_date' and 'thread_create_date_reverse' ordering. */
 	thread_create_date?: number;
+	/** Filter threads by update date. Only works with 'thread_update_date' and 'thread_update_date_reverse' ordering. */
 	thread_update_date?: number;
+	/** List of fields to include. */
 	fields_include?: Array<"*" | "latest_posts">;
 }
 
@@ -1138,22 +1049,37 @@ export type ThreadsListResponse = {
 };
 
 export interface ThreadsCreateBody {
+	/** Content of the new thread. */
 	post_body: string;
+	/** Id of the target forum. */
 	forum_id: number;
+	/** Thread title. Can be skipped if **title_en** set. */
 	title?: string;
+	/** Thread english title. Can be skipped if **title** set. */
 	title_en?: string;
+	/** Prefix ids. */
 	prefix_id?: Array<number>;
+	/** Thread tags. */
 	tags?: Array<string>;
+	/** Hide contacts. */
 	hide_contacts?: boolean;
+	/** Allow ask hidden content. */
 	allow_ask_hidden_content?: boolean;
-	/** @default 2 */
+	/** Allow to reply only users with chosen or higher group. @default 2 */
 	reply_group?: 0 | 2 | 21 | 22 | 23 | 60 | 351;
+	/** Allow commenting if user can't post in thread. */
 	comment_ignore_group?: boolean;
+	/** Don't alert followers about thread creation. */
 	dont_alert_followers?: boolean;
+	/** Date to schedule thread creation (format: `DD-MM-YYYY`). */
 	schedule_date?: string;
+	/** Time to schedule thread creation (format: `HH:MM`). */
 	schedule_time?: string;
+	/** Watch thread state. */
 	watch_thread_state?: boolean;
+	/** Receive forum notifications of new posts in this thread. */
 	watch_thread?: boolean;
+	/** Receive email notifications of new posts in this thread. */
 	watch_thread_email?: boolean;
 }
 
@@ -1163,33 +1089,57 @@ export type ThreadsCreateResponse = {
 };
 
 export interface ThreadsCreateContestBody {
+	/** Content of the new contest. */
 	post_body: string;
+	/** Thread title. Can be skipped if **title_en** set. */
 	title?: string;
+	/** Thread english title. Can be skipped if **title** set. */
 	title_en?: string;
-	/** @default "by_finish_date" */
+	/** Contest type. @default "by_finish_date" */
 	contest_type?: "by_finish_date";
+	/** Giveaway duration value. The maximum duration is 3 days. Required if **contest_type** is **by_finish_date**. */
 	length_value?: number;
+	/** Giveaway duration type. The maximum duration is 3 days. Required if **contest_type** is **by_finish_date**. */
 	length_option?: "minutes" | "hours" | "days";
+	/** Prize type. */
 	prize_type: "money" | "upgrades";
+	/** Winner count (prize count). Optional if **prize_type** is **money**. */
 	count_winners?: number;
+	/** How much money will each winner receive. Optional if **prize_type** is **money**. */
 	prize_data_money?: number;
+	/** Enable the distribution of money prizes by places. Optional if **prize_type** is **money**. */
 	is_money_places?: boolean;
+	/** How much money will receive each place. Required if **is_money_places** is **1**. */
 	prize_data_places?: Array<number>;
+	/** Which upgrade will each winner receive. Required if **prize_type** is **upgrades**. */
 	prize_data_upgrade?: 1 | 6 | 12 | 14 | 17 | 19 | 20 | 21 | 22;
+	/** Sympathies for this week. */
 	require_like_count: number;
+	/** Sympathies for all time. */
 	require_total_like_count: number;
+	/** Secret answer of your account. */
 	secret_answer?: string;
+	/** Thread tags. */
 	tags?: Array<string>;
-	/** @default 2 */
+	/** Allow to reply only users with chosen or higher group. @default 2 */
 	reply_group?: 0 | 2 | 21 | 22 | 23 | 60 | 351;
+	/** Allow commenting if user can't post in thread. */
 	comment_ignore_group?: boolean;
+	/** Don't alert followers about thread creation. */
 	dont_alert_followers?: boolean;
+	/** Hide contacts. */
 	hide_contacts?: boolean;
+	/** Allow ask hidden content. */
 	allow_ask_hidden_content?: boolean;
+	/** Date to schedule thread creation (format: `DD-MM-YYYY`). */
 	schedule_date?: string;
+	/** Time to schedule thread creation (format: `HH:MM`). */
 	schedule_time?: string;
+	/** Watch thread state. */
 	watch_thread_state?: boolean;
+	/** Receive forum notifications of new posts in this thread. */
 	watch_thread?: boolean;
+	/** Receive email notifications of new posts in this thread. */
 	watch_thread_email?: boolean;
 }
 
@@ -1199,28 +1149,61 @@ export type ThreadsCreateContestResponse = {
 };
 
 export interface ThreadsClaimBody {
+	/** To whom the complaint is filed. Specify a nickname or a link to the profile. */
 	as_responder: string;
+	/** Did you buy account on the market? */
 	as_is_market_deal: boolean;
+	/** Market item id.
+Required if **as_is_market_deal** is 1. */
 	as_market_item_id?: number;
+	/** Contacts and wallets of the responder. Specify the known data about the responder, if any.
+Optional if **as_is_market_deal** is 0. */
 	as_data?: string;
+	/** Indicate the amount by which the responder deceived you. */
 	as_amount: number;
+	/** Currency of Claim. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try";
+	/** The transaction took place through a guarantor or there was a transfer to the market with a hold?
+Required if **as_is_market_deal** is 0. */
 	transfer_type: "guarantor" | "safe" | "notsafe";
+	/** Pay claim fee now or later. (Only for **transfer_type** = **notsafe**) */
 	pay_claim?: "now" | "later";
+	/** Funds transfer receipt.
+Upload a receipt for the transfer of funds, use the "View receipt" button in your wallet. May be uploaded to [Imgur](https://imgur.com/upload). Write "no" if you have not paid.
+Required if **as_is_market_deal** is 0. */
 	as_funds_receipt?: string;
+	/** Screenshot showing the respondent's Telegram login.
+If the correspondence was conducted in Telegram, upload a screenshot that will display the respondent's Telegram login against the background of your dialogue. The screenshot may be uploaded to [Imgur](https://imgur.com/upload). If the correspondence was conducted elsewhere, write "no". */
 	as_tg_login_screenshot?: string;
+	/** Thread tags. */
 	tags?: Array<string>;
+	/** Hide contacts. */
 	hide_contacts?: boolean;
+	/** Allow ask hidden content. */
 	allow_ask_hidden_content?: boolean;
-	/** @default 2 */
+	/** Allow to reply only users with chosen or higher group. @default 2 */
 	reply_group?: 0 | 2 | 21 | 22 | 23 | 60 | 351;
+	/** Allow commenting if user can't post in thread. */
 	comment_ignore_group?: boolean;
+	/** Don't alert followers about thread creation. */
 	dont_alert_followers?: boolean;
+	/** Date to schedule thread creation (format: `DD-MM-YYYY`). */
 	schedule_date?: string;
+	/** Time to schedule thread creation (format: `HH:MM`). */
 	schedule_time?: string;
+	/** Watch thread state. */
 	watch_thread_state?: boolean;
+	/** Receive forum notifications of new posts in this thread. */
 	watch_thread?: boolean;
+	/** Receive email notifications of new posts in this thread. */
 	watch_thread_email?: boolean;
+	/** You should describe what's happened.
+- describe the situation in a nutshell. If you wish, you can describe the situation in more detail using the "Spoiler" function.
+- attach screenshots of correspondence. You may upload to the site [Imgur](https://imgur.com/upload) - for convenience, use Ctrl + V when uploading screenshots to the album.
+- other evidence;
+- notify the respondent about the complaint you created, familiarize him with hidden content
+
+Describe the situation in as much detail as possible. */
 	post_body: string;
 }
 
@@ -1230,6 +1213,7 @@ export type ThreadsClaimResponse = {
 };
 
 export interface ThreadsGetParams {
+	/** List of fields to include. */
 	fields_include?: Array<"*" | "latest_posts">;
 }
 
@@ -1239,14 +1223,23 @@ export type ThreadsGetResponse = {
 };
 
 export interface ThreadsEditBody {
+	/** Thread title. */
 	title?: string;
+	/** Thread title english. */
 	title_en?: string;
+	/** Prefix ids. Set "0" to remove all thread prefixes. */
 	prefix_id?: Array<number>;
+	/** Thread tags. */
 	tags?: Array<string>;
+	/** Discussion state. */
 	discussion_open?: boolean;
+	/** Hide contacts. */
 	hide_contacts?: boolean;
+	/** Allow ask hidden content. */
 	allow_ask_hidden_content?: boolean;
+	/** Allow to reply only users with chosen or higher group. */
 	reply_group?: 0 | 2 | 21 | 22 | 23 | 60 | 351;
+	/** Allow commenting if user can't post in thread. */
 	comment_ignore_group?: boolean;
 }
 
@@ -1256,6 +1249,7 @@ export type ThreadsEditResponse = {
 };
 
 export interface ThreadsDeleteBody {
+	/** Reason of the thread removal. */
 	reason?: string;
 }
 
@@ -1266,11 +1260,17 @@ export type ThreadsDeleteResponse = {
 };
 
 export interface ThreadsMoveBody {
+	/** Forum id. */
 	node_id: string;
+	/** Thread title. */
 	title?: string;
+	/** Thread title english. */
 	title_en?: string;
+	/** Prefix ids. Set "0" to remove all thread prefixes. */
 	prefix_id?: Array<number>;
+	/** Apply thread prefix. */
 	apply_thread_prefix?: boolean;
+	/** Send a notification to users who are followed to target node. */
 	send_alert?: boolean;
 }
 
@@ -1317,6 +1317,7 @@ export type ThreadsFollowersResponse = {
 };
 
 export interface ThreadsFollowBody {
+	/** Whether to receive notification as email. */
 	email?: boolean;
 }
 
@@ -1333,136 +1334,14 @@ export type ThreadsUnfollowResponse = {
 };
 
 export interface ThreadsFollowedParams {
+	/** If included in the request, only the thread count is returned as **threads_total**. */
 	total?: boolean;
+	/** List of fields to include. */
 	fields_include?: Array<"*" | "latest_posts">;
 }
 
 export type ThreadsFollowedResponse = {
-	threads: Array<{
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_followed: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			post_attachment_count: number;
-			like_users: Array<{
-				user_id: number;
-				username: string;
-				display_style_group_id: number;
-				is_banned: number;
-				uniq_username_css: string;
-			}>;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				attachments: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-				upload_attachment: boolean;
-			};
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"38": string;
-			"523": string;
-			"1403": string;
-			"1953": string;
-			"8176": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			upload_attachment: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-		};
-		forum: {
-			forum_id: number;
-			forum_title: string;
-			forum_description: string;
-			forum_thread_count: number;
-			forum_post_count: number;
-			forum_prefixes: Array<unknown>;
-			thread_default_prefix_id: number;
-			thread_prefix_is_required: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				"sub-categories": string;
-				"sub-forums": string;
-				threads: string;
-				followers: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				create_thread: boolean;
-				upload_attachment: boolean;
-				tag_thread: boolean;
-				follow: boolean;
-			};
-			forum_is_followed: boolean;
-		};
-		follow: {
-			alert: boolean;
-			email: boolean;
-		};
-	}>;
+	threads: Array<Resp_ThreadModel>;
 	threads_total: number;
 	system_info: Resp_SystemInfo;
 };
@@ -1519,7 +1398,9 @@ export type ThreadsPollGetResponse = {
 };
 
 export interface ThreadsPollVoteBody {
+	/** The id of the response to vote for. Can be skipped if **response_ids** set. */
 	response_id?: number;
+	/** An array of ids of responses (if the poll allows multiple choices). */
 	response_ids?: Array<number>;
 }
 
@@ -1530,250 +1411,38 @@ export type ThreadsPollVoteResponse = {
 };
 
 export interface ThreadsUnreadParams {
+	/** Maximum number of result threads. The limit may get decreased if the value is too large (depending on the system configuration). */
 	limit?: number;
+	/** Id of the container forum to search for threads. Child forums of the specified forum will be included in the search. */
 	forum_id?: number;
+	/** Number of thread data to be returned. Default value is 20. */
 	data_limit?: number;
 }
 
 export type ThreadsUnreadResponse = {
-	threads: Array<Resp_ThreadModel>;
-	data: Array<{
-		content_type: string;
-		content_id: number;
+	threads: Array<{
 		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_followed: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			post_attachment_count: number;
-			like_users: Array<{
-				user_id: number;
-				username: string;
-				display_style_group_id: number;
-				is_banned: number;
-				uniq_username_css: string;
-			}>;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				attachments: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-				upload_attachment: boolean;
-			};
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: Array<unknown>;
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_poster: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			upload_attachment: boolean;
-			edit: boolean;
-		};
-		forum: {
-			forum_id: number;
-			forum_title: string;
-			forum_description: string;
-			forum_thread_count: number;
-			forum_post_count: number;
-			forum_prefixes: Array<unknown>;
-			thread_default_prefix_id: number;
-			thread_prefix_is_required: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				"sub-categories": string;
-				"sub-forums": string;
-				threads: string;
-				followers: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				create_thread: boolean;
-				upload_attachment: boolean;
-				tag_thread: boolean;
-				follow: boolean;
-			};
-			forum_is_followed: boolean;
-		};
 	}>;
+	data: Array<Resp_ThreadModel>;
 	system_info: Resp_SystemInfo;
 };
 
 export interface ThreadsRecentParams {
+	/** Maximum number of days to search for threads. */
 	days?: number;
+	/** Maximum number of result threads. The limit may get decreased if the value is too large. */
 	limit?: number;
+	/** Id of the container forum to search for threads. Child forums of the specified forum will be included in the search. */
 	forum_id?: number;
+	/** Number of thread data to be returned. Default value is 20. */
 	data_limit?: number;
 }
 
 export type ThreadsRecentResponse = {
-	threads: Array<Resp_ThreadModel>;
-	data: Array<{
-		content_type: string;
-		content_id: number;
+	threads: Array<{
 		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_followed: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			post_attachment_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				attachments: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-				upload_attachment: boolean;
-			};
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: Array<unknown>;
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_poster: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			upload_attachment: boolean;
-			edit: boolean;
-		};
-		forum: {
-			forum_id: number;
-			forum_title: string;
-			forum_description: string;
-			forum_thread_count: number;
-			forum_post_count: number;
-			forum_prefixes: Array<unknown>;
-			thread_default_prefix_id: number;
-			thread_prefix_is_required: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				"sub-categories": string;
-				"sub-forums": string;
-				threads: string;
-				followers: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				create_thread: boolean;
-				upload_attachment: boolean;
-				tag_thread: boolean;
-				follow: boolean;
-			};
-			forum_is_followed: boolean;
-		};
 	}>;
+	data: Array<Resp_ThreadModel>;
 	system_info: Resp_SystemInfo;
 };
 
@@ -1786,10 +1455,15 @@ export type ThreadsFinishResponse = {
 // ─── PostsApi Types ────────────────────────────────────────
 
 export interface PostsListParams {
+	/** Id of the containing thread. */
 	thread_id?: number;
+	/** Id of a post, posts that are in the same page with the specified post will be returned. **thread_id** may be skipped. */
 	page_of_post_id?: number;
+	/** Page number of posts. */
 	page?: number;
+	/** Number of posts in a page. */
 	limit?: number;
+	/** Ordering of posts. */
 	order?: "natural" | "natural_reverse" | "post_likes" | "post_likes_reverse";
 }
 
@@ -1801,8 +1475,11 @@ export type PostsListResponse = {
 };
 
 export interface PostsCreateBody {
+	/** Content of the new post. */
 	post_body: string;
+	/** Id of the target thread. **quote_post_id** can be skipped if this parameter is provided. */
 	thread_id?: number;
+	/** Id of the quote post. **thread_id** can be skipped if this parameter is provided. */
 	quote_post_id?: number;
 }
 
@@ -1817,6 +1494,7 @@ export type PostsGetResponse = {
 };
 
 export interface PostsEditBody {
+	/** Content of the post. */
 	post_body?: string;
 }
 
@@ -1826,6 +1504,7 @@ export type PostsEditResponse = {
 };
 
 export interface PostsDeleteBody {
+	/** Reason of the post removal. */
 	reason?: string;
 }
 
@@ -1836,7 +1515,9 @@ export type PostsDeleteResponse = {
 };
 
 export interface PostsLikesParams {
+	/** Page number of users. */
 	page?: number;
+	/** Number of users in a page. */
 	limit?: number;
 }
 
@@ -1866,6 +1547,7 @@ export type PostsReportReasonsResponse = {
 };
 
 export interface PostsReportBody {
+	/** Reason of the report. */
 	message: string;
 }
 
@@ -1876,8 +1558,11 @@ export type PostsReportResponse = {
 };
 
 export interface PostsCommentsGetParams {
+	/** Id of post. */
 	post_id: number;
+	/** The time in milliseconds (e.g. 1652177794083) before last comment date. */
 	before?: number;
+	/** Comment id to get older comments. */
 	before_comment?: number;
 }
 
@@ -1887,7 +1572,9 @@ export type PostsCommentsGetResponse = {
 };
 
 export interface PostsCommentsCreateBody {
+	/** Id of post. */
 	post_id: number;
+	/** Content of the a post comment. */
 	comment_body: string;
 }
 
@@ -1930,7 +1617,9 @@ export type PostsCommentsCreateResponse = {
 };
 
 export interface PostsCommentsEditBody {
+	/** Id of post. */
 	post_comment_id: number;
+	/** Content of the new post comment. */
 	comment_body: string;
 }
 
@@ -1973,7 +1662,9 @@ export type PostsCommentsEditResponse = {
 };
 
 export interface PostsCommentsDeleteBody {
+	/** Id of post comment. */
 	post_comment_id: number;
+	/** Reason of a post comment removal. */
 	reason?: string;
 }
 
@@ -1984,7 +1675,9 @@ export type PostsCommentsDeleteResponse = {
 };
 
 export interface PostsCommentsReportBody {
+	/** Id of post comment. */
 	post_comment_id: number;
+	/** Reason of the report. */
 	message: string;
 }
 
@@ -1997,8 +1690,11 @@ export type PostsCommentsReportResponse = {
 // ─── UsersApi Types ────────────────────────────────────────
 
 export interface UsersListParams {
+	/** Page number of users. */
 	page?: number;
+	/** Number of users in a page. */
 	limit?: number;
+	/** List of fields to include. */
 	fields_include?: Array<"*" | "alerts">;
 }
 
@@ -2025,8 +1721,11 @@ export type UsersFieldsResponse = {
 };
 
 export interface UsersFindParams {
+	/** Username to filter. Usernames start with the query will be returned. */
 	username?: string;
+	/** Custom fields to filter. Example: **custom_fields[telegram]=telegramLogin**. */
 	custom_fields?: Record<string, string>;
+	/** List of fields to include. */
 	fields_include?: Array<"*" | "alerts">;
 }
 
@@ -2036,6 +1735,7 @@ export type UsersFindResponse = {
 };
 
 export interface UsersGetParams {
+	/** List of fields to include. */
 	fields_include?: Array<"*" | "alerts">;
 }
 
@@ -2045,20 +1745,35 @@ export type UsersGetResponse = {
 };
 
 export interface UsersEditBody {
+	/** New username. */
 	username?: string;
+	/** New custom title of the user. */
 	user_title?: string;
+	/** Id of the group you want to display. */
 	display_group_id?: number;
+	/** Id of the icon group you want to display. */
 	display_icon_group_id?: number;
+	/** Id of the banner you want to display. */
 	display_banner_id?: number;
+	/** This message is shown when someone wants to write to you. */
 	conv_welcome_message?: string;
+	/** Your date of birth (day). */
 	user_dob_day?: number;
+	/** Your date of birth (month). */
 	user_dob_month?: number;
+	/** Your date of birth (year). */
 	user_dob_year?: number;
+	/** Secret answer. */
 	secret_answer?: string;
+	/** Secret answer type. */
 	secret_answer_type?: number;
+	/** Profile short link. */
 	short_link?: string;
+	/** User interface language ID. */
 	language_id?: 1 | 2;
+	/** User gender. */
 	gender?: "" | "male" | "female";
+	/** User timezone. */
 	timezone?:
 		| "Pacific/Midway"
 		| "Pacific/Honolulu"
@@ -2153,17 +1868,29 @@ export interface UsersEditBody {
 		| "Pacific/Tongatapu"
 		| "Pacific/Apia"
 		| "Pacific/Kiritimati";
+	/** Whether to receive admin emails. */
 	receive_admin_email?: boolean;
+	/** Whether user activity is visible. */
 	activity_visible?: boolean;
+	/** Show date of birth (day and month). */
 	show_dob_date?: boolean;
+	/** Show year of birth. */
 	show_dob_year?: boolean;
+	/** Hide username change logs. */
 	hide_username_change_logs?: boolean;
+	/** Who can view your profile. */
 	allow_view_profile?: "none" | "members" | "followed";
+	/** Who can post on your profile. */
 	allow_post_profile?: "none" | "members" | "followed";
+	/** Who can send you personal conversations. */
 	allow_send_personal_conversation?: "none" | "members" | "followed";
+	/** Who can invite you to groups. */
 	allow_invite_group?: "none" | "members" | "followed";
+	/** Who can see your news feed. */
 	allow_receive_news_feed?: "none" | "members" | "followed";
+	/** Alert settings. */
 	alert?: Record<string, boolean>;
+	/** Custom user profile fields. */
 	fields?: {
 		location?: string;
 		occupation?: string;
@@ -2189,7 +1916,9 @@ export type UsersEditResponse = {
 };
 
 export interface UsersClaimsParams {
+	/** Filter claims by their type. */
 	type?: "market" | "nomarket";
+	/** Filter claims by their state. */
 	claim_state?: "active" | "solved" | "rejected" | "settled";
 }
 
@@ -2223,9 +1952,13 @@ export type UsersClaimsResponse = {
 };
 
 export interface UsersAvatarUploadBody {
+	/** Binary data of the avatar. */
 	avatar: FileInput;
+	/** The starting point of the selection by width. Default value - 0 */
 	x?: number;
+	/** The starting point of the selection by height. Default value - 0 */
 	y?: number;
+	/** Selection size. */
 	crop?: number;
 }
 
@@ -2242,8 +1975,11 @@ export type UsersAvatarDeleteResponse = {
 };
 
 export interface UsersAvatarCropBody {
+	/** The starting point of the selection by width. Default value - 0 */
 	x?: number;
+	/** The starting point of the selection by height. Default value - 0 */
 	y?: number;
+	/** Selection size. */
 	crop?: number;
 }
 
@@ -2254,9 +1990,13 @@ export type UsersAvatarCropResponse = {
 };
 
 export interface UsersBackgroundUploadBody {
+	/** Binary data of the background. Background image must be 1920x1080 pixels */
 	background: FileInput;
+	/** The starting point of the selection by width. Default value - 0 */
 	x?: number;
+	/** The starting point of the selection by height. Default value - 0 */
 	y?: number;
+	/** Selection size. */
 	crop?: number;
 }
 
@@ -2273,8 +2013,11 @@ export type UsersBackgroundDeleteResponse = {
 };
 
 export interface UsersBackgroundCropBody {
+	/** The starting point of the selection by width. Default value - 0 */
 	x?: number;
+	/** The starting point of the selection by height. Default value - 0 */
 	y?: number;
+	/** Selection size. */
 	crop?: number;
 }
 
@@ -2285,8 +2028,11 @@ export type UsersBackgroundCropResponse = {
 };
 
 export interface UsersFollowersParams {
+	/** Ordering of followers. */
 	order?: "natural" | "follow_date" | "follow_date_reverse";
+	/** Page number of followers. */
 	page?: number;
+	/** Number of followers in a page. */
 	limit?: number;
 }
 
@@ -2362,8 +2108,11 @@ export type UsersUnfollowResponse = {
 };
 
 export interface UsersFollowingsParams {
+	/** Ordering of users. */
 	order?: "natural" | "follow_date" | "follow_date_reverse";
+	/** Page number of users. */
 	page?: number;
+	/** Number of users in a page. */
 	limit?: number;
 }
 
@@ -2440,14 +2189,19 @@ export type UsersFollowingsResponse = {
 };
 
 export interface UsersLikesParams {
+	/** Filter by forum section. */
 	node_id?: number;
+	/** Like type. */
 	like_type?: "like" | "like2";
-	/** @default "gotten" */
+	/** Likes type. @default "gotten" */
 	type?: "gotten" | "given";
+	/** Page number. */
 	page?: number;
-	/** @default "post" */
+	/** Content type. @default "post" */
 	content_type?: "post" | "post_comment" | "profile_post" | "profile_post_comment";
+	/** Get only likes from specified user. */
 	search_user_id?: number;
+	/** Show weekly statistics. */
 	stats?: boolean;
 }
 
@@ -2475,6 +2229,7 @@ export type UsersLikesResponse = {
 };
 
 export interface UsersIgnoredParams {
+	/** If included in the request, only the user count is returned as **users_total**. */
 	total?: boolean;
 }
 
@@ -2552,8 +2307,11 @@ export type UsersIgnoreResponse = {
 };
 
 export interface UsersIgnoreEditParams {
+	/** Ignore user's conversations. */
 	ignore_conversations?: boolean;
+	/** Ignore user's content. */
 	ignore_content?: boolean;
+	/** Restrict user from viewing your profile. */
 	restrict_view_profile?: boolean;
 }
 
@@ -2570,7 +2328,9 @@ export type UsersUnignoreResponse = {
 };
 
 export interface UsersContentsParams {
+	/** Page number of contents. */
 	page?: number;
+	/** Number of contents in a page. */
 	limit?: number;
 }
 
@@ -2623,44 +2383,7 @@ export type UsersContentsResponse = {
 			report: boolean;
 			upload_attachment: boolean;
 		};
-		thread: {
-			thread_id: number;
-			forum_id: number;
-			thread_title: string;
-			thread_view_count: number;
-			creator_user_id: number;
-			creator_username: string;
-			creator_username_html: string;
-			thread_create_date: number;
-			thread_update_date: number;
-			user_is_ignored: boolean;
-			thread_post_count: number;
-			thread_is_published: boolean;
-			thread_is_deleted: boolean;
-			thread_is_sticky: boolean;
-			thread_is_followed: boolean;
-			thread_prefixes: Array<unknown>;
-			thread_tags: Array<unknown>;
-			links: {
-				permalink: string;
-				detail: string;
-				followers: string;
-				forum: string;
-				posts: string;
-				first_poster: string;
-				first_poster_avatar: string;
-				first_post: string;
-				last_poster: string;
-				last_post: string;
-			};
-			permissions: {
-				view: boolean;
-				delete: boolean;
-				follow: boolean;
-				post: boolean;
-				upload_attachment: boolean;
-			};
-		};
+		thread: Resp_ThreadModel;
 	}>;
 	data_total: number;
 	user: Resp_UserModel;
@@ -2705,9 +2428,13 @@ export type UsersSaCancelResetResponse = {
 // ─── ProfilePostsApi Types ────────────────────────────────────────
 
 export interface ProfilePostsListParams {
+	/** Filter to get only posts from the specified user. */
 	posts_user_id?: number;
+	/** Page number of contents. */
 	page?: number;
+	/** Number of contents in a page. */
 	limit?: number;
+	/** List of fields to include. */
 	fields_include?: Array<"*" | "latest_comments">;
 }
 
@@ -2729,7 +2456,9 @@ export type ProfilePostsGetResponse = {
 };
 
 export interface ProfilePostsEditBody {
+	/** New content of the profile post. */
 	post_body?: string;
+	/** Disable comments. */
 	disable_comments?: boolean;
 }
 
@@ -2772,6 +2501,7 @@ export type ProfilePostsEditResponse = {
 };
 
 export interface ProfilePostsDeleteParams {
+	/** Reason of the profile post removal. */
 	reason?: string;
 }
 
@@ -2787,6 +2517,7 @@ export type ProfilePostsReportReasonsResponse = {
 };
 
 export interface ProfilePostsReportBody {
+	/** Reason of the report. */
 	message: string;
 }
 
@@ -2798,6 +2529,7 @@ export type ProfilePostsReportResponse = {
 
 export interface ProfilePostsCreateBody {
 	user_id: UserIDModel;
+	/** Content of a profile post. */
 	post_body: string;
 }
 
@@ -2872,8 +2604,11 @@ export type ProfilePostsUnlikeResponse = {
 };
 
 export interface ProfilePostsCommentsListParams {
+	/** Id of profile post. */
 	profile_post_id: number;
+	/** Date to get older comments. Please note that this entry point does not support the page parameter but it still does support **limit**. */
 	before?: number;
+	/** Number of profile posts in a page. */
 	limit?: number;
 }
 
@@ -2919,7 +2654,9 @@ export type ProfilePostsCommentsListResponse = {
 };
 
 export interface ProfilePostsCommentsCreateBody {
+	/** Id of profile post. */
 	profile_post_id: number;
+	/** Content of the new profile post comment. */
 	comment_body: string;
 }
 
@@ -2951,7 +2688,9 @@ export type ProfilePostsCommentsCreateResponse = {
 };
 
 export interface ProfilePostsCommentsEditBody {
+	/** Id of profile post comment. */
 	comment_id: number;
+	/** New content for the profile post comment. */
 	comment_body: string;
 }
 
@@ -2983,6 +2722,7 @@ export type ProfilePostsCommentsEditResponse = {
 };
 
 export interface ProfilePostsCommentsDeleteBody {
+	/** Id of profile post comment. */
 	comment_id: number;
 }
 
@@ -2998,6 +2738,7 @@ export type ProfilePostsCommentsGetResponse = {
 };
 
 export interface ProfilePostsCommentsReportBody {
+	/** Reason of the report. */
 	message: string;
 }
 
@@ -3010,6 +2751,7 @@ export type ProfilePostsCommentsReportResponse = {
 // ─── ConversationsApi Types ────────────────────────────────────────
 
 export interface ConversationsListParams {
+	/** Filter conversations by folder. */
 	folder?:
 		| "all"
 		| "unread"
@@ -3019,7 +2761,9 @@ export interface ConversationsListParams {
 		| "staff"
 		| "giveaways"
 		| "p2p";
+	/** Page number of conversations. */
 	page?: number;
+	/** Number of conversations in a page. */
 	limit?: number;
 }
 
@@ -3040,15 +2784,23 @@ export type ConversationsListResponse = {
 };
 
 export interface ConversationsCreateBody {
+	/** Id of recipient. Required if **is_group=false**. */
 	recipient_id?: number;
+	/** List of recipients username's. Max recipients count is 10. Required if **is_group=true**. */
 	recipients?: Array<string>;
-	/** @default false */
+	/** Is group. Set **false** if personal conversation, or set **true** if group. @default false */
 	is_group?: boolean;
+	/** The title of new conversation. Required if **is_group=1**. */
 	title?: string;
+	/** Open invite. */
 	open_invite?: boolean;
+	/** Allow edit messages. */
 	allow_edit_messages?: boolean;
+	/** Allow members to stick messages. */
 	allow_sticky_messages?: boolean;
+	/** Allow members to delete their own messages. */
 	allow_delete_own_messages?: boolean;
+	/** First message. Required if **is_group**=false */
 	message_body?: string;
 }
 
@@ -3058,12 +2810,19 @@ export type ConversationsCreateResponse = {
 };
 
 export interface ConversationsUpdateBody {
+	/** Id of conversation. */
 	conversation_id: number;
+	/** New conversation title. */
 	title?: string;
+	/** Allow members to invite others. */
 	open_invite?: boolean;
+	/** Make conversation history visible to new members. */
 	history_open?: boolean;
+	/** Allow members to edit their own messages. */
 	allow_edit_messages?: boolean;
+	/** Allow members to stick messages. */
 	allow_sticky_messages?: boolean;
+	/** Allow members to delete their own messages. */
 	allow_delete_own_messages?: boolean;
 }
 
@@ -3073,7 +2832,9 @@ export type ConversationsUpdateResponse = {
 };
 
 export interface ConversationsDeleteBody {
+	/** Id of conversation. */
 	conversation_id: number;
+	/** Deletion type. */
 	delete_type: "delete" | "delete_ignore";
 }
 
@@ -3093,6 +2854,7 @@ export type ConversationsStartResponse = {
 };
 
 export interface ConversationsSaveBody {
+	/** Content url. */
 	link: string;
 }
 
@@ -3108,10 +2870,15 @@ export type ConversationsGetResponse = {
 };
 
 export interface ConversationsMessagesListParams {
+	/** Page number of messages. */
 	page?: number;
+	/** Number of messages in a page. */
 	limit?: number;
+	/** Ordering of messages. */
 	order?: "natural" | "natural_reverse";
+	/** Date to get older messages. */
 	before?: number;
+	/** Date to get newer messages. */
 	after?: number;
 }
 
@@ -3127,7 +2894,9 @@ export type ConversationsMessagesListResponse = {
 };
 
 export interface ConversationsMessagesCreateBody {
+	/** ID of the message being replied to. */
 	reply_message_id?: number;
+	/** Content of the new message. */
 	message_body: string;
 }
 
@@ -3137,8 +2906,11 @@ export type ConversationsMessagesCreateResponse = {
 };
 
 export interface ConversationsSearchBody {
+	/** Search query string. */
 	q?: string;
+	/** Id of conversation. */
 	conversation_id?: number;
+	/** Search for recipients. */
 	search_recipients?: boolean;
 }
 
@@ -3154,6 +2926,7 @@ export type ConversationsMessagesGetResponse = {
 };
 
 export interface ConversationsMessagesEditBody {
+	/** New content of the message. */
 	message_body: string;
 }
 
@@ -3169,6 +2942,7 @@ export type ConversationsMessagesDeleteResponse = {
 };
 
 export interface ConversationsInviteBody {
+	/** List of recipients username's. */
 	recipients: Array<string>;
 }
 
@@ -3179,6 +2953,7 @@ export type ConversationsInviteResponse = {
 };
 
 export interface ConversationsKickBody {
+	/** Id of user to kick from conversation. */
 	user_id: number;
 }
 
@@ -3239,8 +3014,11 @@ export type ConversationsAlertsDisableResponse = {
 // ─── NotificationsApi Types ────────────────────────────────────────
 
 export interface NotificationsListParams {
+	/** Filter notifications by their type. */
 	type?: "market" | "nomarket";
+	/** Page number of notifications. */
 	page?: number;
+	/** Number of notifications in a page. */
 	limit?: number;
 }
 
@@ -3263,6 +3041,7 @@ export type NotificationsGetResponse = {
 };
 
 export interface NotificationsReadBody {
+	/** If notification_id is omitted, it's mark all existing notifications as read. */
 	notification_id?: number;
 }
 
@@ -3275,39 +3054,19 @@ export type NotificationsReadResponse = {
 // ─── TagsApi Types ────────────────────────────────────────
 
 export type TagsPopularResponse = {
-	tags: {
-		"000": string;
-	};
+	tags: Record<string, string>;
 	system_info: Resp_SystemInfo;
 };
 
 export interface TagsListParams {
+	/** Page number of tags list. */
 	page?: number;
+	/** Number of results in a page. */
 	limit?: number;
 }
 
 export type TagsListResponse = {
-	tags: {
-		"1": string;
-		"2": string;
-		"3": string;
-		"4": string;
-		"5": string;
-		"6": string;
-		"7": string;
-		"8": string;
-		"9": string;
-		"10": string;
-		"11": string;
-		"12": string;
-		"14": string;
-		"15": string;
-		"16": string;
-		"17": string;
-		"18": string;
-		"19": string;
-		"20": string;
-	};
+	tags: Record<string, string>;
 	tags_total: number;
 	links: {
 		pages: number;
@@ -3318,7 +3077,9 @@ export type TagsListResponse = {
 };
 
 export interface TagsGetParams {
+	/** Page number of tagged contents. */
 	page?: number;
+	/** Number of tagged contents in a page. */
 	limit?: number;
 }
 
@@ -3332,127 +3093,7 @@ export type TagsGetResponse = {
 			detail: string;
 		};
 	};
-	tagged: Array<{
-		content_type: string;
-		content_id: number;
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_followed: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			post_attachment_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				attachments: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-				upload_attachment: boolean;
-			};
-		};
-		thread_prefixes: Array<{
-			prefix_id: number;
-			prefix_title: string;
-		}>;
-		thread_tags: {
-			"1": string;
-			"654": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_poster: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			upload_attachment: boolean;
-			edit: boolean;
-		};
-		forum: {
-			forum_id: number;
-			forum_title: string;
-			forum_description: string;
-			forum_thread_count: number;
-			forum_post_count: number;
-			forum_prefixes: Array<{
-				group_title: string;
-				group_prefixes: Array<{
-					prefix_id: number;
-					prefix_title: string;
-				}>;
-			}>;
-			thread_default_prefix_id: number;
-			thread_prefix_is_required: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				"sub-categories": string;
-				"sub-forums": string;
-				threads: string;
-				followers: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				create_thread: boolean;
-				upload_attachment: boolean;
-				tag_thread: boolean;
-				follow: boolean;
-			};
-			forum_is_followed: boolean;
-		};
-	}>;
+	tagged: Array<Resp_ThreadModel>;
 	tagged_total: number;
 	links: {
 		pages: number;
@@ -3463,6 +3104,7 @@ export type TagsGetResponse = {
 };
 
 export interface TagsFindParams {
+	/** tag to filter. Tags start with the query will be returned. */
 	tag: string;
 }
 
@@ -3475,170 +3117,23 @@ export type TagsFindResponse = {
 // ─── SearchApi Types ────────────────────────────────────────
 
 export interface SearchAllBody {
+	/** Search query. Can be skipped if **user_id** is set. */
 	q?: string;
+	/** Tag to search for tagged contents. */
 	tag?: string;
+	/** Id of the container forum to search for contents. Child forums of the specified forum will be included in the search. */
 	forum_id?: number;
 	user_id?: UserIDModel;
+	/** Page number of results. */
 	page?: number;
+	/** Number of results in a page. */
 	limit?: number;
+	/** The time in milliseconds (e.g. 1767214800) before last content date. */
+	before?: number;
 }
 
 export type SearchAllResponse = {
-	data: Array<{
-		content_type: string;
-		content_id: string;
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_is_starred: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: Array<unknown>;
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_poster: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			edit: boolean;
-			bump: {
-				can: boolean;
-				available_count: number;
-				error: unknown;
-				next_available_time: unknown;
-			};
-		};
-		node_title: string;
-		forum: {
-			forum_id: number;
-			forum_title: string;
-			forum_description: string;
-			forum_thread_count: number;
-			forum_post_count: number;
-			parent_node_id: number;
-			forum_prefixes: Array<unknown>;
-			thread_default_prefix_id: number;
-			thread_prefix_is_required: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				"sub-categories": string;
-				"sub-forums": string;
-				threads: string;
-				followers: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				create_thread: boolean;
-				tag_thread: boolean;
-				follow: boolean;
-			};
-			forum_is_followed: boolean;
-		};
-		last_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			post_is_liked: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-			};
-			thread_is_deleted: boolean;
-		};
-	}>;
+	data: Array<Resp_ForumModel>;
 	data_total: number;
 	users: Array<Resp_UserModel>;
 	links: {
@@ -3650,124 +3145,25 @@ export type SearchAllResponse = {
 };
 
 export interface SearchThreadsBody {
+	/** Search query. Can be skipped if **user_id** is set. */
 	q?: string;
+	/** Tag to search for tagged contents. */
 	tag?: string;
+	/** Id of the container forum to search for contents. Child forums of the specified forum will be included in the search. */
 	forum_id?: number;
 	user_id?: UserIDModel;
+	/** Page number of results. */
 	page?: number;
+	/** Number of results in a page. */
 	limit?: number;
+	/** Number of thread data to be returned. */
 	data_limit?: number;
+	/** The time in milliseconds (e.g. 1767214800) before last content date. */
+	before?: number;
 }
 
 export type SearchThreadsResponse = {
-	data: Array<{
-		content_type: string;
-		content_id: number;
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_followed: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			post_attachment_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				attachments: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-				upload_attachment: boolean;
-			};
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: Array<unknown>;
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			upload_attachment: boolean;
-			edit: boolean;
-		};
-		forum: {
-			forum_id: number;
-			forum_title: string;
-			forum_description: string;
-			forum_thread_count: number;
-			forum_post_count: number;
-			forum_prefixes: Array<unknown>;
-			thread_default_prefix_id: number;
-			thread_prefix_is_required: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				"sub-categories": string;
-				"sub-forums": string;
-				threads: string;
-				followers: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				create_thread: boolean;
-				upload_attachment: boolean;
-				tag_thread: boolean;
-				follow: boolean;
-			};
-			forum_is_followed: boolean;
-		};
-	}>;
+	data: Array<Resp_ForumModel>;
 	data_total: number;
 	links: {
 		pages: number;
@@ -3778,124 +3174,25 @@ export type SearchThreadsResponse = {
 };
 
 export interface SearchPostsBody {
+	/** Search query. Can be skipped if **user_id** is set. */
 	q?: string;
+	/** Tag to search for tagged contents. */
 	tag?: string;
+	/** Id of the container forum to search for contents. Child forums of the specified forum will be included in the search. */
 	forum_id?: number;
 	user_id?: UserIDModel;
+	/** Page number of results. */
 	page?: number;
+	/** Number of results in a page. */
 	limit?: number;
+	/** Number of post data to be returned. */
 	data_limit?: number;
+	/** The time in milliseconds (e.g. 1767214800) before last content date. */
+	before?: number;
 }
 
 export type SearchPostsResponse = {
-	data: Array<{
-		content_type: string;
-		content_id: number;
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_followed: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			post_attachment_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				attachments: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-				upload_attachment: boolean;
-			};
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: Array<unknown>;
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			upload_attachment: boolean;
-			edit: boolean;
-		};
-		forum: {
-			forum_id: number;
-			forum_title: string;
-			forum_description: string;
-			forum_thread_count: number;
-			forum_post_count: number;
-			forum_prefixes: Array<unknown>;
-			thread_default_prefix_id: number;
-			thread_prefix_is_required: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				"sub-categories": string;
-				"sub-forums": string;
-				threads: string;
-				followers: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				create_thread: boolean;
-				upload_attachment: boolean;
-				tag_thread: boolean;
-				follow: boolean;
-			};
-			forum_is_followed: boolean;
-		};
-	}>;
+	data: Array<Resp_PostModel>;
 	data_total: number;
 	links: {
 		pages: number;
@@ -3906,6 +3203,7 @@ export type SearchPostsResponse = {
 };
 
 export interface SearchUsersBody {
+	/** Search query. */
 	q?: string;
 }
 
@@ -3915,10 +3213,16 @@ export type SearchUsersResponse = {
 };
 
 export interface SearchProfilePostsBody {
+	/** Search query. Can be skipped if **user_id** is set. */
 	q?: string;
+	/** User ID to filter profile posts. */
 	user_id?: number;
+	/** Page number of results. */
 	page?: number;
+	/** Number of results in a page. */
 	limit?: number;
+	/** The time in milliseconds (e.g. 1767214800) before last content date. */
+	before?: number;
 }
 
 export type SearchProfilePostsResponse = {
@@ -3969,131 +3273,18 @@ export type SearchProfilePostsResponse = {
 };
 
 export interface SearchTaggedBody {
+	/** Tag to search for tagged contents. */
 	tag?: string;
+	/** Array of tags to search for tagged contents. */
 	tags?: Array<string>;
+	/** Page number of results. */
 	page?: number;
+	/** Number of results in a page. */
 	limit?: number;
 }
 
 export type SearchTaggedResponse = {
-	data: Array<{
-		content_type: string;
-		content_id: number;
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_followed: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			post_attachment_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				attachments: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-				upload_attachment: boolean;
-			};
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"160179": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			upload_attachment: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-		};
-		forum: {
-			forum_id: number;
-			forum_title: string;
-			forum_description: string;
-			forum_thread_count: number;
-			forum_post_count: number;
-			forum_prefixes: Array<{
-				group_title: string;
-				group_prefixes: Array<{
-					prefix_id: number;
-					prefix_title: string;
-				}>;
-			}>;
-			thread_default_prefix_id: number;
-			thread_prefix_is_required: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				"sub-categories": string;
-				"sub-forums": string;
-				threads: string;
-				followers: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				create_thread: boolean;
-				upload_attachment: boolean;
-				tag_thread: boolean;
-				follow: boolean;
-			};
-			forum_is_followed: boolean;
-		};
-	}>;
+	data: Array<Resp_ThreadModel>;
 	data_total: number;
 	search_tags: {
 		"160179": string;
@@ -4102,129 +3293,14 @@ export type SearchTaggedResponse = {
 };
 
 export interface SearchResultsParams {
+	/** Page number of results. */
 	page?: number;
+	/** Number of results in a page. */
 	limit?: number;
 }
 
 export type SearchResultsResponse = {
-	data: Array<{
-		content_type: string;
-		content_id: number;
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_followed: boolean;
-		first_post: {
-			post_id: number;
-			thread_id: number;
-			poster_user_id: number;
-			poster_username: string;
-			poster_username_html: string;
-			post_create_date: number;
-			post_body: string;
-			post_body_html: string;
-			post_body_plain_text: string;
-			signature: string;
-			signature_html: string;
-			signature_plain_text: string;
-			post_like_count: number;
-			post_attachment_count: number;
-			user_is_ignored: boolean;
-			post_is_published: boolean;
-			post_is_deleted: boolean;
-			post_update_date: number;
-			post_is_first_post: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				thread: string;
-				poster: string;
-				likes: string;
-				report: string;
-				attachments: string;
-				poster_avatar: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				reply: boolean;
-				like: boolean;
-				report: boolean;
-				upload_attachment: boolean;
-			};
-		};
-		thread_prefixes: Array<unknown>;
-		thread_tags: {
-			"160179": string;
-		};
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-			last_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-			upload_attachment: boolean;
-			edit: boolean;
-			edit_title: boolean;
-			edit_tags: boolean;
-		};
-		forum: {
-			forum_id: number;
-			forum_title: string;
-			forum_description: string;
-			forum_thread_count: number;
-			forum_post_count: number;
-			forum_prefixes: Array<{
-				group_title: string;
-				group_prefixes: Array<{
-					prefix_id: number;
-					prefix_title: string;
-				}>;
-			}>;
-			thread_default_prefix_id: number;
-			thread_prefix_is_required: boolean;
-			links: {
-				permalink: string;
-				detail: string;
-				"sub-categories": string;
-				"sub-forums": string;
-				threads: string;
-				followers: string;
-			};
-			permissions: {
-				view: boolean;
-				edit: boolean;
-				delete: boolean;
-				create_thread: boolean;
-				upload_attachment: boolean;
-				tag_thread: boolean;
-				follow: boolean;
-			};
-			forum_is_followed: boolean;
-		};
-	}>;
+	data: Array<Resp_ThreadModel>;
 	data_total: number;
 	search_tags: {
 		"160179": string;
@@ -4250,6 +3326,7 @@ export type BatchExecuteResponse = {
 // ─── ChatboxApi Types ────────────────────────────────────────
 
 export interface ChatboxIndexParams {
+	/** Room id. */
 	room_id?: RoomIDModel;
 }
 
@@ -4311,7 +3388,9 @@ export type ChatboxIndexResponse = {
 };
 
 export interface ChatboxGetMessagesParams {
+	/** Room id. */
 	room_id: RoomIDModel;
+	/** Message id to get older chat messages. */
 	before_message_id?: number;
 }
 
@@ -4322,7 +3401,9 @@ export type ChatboxGetMessagesResponse = {
 
 export interface ChatboxPostMessageBody {
 	room_id: RoomIDModel;
+	/** ID of the message being replied to. */
 	reply_message_id?: number;
+	/** Content of the chat message. */
 	message: string;
 }
 
@@ -4332,7 +3413,9 @@ export type ChatboxPostMessageResponse = {
 };
 
 export interface ChatboxEditMessageBody {
+	/** Message id. */
 	message_id: number;
+	/** New content of the chat message. */
 	message: string;
 }
 
@@ -4342,6 +3425,7 @@ export type ChatboxEditMessageResponse = {
 };
 
 export interface ChatboxDeleteMessageBody {
+	/** Message id. */
 	message_id: number;
 }
 
@@ -4352,6 +3436,7 @@ export type ChatboxDeleteMessageResponse = {
 };
 
 export interface ChatboxOnlineParams {
+	/** Room id. */
 	room_id: RoomIDModel;
 }
 
@@ -4398,6 +3483,7 @@ export type ChatboxOnlineResponse = {
 };
 
 export interface ChatboxReportReasonsParams {
+	/** Message id. */
 	message_id: number;
 }
 
@@ -4407,7 +3493,9 @@ export type ChatboxReportReasonsResponse = {
 };
 
 export interface ChatboxReportBody {
+	/** Message id. */
 	message_id: number;
+	/** Report reason. */
 	reason: string;
 }
 
@@ -4418,6 +3506,7 @@ export type ChatboxReportResponse = {
 };
 
 export interface ChatboxGetLeaderboardParams {
+	/** Duration. */
 	duration?: "day" | "week" | "month";
 }
 
@@ -4517,6 +3606,7 @@ export type ChatboxDeleteIgnoreResponse = {
 // ─── FormsApi Types ────────────────────────────────────────
 
 export interface FormsListParams {
+	/** Page number of forms. */
 	page?: number;
 }
 
@@ -4544,7 +3634,7 @@ export type FormsListResponse = {
 };
 
 export interface FormsCreateP2Ptrade {
-	/** @default 1 */
+	/** Form ID @default 1 */
 	form_id?: 1;
 	fields: {
 		"8": number;
@@ -4670,7 +3760,7 @@ export interface FormsCreateP2Ptrade {
 }
 
 export interface FormsCreateComplaint {
-	/** @default 3 */
+	/** Form ID @default 3 */
 	form_id?: 3;
 	fields: {
 		"22"?: string;
@@ -4701,42 +3791,6 @@ export type FormsCreateBody = FormsCreateP2Ptrade | FormsCreateComplaint;
 
 export type FormsCreateResponse = {
 	message: string;
-	content: {
-		thread_id: number;
-		forum_id: number;
-		thread_title: string;
-		thread_view_count: number;
-		creator_user_id: number;
-		creator_username: string;
-		creator_username_html: string;
-		thread_create_date: number;
-		thread_update_date: number;
-		user_is_ignored: boolean;
-		thread_post_count: number;
-		thread_is_published: boolean;
-		thread_is_deleted: boolean;
-		thread_is_sticky: boolean;
-		thread_is_closed: boolean;
-		thread_is_followed: boolean;
-		thread_prefixes: Array<unknown>;
-		thread_tags: Array<unknown>;
-		links: {
-			permalink: string;
-			detail: string;
-			followers: string;
-			forum: string;
-			posts: string;
-			first_poster: string;
-			first_poster_avatar: string;
-			first_post: string;
-		};
-		permissions: {
-			view: boolean;
-			delete: boolean;
-			follow: boolean;
-			post: boolean;
-		};
-		node_title: string;
-	};
+	content: Resp_ThreadModel;
 	system_info: Resp_SystemInfo;
 };

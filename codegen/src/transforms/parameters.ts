@@ -13,6 +13,7 @@ interface ParameterObject {
 	name: string;
 	in: "path" | "query" | "header" | "cookie";
 	required?: boolean;
+	description?: string;
 	schema?: {
 		type?: string | string[];
 		enum?: unknown[];
@@ -29,6 +30,7 @@ export interface ParsedParameter {
 	required: boolean;
 	defaultValue?: unknown;
 	enumValues?: string[];
+	description?: string;
 }
 
 export interface OperationParameters {
@@ -55,12 +57,18 @@ export function extractParameters(
 
 		const enumValues = param.schema?.enum?.filter((v): v is string => typeof v === "string") ?? [];
 
+		const description =
+			typeof param.description === "string" && param.description.length > 0
+				? param.description
+				: undefined;
+
 		const parsed: ParsedParameter = {
 			name: param.name,
 			required: param.required ?? false,
 			type: schemaToTypeString(param.schema, spec),
 			defaultValue: param.schema?.default,
 			enumValues: enumValues.length > 0 ? enumValues : undefined,
+			description,
 		};
 
 		if (param.in === "path") {

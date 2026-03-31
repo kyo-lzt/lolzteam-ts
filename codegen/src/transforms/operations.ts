@@ -38,6 +38,7 @@ export interface BodyProperty {
 	defaultValue?: unknown;
 	isSpaceDelimited?: boolean;
 	enumValues?: string[];
+	description?: string;
 }
 
 export interface BodyVariant {
@@ -51,9 +52,17 @@ export interface MethodDefinition {
 	methodName: string;
 	httpMethod: string;
 	path: string;
+	summary?: string;
+	description?: string;
 	params: {
-		pathParams: Array<{ name: string; type: string; required: boolean }>;
-		queryParams: Array<{ name: string; type: string; required: boolean; defaultValue?: unknown }>;
+		pathParams: Array<{ name: string; type: string; required: boolean; description?: string }>;
+		queryParams: Array<{
+			name: string;
+			type: string;
+			required: boolean;
+			defaultValue?: unknown;
+			description?: string;
+		}>;
 	};
 	bodyProperties: BodyProperty[];
 	hasBody: boolean;
@@ -70,6 +79,8 @@ const HTTP_METHODS = ["get", "post", "put", "delete", "patch"] as const;
 
 interface OperationObject {
 	operationId?: string;
+	summary?: string;
+	description?: string;
 	parameters?: unknown[];
 	requestBody?: {
 		required?: boolean;
@@ -93,7 +104,13 @@ interface OperationObject {
 }
 
 interface BodyExtractionResult {
-	properties: Array<{ name: string; type: string; required: boolean; defaultValue?: unknown }>;
+	properties: Array<{
+		name: string;
+		type: string;
+		required: boolean;
+		defaultValue?: unknown;
+		description?: string;
+	}>;
 	bodyEncoding: "form" | "json" | "multipart";
 	bodyIsArray?: boolean;
 	bodyArrayItemType?: string;
@@ -240,11 +257,14 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 				}
 			}
 
+			const mergedDesc = (mergedSchema as { description?: string }).description;
 			bodyProperties.push({
 				name,
 				type: schemaToTypeString(mergedSchema, spec),
 				required: isRequired,
 				isSpaceDelimited: encoding?.[name]?.style === "spaceDelimited" || undefined,
+				description:
+					typeof mergedDesc === "string" && mergedDesc.length > 0 ? mergedDesc : undefined,
 			});
 		}
 
@@ -262,12 +282,14 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 				for (const [name, propSchema] of Object.entries(variantProps)) {
 					const format = (propSchema as { format?: string }).format;
 					const type = format === "binary" ? "FileInput" : schemaToTypeString(propSchema, spec);
+					const desc = (propSchema as { description?: string }).description;
 					properties.push({
 						name,
 						type,
 						required: requiredSet.has(name),
 						defaultValue: (propSchema as { default?: unknown }).default,
 						isSpaceDelimited: encoding?.[name]?.style === "spaceDelimited" || undefined,
+						description: typeof desc === "string" && desc.length > 0 ? desc : undefined,
 					});
 				}
 
@@ -285,6 +307,7 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 			const propEnum = (propSchema as { enum?: unknown[] }).enum?.filter(
 				(v): v is string => typeof v === "string",
 			);
+			const desc = (propSchema as { description?: string }).description;
 			bodyProperties.push({
 				name,
 				type,
@@ -292,6 +315,7 @@ function extractBody(operation: OperationObject, spec: OpenApiSpec): BodyExtract
 				defaultValue: (propSchema as { default?: unknown }).default,
 				isSpaceDelimited: encoding?.[name]?.style === "spaceDelimited" || undefined,
 				enumValues: propEnum && propEnum.length > 0 ? propEnum : undefined,
+				description: typeof desc === "string" && desc.length > 0 ? desc : undefined,
 			});
 		}
 	}
@@ -376,11 +400,22 @@ export function extractMethodDefinition(
 		? [...params.queryParams, ...body.properties.map((p) => ({ ...p, required: false }))]
 		: params.queryParams;
 
+	const summary =
+		typeof operation.summary === "string" && operation.summary.length > 0
+			? operation.summary
+			: undefined;
+	const description =
+		typeof operation.description === "string" && operation.description.length > 0
+			? operation.description
+			: undefined;
+
 	return {
 		operationId,
 		methodName,
 		httpMethod: httpMethod.toUpperCase(),
 		path,
+		summary,
+		description,
 		params: {
 			pathParams: params.pathParams,
 			queryParams: effectiveQueryParams,

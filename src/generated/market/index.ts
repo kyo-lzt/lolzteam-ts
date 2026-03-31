@@ -85,6 +85,7 @@ import type {
 	ImapCreateResponse,
 	ImapDeleteBody,
 	ImapDeleteResponse,
+	ItemOriginModel,
 	ListDownloadParams,
 	ListDownloadResponse,
 	ListFavoritesParams,
@@ -213,6 +214,11 @@ import type {
 class CategoryApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Last Accounts
+	 *
+	 * Displays a list of latest accounts.
+	 */
 	async all(params?: CategoryAllParams): Promise<CategoryAllResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -255,6 +261,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Steam
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async steam(params?: CategorySteamParams): Promise<CategorySteamResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -309,6 +320,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Fortnite
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async fortnite(params?: CategoryFortniteParams): Promise<CategoryFortniteResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -359,6 +375,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * miHoYo
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async mihoyo(params?: CategoryMihoyoParams): Promise<CategoryMihoyoResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -402,6 +423,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Riot
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async riot(params?: CategoryRiotParams): Promise<CategoryRiotResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -446,6 +472,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Telegram
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async telegram(params?: CategoryTelegramParams): Promise<CategoryTelegramResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -497,6 +528,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Supercell
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async supercell(params?: CategorySupercellParams): Promise<CategorySupercellResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -539,6 +575,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * EA (Origin)
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async ea(params?: CategoryEaParams): Promise<CategoryEaResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -583,6 +624,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * World of Tanks
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async wot(params?: CategoryWotParams): Promise<CategoryWotResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -633,6 +679,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * WoT Blitz
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async wotBlitz(params?: CategoryWotBlitzParams): Promise<CategoryWotBlitzResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -683,6 +734,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Gifts
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async gifts(params?: CategoryGiftsParams): Promise<CategoryGiftsResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -732,6 +788,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Epic Games
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async epicGames(params?: CategoryEpicGamesParams): Promise<CategoryEpicGamesResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -775,6 +836,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Escape from Tarkov
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async escapeFromTarkov(
 		params?: CategoryEscapeFromTarkovParams,
 	): Promise<CategoryEscapeFromTarkovResponse> {
@@ -822,6 +888,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Social Club
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async socialClub(params?: CategorySocialClubParams): Promise<CategorySocialClubResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -864,6 +935,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Uplay
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async uplay(params?: CategoryUplayParams): Promise<CategoryUplayResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -909,6 +985,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Discord
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async discord(params?: CategoryDiscordParams): Promise<CategoryDiscordResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -954,6 +1035,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * TikTok
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async tikTok(params?: CategoryTikTokParams): Promise<CategoryTikTokResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -1000,6 +1086,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Instagram
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async instagram(params?: CategoryInstagramParams): Promise<CategoryInstagramResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -1045,6 +1136,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * BattleNet
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async battleNet(params?: CategoryBattleNetParams): Promise<CategoryBattleNetResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -1088,6 +1184,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * ChatGPT
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async chatGPT(params?: CategoryChatGPTParams): Promise<CategoryChatGPTResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -1134,6 +1235,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * VPN
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async vpn(params?: CategoryVpnParams): Promise<CategoryVpnResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -1178,6 +1284,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Roblox
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async roblox(params?: CategoryRobloxParams): Promise<CategoryRobloxResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -1233,6 +1344,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Warface
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async warface(params?: CategoryWarfaceParams): Promise<CategoryWarfaceResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -1276,6 +1392,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Minecraft
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async minecraft(params?: CategoryMinecraftParams): Promise<CategoryMinecraftResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -1327,6 +1448,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Hytale
+	 *
+	 * Displays a list of accounts in a specific category according to your parameters.
+	 */
 	async hytale(params?: CategoryHytaleParams): Promise<CategoryHytaleResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -1369,6 +1495,11 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Get Categories
+	 *
+	 * Display category list.
+	 */
 	async list(params?: CategoryListParams): Promise<CategoryListResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1378,6 +1509,12 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Get Category Search Params
+	 *
+	 * Displays search parameters for a category.
+	 * @param categoryName - Category name.
+	 */
 	async params(
 		categoryName:
 			| "steam"
@@ -1412,6 +1549,12 @@ class CategoryApi {
 		});
 	}
 
+	/**
+	 * Get Category Games
+	 *
+	 * Displays a list of games in the category.
+	 * @param categoryName - Category name.
+	 */
 	async games(
 		categoryName:
 			| "steam"
@@ -1450,6 +1593,11 @@ class CategoryApi {
 class ListApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get All User Accounts
+	 *
+	 * Displays a list of user accounts.
+	 */
 	async user(params?: ListUserParams): Promise<ListUserResponse> {
 		validateEnum("show", params?.show, [
 			"active",
@@ -1480,6 +1628,11 @@ class ListApi {
 		});
 	}
 
+	/**
+	 * Get All Purchased Accounts
+	 *
+	 * Displays a list of purchased accounts.
+	 */
 	async orders(params?: ListOrdersParams): Promise<ListOrdersResponse> {
 		validateEnum("show", params?.show, [
 			"active",
@@ -1510,6 +1663,11 @@ class ListApi {
 		});
 	}
 
+	/**
+	 * Get User Items States
+	 *
+	 * Returns the states of user items.
+	 */
 	async states(params?: ListStatesParams): Promise<ListStatesResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1518,6 +1676,12 @@ class ListApi {
 		});
 	}
 
+	/**
+	 * Download Accounts Data
+	 *
+	 * Download accounts data in the specified format.
+	 * @param type - The type of account list to download.
+	 */
 	async download(
 		type: "items" | "orders",
 		params?: ListDownloadParams,
@@ -1557,6 +1721,11 @@ class ListApi {
 		});
 	}
 
+	/**
+	 * Get All Favourites Accounts
+	 *
+	 * Displays a list of favourites accounts.
+	 */
 	async favorites(params?: ListFavoritesParams): Promise<ListFavoritesResponse> {
 		validateEnum("show", params?.show, [
 			"active",
@@ -1587,6 +1756,11 @@ class ListApi {
 		});
 	}
 
+	/**
+	 * Get All Viewed Accounts
+	 *
+	 * Displays a list of viewed accounts.
+	 */
 	async viewed(params?: ListViewedParams): Promise<ListViewedResponse> {
 		validateEnum("show", params?.show, [
 			"active",
@@ -1621,6 +1795,12 @@ class ListApi {
 class ManagingApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Account
+	 *
+	 * Displays account information.
+	 * @param item_id - Item id.
+	 */
 	async get(item_id: number, params?: ManagingGetParams): Promise<ManagingGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1629,6 +1809,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Delete Account
+	 *
+	 * Deletes your account from public search. Deletion type is soft. You can restore account after deletion if you want.
+	 * @param item_id - Item id.
+	 */
 	async delete(item_id: number, body?: ManagingDeleteBody): Promise<ManagingDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1638,6 +1824,11 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Create Claim
+	 *
+	 * Create a claim.
+	 */
 	async createClaim(body?: ManagingCreateClaimBody): Promise<ManagingCreateClaimResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1647,6 +1838,11 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Bulk Get Accounts
+	 *
+	 * Bulk get up to 250 accounts.
+	 */
 	async bulkGet(body: ManagingBulkGetBody): Promise<ManagingBulkGetResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1656,6 +1852,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Account Steam Inventory Value
+	 *
+	 * Gets Account steam inventory value.
+	 * @param item_id - Item id.
+	 */
 	async steamInventoryValue(
 		item_id: number,
 		params?: ManagingSteamInventoryValueParams,
@@ -1667,6 +1869,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Steam Inventory Value
+	 *
+	 * Gets steam inventory value.
+	 * > 📘 This method is rate limited. You can send 20 requests per minute (3s delay between requests)
+	 */
 	async steamValue(params?: ManagingSteamValueParams): Promise<ManagingSteamValueResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1675,6 +1883,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Steam HTML
+	 *
+	 * Returns Steam account profile/games preview.
+	 * @param item_id - Item id.
+	 */
 	async steamPreview(
 		item_id: number,
 		params?: ManagingSteamPreviewParams,
@@ -1687,17 +1901,13 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Edit Account
+	 *
+	 * Edits any details of account.
+	 * @param item_id - Item id.
+	 */
 	async edit(item_id: number, body?: ManagingEditBody): Promise<ManagingEditResponse> {
-		if (body && "item_origin" in body)
-			validateEnum("item_origin", body.item_origin, [
-				"brute",
-				"phishing",
-				"stealer",
-				"personal",
-				"resale",
-				"autoreg",
-				"dummy",
-			]);
 		if (body && "email_type" in body)
 			validateEnum("email_type", body.email_type, ["native", "autoreg"]);
 		return this.http.request({
@@ -1708,6 +1918,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get AI Price
+	 *
+	 * Get AI-suggested price for the account.
+	 * @param item_id - Item id.
+	 */
 	async aIPrice(item_id: number): Promise<ManagingAIPriceResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1715,6 +1931,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Auto Buy Price
+	 *
+	 * Get auto buy price for the account.
+	 * @param item_id - Item id.
+	 */
 	async autoBuyPrice(item_id: number): Promise<ManagingAutoBuyPriceResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1722,6 +1944,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Edit Note
+	 *
+	 * Edits a note for the account.
+	 * @param item_id - Item id.
+	 */
 	async note(item_id: number, body?: ManagingNoteBody): Promise<ManagingNoteResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1731,6 +1959,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Update Inventory Value
+	 *
+	 * Update inventory value.
+	 * @param item_id - Item id.
+	 */
 	async steamUpdateValue(
 		item_id: number,
 		body?: ManagingSteamUpdateValueBody,
@@ -1743,6 +1977,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Bump Account
+	 *
+	 * Bumps account in the search.
+	 * @param item_id - Item id.
+	 */
 	async bump(item_id: number): Promise<ManagingBumpResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1750,6 +1990,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Auto Bump
+	 *
+	 * Enables/edits automatic bumping for the specified account.
+	 * @param item_id - Item id.
+	 */
 	async autoBump(item_id: number, body?: ManagingAutoBumpBody): Promise<ManagingAutoBumpResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1759,6 +2005,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Disable Auto Bump
+	 *
+	 * Disables automatic bumping for the specified account.
+	 * @param item_id - Item id.
+	 */
 	async autoBumpDisable(item_id: number): Promise<ManagingAutoBumpDisableResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1766,6 +2018,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Open Account
+	 *
+	 * Opens account.
+	 * @param item_id - Item id.
+	 */
 	async open(item_id: number): Promise<ManagingOpenResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1773,6 +2031,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Close Account
+	 *
+	 * Closes account.
+	 * @param item_id - Item id.
+	 */
 	async close(item_id: number): Promise<ManagingCloseResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1780,6 +2044,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Account Image
+	 *
+	 * Get account image.
+	 * @param item_id - Item id.
+	 */
 	async image(item_id: number, params?: ManagingImageParams): Promise<ManagingImageResponse> {
 		validateEnum("type", params?.type, [
 			"skins",
@@ -1797,6 +2067,14 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Email Confirmation Code
+	 *
+	 * Gets confirmation code or link.
+	 *
+	 * > ❗️ If you receive a "retry_request" error, you should repeat the same request (up to a maximum of 100 times)
+	 * @param item_id - Item id.
+	 */
 	async emailCode(item_id: number): Promise<ManagingEmailCodeResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1804,6 +2082,13 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Email Letters
+	 *
+	 * Returns account letters.
+	 *
+	 * > ❗️ If you receive a "retry_request" error, you should repeat the same request (up to a maximum of 100 times)
+	 */
 	async getLetters2(params?: ManagingGetLetters2Params): Promise<ManagingGetLetters2Response> {
 		return this.http.request({
 			method: "GET",
@@ -1812,6 +2097,13 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Mafile
+	 *
+	 * Returns steam mafile.
+	 * > ❗️ This action is cancelling active account guarantee
+	 * @param item_id - Item id.
+	 */
 	async steamGetMafile(item_id: number): Promise<ManagingSteamGetMafileResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1819,6 +2111,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Add Mafile
+	 *
+	 * Add a new Steam mafile to the account.
+	 * @param item_id - Item id.
+	 */
 	async steamAddMafile(item_id: number): Promise<ManagingSteamAddMafileResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1826,6 +2124,13 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Remove Mafile
+	 *
+	 * Remove steam mafile.
+	 * > ❗️ This will unlink the authenticator from the account and remove mafile from the item
+	 * @param item_id - Item id.
+	 */
 	async steamRemoveMafile(item_id: number): Promise<ManagingSteamRemoveMafileResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1833,6 +2138,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Mafile Confirmation Code
+	 *
+	 * Gets confirmation code from MaFile (Only for Steam accounts).
+	 * @param item_id - Item id.
+	 */
 	async steamMafileCode(item_id: number): Promise<ManagingSteamMafileCodeResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1840,6 +2151,16 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Confirm SDA
+	 *
+	 * Confirm steam action.
+	 *
+	 *  Don't set **id** and **nonce** parameters to get list of available confirmation requests.
+	 *
+	 * > ❗️ This action is cancelling active account guarantee
+	 * @param item_id - Item id.
+	 */
 	async steamSDA(item_id: number, body?: ManagingSteamSDABody): Promise<ManagingSteamSDAResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1849,6 +2170,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Telegram Confirmation Code
+	 *
+	 * Gets confirmation code from Telegram.
+	 * @param item_id - Item id.
+	 */
 	async telegramCode(item_id: number): Promise<ManagingTelegramCodeResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1856,6 +2183,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Telegram Reset Auth
+	 *
+	 * Resets Telegram authorizations.
+	 * @param item_id - Item id.
+	 */
 	async telegramResetAuth(item_id: number): Promise<ManagingTelegramResetAuthResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1863,6 +2196,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Cancel Guarantee
+	 *
+	 * Cancel guarantee of account. It can be useful for account reselling.
+	 * @param item_id - Item id.
+	 */
 	async refuseGuarantee(item_id: number): Promise<ManagingRefuseGuaranteeResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1870,6 +2209,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Decline Video Recording Request
+	 *
+	 * Waiver of the requirement to record a video and any claims regarding this account.
+	 * @param item_id - Item id.
+	 */
 	async declineVideoRecording(
 		item_id: number,
 		body?: ManagingDeclineVideoRecordingBody,
@@ -1882,6 +2227,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Check Guarantee
+	 *
+	 * Checks the guarantee and cancels it if there are reasons to cancel it.
+	 * @param item_id - Item id.
+	 */
 	async checkGuarantee(item_id: number): Promise<ManagingCheckGuaranteeResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1889,6 +2240,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Change Password
+	 *
+	 * Changes password of account.
+	 * @param item_id - Item id.
+	 */
 	async changePassword(
 		item_id: number,
 		body?: ManagingChangePasswordBody,
@@ -1901,6 +2258,13 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Get Temp Email Password
+	 *
+	 * Gets password from temp email of account. After calling of this method, the guarantee will be cancelled and you cannot automatically resell account.
+	 * > ❗️ This action is cancelling active account guarantee
+	 * @param item_id - Item id.
+	 */
 	async tempEmailPassword(item_id: number): Promise<ManagingTempEmailPasswordResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1908,6 +2272,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Add a Tag
+	 *
+	 * Adds a tag to the specified account.
+	 * @param item_id - Item id.
+	 */
 	async tag(item_id: number, body?: ManagingTagBody): Promise<ManagingTagResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1917,6 +2287,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Remove a Tag
+	 *
+	 * Removes a tag from from the specified account.
+	 * @param item_id - Item id.
+	 */
 	async untag(item_id: number, body?: ManagingUntagBody): Promise<ManagingUntagResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1926,6 +2302,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Add a Public Tag
+	 *
+	 * Adds a public tag to the specified account.
+	 * @param item_id - Item id.
+	 */
 	async publicTag(
 		item_id: number,
 		body?: ManagingPublicTagBody,
@@ -1938,6 +2320,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Remove a Public Tag
+	 *
+	 * Removes a public tag from the specified account.
+	 * @param item_id - Item id.
+	 */
 	async publicUntag(
 		item_id: number,
 		body?: ManagingPublicUntagBody,
@@ -1950,6 +2338,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Favorite
+	 *
+	 * Adds account to favorites.
+	 * @param item_id - Item id.
+	 */
 	async favorite(item_id: number): Promise<ManagingFavoriteResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1957,6 +2351,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Unfavorite
+	 *
+	 * Delete account from favorites.
+	 * @param item_id - Item id.
+	 */
 	async unfavorite(item_id: number): Promise<ManagingUnfavoriteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1964,6 +2364,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Stick Account
+	 *
+	 * Stick account in the top of search.
+	 * @param item_id - Item id.
+	 */
 	async stick(item_id: number): Promise<ManagingStickResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1971,6 +2377,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Unstick Account
+	 *
+	 * Unstick account from the top of search.
+	 * @param item_id - Item id.
+	 */
 	async unstick(item_id: number): Promise<ManagingUnstickResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1978,6 +2390,12 @@ class ManagingApi {
 		});
 	}
 
+	/**
+	 * Change Account Owner
+	 *
+	 * Transfer account to another user.
+	 * @param item_id - Item id.
+	 */
 	async transfer(item_id: number, body?: ManagingTransferBody): Promise<ManagingTransferResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1991,6 +2409,11 @@ class ManagingApi {
 class ProfileApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Claims
+	 *
+	 * Returns a list of claims filed against you.
+	 */
 	async claims(params?: ProfileClaimsParams): Promise<ProfileClaimsResponse> {
 		validateEnum("type", params?.type, ["market", "nomarket"]);
 		validateEnum("claim_state", params?.claim_state, ["active", "solved", "rejected", "settled"]);
@@ -2001,6 +2424,11 @@ class ProfileApi {
 		});
 	}
 
+	/**
+	 * Get Profile
+	 *
+	 * Displays info about your profile.
+	 */
 	async get(params?: ProfileGetParams): Promise<ProfileGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -2009,6 +2437,11 @@ class ProfileApi {
 		});
 	}
 
+	/**
+	 * Edit Market Settings
+	 *
+	 * Change settings about your profile on the market.
+	 */
 	async edit(body?: ProfileEditBody): Promise<ProfileEditResponse> {
 		return this.http.request({
 			method: "PUT",
@@ -2022,6 +2455,11 @@ class ProfileApi {
 class CartApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Cart Items
+	 *
+	 * Returns the list of items currently in your cart.
+	 */
 	async get(params?: CartGetParams): Promise<CartGetResponse> {
 		validateEnum("order_by", params?.order_by, [
 			"price_to_up",
@@ -2063,6 +2501,11 @@ class CartApi {
 		});
 	}
 
+	/**
+	 * Add Item to Cart
+	 *
+	 * Adds item to your cart.
+	 */
 	async add(body: CartAddBody): Promise<CartAddResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2072,6 +2515,11 @@ class CartApi {
 		});
 	}
 
+	/**
+	 * Delete Item From Cart
+	 *
+	 * Deletes an item from the cart.
+	 */
 	async delete(body?: CartDeleteBody): Promise<CartDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -2085,6 +2533,14 @@ class CartApi {
 class PurchasingApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Fast Buy Account
+	 *
+	 * Check and buy account.
+	 *
+	 * > ❗️ If you receive a "retry_request" error, you should repeat the same request (up to a maximum of 100 times).
+	 * @param item_id - Item id.
+	 */
 	async fastBuy(item_id: number, body?: PurchasingFastBuyBody): Promise<PurchasingFastBuyResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2094,6 +2550,14 @@ class PurchasingApi {
 		});
 	}
 
+	/**
+	 * Check Account
+	 *
+	 * Checking account for validity.
+	 *
+	 * > ❗️ If you receive a "retry_request" error, you should repeat the same request (up to a maximum of 100 times).
+	 * @param item_id - Item id.
+	 */
 	async check(item_id: number): Promise<PurchasingCheckResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2101,6 +2565,14 @@ class PurchasingApi {
 		});
 	}
 
+	/**
+	 * Confirm Buy
+	 *
+	 * Confirm buy.
+	 *
+	 * > ❗️ This method doesn't check account for validity. If you want to confirm validity before buying, you should use [FastBuy](https://lzt-market.readme.io/reference/purchasingfastbuy) method
+	 * @param item_id - Item id.
+	 */
 	async confirm(item_id: number, body?: PurchasingConfirmBody): Promise<PurchasingConfirmResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2110,6 +2582,12 @@ class PurchasingApi {
 		});
 	}
 
+	/**
+	 * Discount Request
+	 *
+	 * Request a discount for the specified item.
+	 * @param item_id - Item id.
+	 */
 	async discountRequest(
 		item_id: number,
 		body?: PurchasingDiscountRequestBody,
@@ -2122,6 +2600,12 @@ class PurchasingApi {
 		});
 	}
 
+	/**
+	 * Cancel Discount Request
+	 *
+	 * Cancel a requested discount for the specified item.
+	 * @param item_id - Item id.
+	 */
 	async discountCancel(item_id: number): Promise<PurchasingDiscountCancelResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -2133,6 +2617,11 @@ class PurchasingApi {
 class CustomDiscountsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Custom Discounts
+	 *
+	 * Get a list of custom discounts.
+	 */
 	async get(): Promise<CustomDiscountsGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -2140,6 +2629,11 @@ class CustomDiscountsApi {
 		});
 	}
 
+	/**
+	 * Create Custom Discount
+	 *
+	 * Creates a new custom discount.
+	 */
 	async create(body?: CustomDiscountsCreateBody): Promise<CustomDiscountsCreateResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2149,6 +2643,11 @@ class CustomDiscountsApi {
 		});
 	}
 
+	/**
+	 * Edit Custom Discount
+	 *
+	 * Edit an existing custom discount.
+	 */
 	async edit(body?: CustomDiscountsEditBody): Promise<CustomDiscountsEditResponse> {
 		return this.http.request({
 			method: "PUT",
@@ -2158,6 +2657,11 @@ class CustomDiscountsApi {
 		});
 	}
 
+	/**
+	 * Delete Custom Discount
+	 *
+	 * Delete an existing custom discount.
+	 */
 	async delete(body?: CustomDiscountsDeleteBody): Promise<CustomDiscountsDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -2171,18 +2675,14 @@ class CustomDiscountsApi {
 class PublishingApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Fast Account Upload
+	 *
+	 * Adds and checks the account for validity.
+	 *
+	 * > ❗️ If you receive a "retry_request" error, you should repeat the same request (up to a maximum of 100 times).
+	 */
 	async fastSell(body?: PublishingFastSellBody): Promise<PublishingFastSellResponse> {
-		if (body && "item_origin" in body)
-			validateEnum("item_origin", body.item_origin, [
-				"brute",
-				"phishing",
-				"stealer",
-				"personal",
-				"resale",
-				"autoreg",
-				"dummy",
-				"self_registration",
-			]);
 		if (body && "email_type" in body)
 			validateEnum("email_type", body.email_type, ["native", "autoreg"]);
 		return this.http.request({
@@ -2193,18 +2693,17 @@ class PublishingApi {
 		});
 	}
 
+	/**
+	 * Add Account
+	 *
+	 * Adds account on the market.
+	 *
+	 * Required email login data categories:
+	 * + 9 - Fortnite
+	 * + 12 - Epic games
+	 * + 18 - Escape from Tarkov
+	 */
 	async add(body?: PublishingAddBody): Promise<PublishingAddResponse> {
-		if (body && "item_origin" in body)
-			validateEnum("item_origin", body.item_origin, [
-				"brute",
-				"phishing",
-				"stealer",
-				"personal",
-				"resale",
-				"autoreg",
-				"dummy",
-				"self_registration",
-			]);
 		if (body && "email_type" in body)
 			validateEnum("email_type", body.email_type, ["native", "autoreg"]);
 		return this.http.request({
@@ -2215,6 +2714,14 @@ class PublishingApi {
 		});
 	}
 
+	/**
+	 * Check Account Details
+	 *
+	 * Check and put up to sale not published account OR update account information existing account.
+	 *
+	 * > ❗️ If you receive a "retry_request" error, you should repeat the same request (up to a maximum of 100 times).
+	 * @param item_id - Item id.
+	 */
 	async check(item_id: number, body?: PublishingCheckBody): Promise<PublishingCheckResponse> {
 		if (body && "email_type" in body)
 			validateEnum("email_type", body.email_type, ["native", "autoreg"]);
@@ -2226,6 +2733,14 @@ class PublishingApi {
 		});
 	}
 
+	/**
+	 * Add an External Account
+	 *
+	 * Check and add an external account to your item.
+	 *
+	 * > ❗️ Please note that if you're linking a Social Club account to Steam, it will update the last activity on your account (This is a limitation of Steam). If Social Club Games does not have a linked account, do not enter any data.
+	 * @param item_id - Item id.
+	 */
 	async external(
 		item_id: number,
 		body?: PublishingExternalBody,
@@ -2243,6 +2758,14 @@ class PublishingApi {
 class PaymentsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Invoice
+	 *
+	 * Get invoice.
+	 *
+	 * Required scopes:
+	 * + **invoice**
+	 */
 	async invoiceGet(params?: PaymentsInvoiceGetParams): Promise<PaymentsInvoiceGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -2251,6 +2774,14 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Create Invoice
+	 *
+	 * Create invoice.
+	 *
+	 * Required scopes:
+	 * + **invoice**
+	 */
 	async invoiceCreate(body?: PaymentsInvoiceCreateBody): Promise<PaymentsInvoiceCreateResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2260,6 +2791,14 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Get Invoice List
+	 *
+	 * Get invoice list.
+	 *
+	 * Required scopes:
+	 * + **invoice**
+	 */
 	async invoiceList(params?: PaymentsInvoiceListParams): Promise<PaymentsInvoiceListResponse> {
 		validateEnum("status", params?.status, ["paid", "not_paid"]);
 		return this.http.request({
@@ -2269,6 +2808,11 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Get Currency
+	 *
+	 * Get currency list.
+	 */
 	async currency(): Promise<PaymentsCurrencyResponse> {
 		return this.http.request({
 			method: "GET",
@@ -2276,6 +2820,11 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Get List Of Balances
+	 *
+	 * Returns list of balances.
+	 */
 	async balanceList(): Promise<PaymentsBalanceListResponse> {
 		return this.http.request({
 			method: "GET",
@@ -2283,6 +2832,11 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Exchange Balance
+	 *
+	 * Transfer funds from one balance to another.
+	 */
 	async balanceExchange(
 		body?: PaymentsBalanceExchangeBody,
 	): Promise<PaymentsBalanceExchangeResponse> {
@@ -2294,6 +2848,14 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Transfer Money
+	 *
+	 * Transfer money to any user.
+	 *
+	 * Required scopes:
+	 * + **payment**
+	 */
 	async transfer(body?: PaymentsTransferBody): Promise<PaymentsTransferResponse> {
 		if (body && "hold_length_option" in body)
 			validateEnum("hold_length_option", body.hold_length_option, [
@@ -2311,6 +2873,14 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Check Transfer Fee
+	 *
+	 * Get transfer limits and get fee amount for transfer.
+	 *
+	 * Required scopes:
+	 * + **payment**
+	 */
 	async fee(params?: PaymentsFeeParams): Promise<PaymentsFeeResponse> {
 		return this.http.request({
 			method: "GET",
@@ -2319,6 +2889,14 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Cancel Transfer
+	 *
+	 * Cancels a transfer with a hold that was sent to your account.
+	 *
+	 * Required scopes:
+	 * + **payment**
+	 */
 	async cancel(body?: PaymentsCancelBody): Promise<PaymentsCancelResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2328,6 +2906,14 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Payments History
+	 *
+	 * Displays list of your payments.
+	 *
+	 * Required scopes:
+	 * + **payment**
+	 */
 	async history(params?: PaymentsHistoryParams): Promise<PaymentsHistoryResponse> {
 		validateEnum("type", params?.type, [
 			"paid_item",
@@ -2351,6 +2937,11 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Get Payout Services
+	 *
+	 * Get a list of available payout services.
+	 */
 	async payoutServices(): Promise<PaymentsPayoutServicesResponse> {
 		return this.http.request({
 			method: "GET",
@@ -2358,6 +2949,11 @@ class PaymentsApi {
 		});
 	}
 
+	/**
+	 * Create Payout
+	 *
+	 * Creates a payout request.
+	 */
 	async payout(body?: PaymentsPayoutBody): Promise<PaymentsPayoutResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2371,6 +2967,14 @@ class PaymentsApi {
 class AutoPaymentsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Auto Payments
+	 *
+	 * Get auto payments list.
+	 *
+	 * Required scopes:
+	 * + **payment**
+	 */
 	async list(): Promise<AutoPaymentsListResponse> {
 		return this.http.request({
 			method: "GET",
@@ -2378,6 +2982,14 @@ class AutoPaymentsApi {
 		});
 	}
 
+	/**
+	 * Create Auto Payment
+	 *
+	 * Creates auto payment.
+	 *
+	 * Required scopes:
+	 * + **payment**
+	 */
 	async create(body?: AutoPaymentsCreateBody): Promise<AutoPaymentsCreateResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2387,6 +2999,14 @@ class AutoPaymentsApi {
 		});
 	}
 
+	/**
+	 * Delete Auto Payment
+	 *
+	 * Deletes an auto payment.
+	 *
+	 * Required scopes:
+	 * + **payment**
+	 */
 	async delete(body?: AutoPaymentsDeleteBody): Promise<AutoPaymentsDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -2400,6 +3020,11 @@ class AutoPaymentsApi {
 class ProxyApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Proxy
+	 *
+	 * Gets your proxy list.
+	 */
 	async get(): Promise<ProxyGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -2407,6 +3032,25 @@ class ProxyApi {
 		});
 	}
 
+	/**
+	 * Add Proxy
+	 *
+	 * Add single proxy or proxy list.
+	 *
+	 *
+	 * To add single proxy use this parameters:
+	 *
+	 *
+	 * + **proxy_ip** (required) - proxy ip or host
+	 * + **proxy_port** (required) - proxy port
+	 * + **proxy_user** (optional) - proxy username
+	 * + **proxy_pass** (optional) - proxy password
+	 *
+	 * To add proxy list use this parameters:
+	 *
+	 *
+	 * + **proxy_row** (required) - proxy list in String format ip:port:user:pass. Each proxy must be start with new line (use \n separator)
+	 */
 	async add(body: ProxyAddBody): Promise<ProxyAddResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2416,6 +3060,11 @@ class ProxyApi {
 		});
 	}
 
+	/**
+	 * Delete Proxy
+	 *
+	 * Delete single or all proxies.
+	 */
 	async delete(body?: ProxyDeleteBody): Promise<ProxyDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -2429,6 +3078,11 @@ class ProxyApi {
 class ImapApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Create IMAP Configuration
+	 *
+	 * Create an IMAP configuration for a domain.
+	 */
 	async create(body?: ImapCreateBody): Promise<ImapCreateResponse> {
 		return this.http.request({
 			method: "POST",
@@ -2438,6 +3092,11 @@ class ImapApi {
 		});
 	}
 
+	/**
+	 * Delete IMAP Configuration
+	 *
+	 * Delete an IMAP configuration for a domain.
+	 */
 	async delete(body?: ImapDeleteBody): Promise<ImapDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -2451,6 +3110,14 @@ class ImapApi {
 class BatchApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Batch
+	 *
+	 * Execute multiple API requests at once (separated by comma). Maximum batch jobs is 10.
+	 * Following methods are unavailable in Batch:
+	 * - GET /{item_id}/image
+	 * - /item/fast-sell
+	 */
 	async batch(body: BatchBatchBody): Promise<BatchBatchResponse> {
 		return this.http.request({
 			method: "POST",

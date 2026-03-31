@@ -258,6 +258,17 @@ import type {
 class OAuthApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Access Token
+	 *
+	 * Obtain an access token using various grant types.
+	 *
+	 * Supports the following grant types:
+	 * - Client Credentials
+	 * - Authorization Code
+	 * - Refresh Token
+	 * - Password
+	 */
 	async token(body: OAuthTokenBody): Promise<OAuthTokenResponse> {
 		return this.http.request({
 			method: "POST",
@@ -274,6 +285,11 @@ class OAuthApi {
 class AssetsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get CSS
+	 *
+	 * Gets css rulesets for requested selectors.
+	 */
 	async css(params?: AssetsCssParams): Promise<AssetsCssResponse> {
 		return this.http.request({
 			method: "GET",
@@ -286,6 +302,14 @@ class AssetsApi {
 class CategoriesApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Categories
+	 *
+	 * List of all categories in the system.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async list(params?: CategoriesListParams): Promise<CategoriesListResponse> {
 		validateEnum("order", params?.order, ["natural", "list"]);
 		return this.http.request({
@@ -295,6 +319,15 @@ class CategoriesApi {
 		});
 	}
 
+	/**
+	 * Get Category
+	 *
+	 * Detail information of a category.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param category_id - Id of category.
+	 */
 	async get(category_id: number): Promise<CategoriesGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -306,6 +339,14 @@ class CategoriesApi {
 class ForumsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Forums
+	 *
+	 * List of all forums in the system.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async list(params?: ForumsListParams): Promise<ForumsListResponse> {
 		validateEnum("order", params?.order, ["natural", "list"]);
 		return this.http.request({
@@ -315,6 +356,14 @@ class ForumsApi {
 		});
 	}
 
+	/**
+	 * Get Forums Tree
+	 *
+	 * Returns grouped forums.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async grouped(): Promise<ForumsGroupedResponse> {
 		return this.http.request({
 			method: "GET",
@@ -322,6 +371,15 @@ class ForumsApi {
 		});
 	}
 
+	/**
+	 * Get Forum
+	 *
+	 * Detail information of a forum.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param forum_id - Id of forum.
+	 */
 	async get(forum_id: number): Promise<ForumsGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -329,6 +387,15 @@ class ForumsApi {
 		});
 	}
 
+	/**
+	 * Get Followers
+	 *
+	 * List of a forum's followers. For privacy reason, only the current user will be included in the list (if the user follows the specified forum).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param forum_id - Id of forum.
+	 */
 	async followers(forum_id: number): Promise<ForumsFollowersResponse> {
 		return this.http.request({
 			method: "GET",
@@ -336,6 +403,15 @@ class ForumsApi {
 		});
 	}
 
+	/**
+	 * Follow Forum
+	 *
+	 * Follow a forum.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param forum_id - Id of forum.
+	 */
 	async follow(forum_id: number, body?: ForumsFollowBody): Promise<ForumsFollowResponse> {
 		return this.http.request({
 			method: "POST",
@@ -345,6 +421,15 @@ class ForumsApi {
 		});
 	}
 
+	/**
+	 * Unfollow Forum
+	 *
+	 * Unfollow a forum.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param forum_id - Id of forum.
+	 */
 	async unfollow(forum_id: number): Promise<ForumsUnfollowResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -352,6 +437,14 @@ class ForumsApi {
 		});
 	}
 
+	/**
+	 * Get Followed Forums
+	 *
+	 * List of followed forums by current user.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async followed(params?: ForumsFollowedParams): Promise<ForumsFollowedResponse> {
 		return this.http.request({
 			method: "GET",
@@ -360,6 +453,14 @@ class ForumsApi {
 		});
 	}
 
+	/**
+	 * Get Feed Options
+	 *
+	 * Returns available options for the forums feed.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async getFeedOptions(): Promise<ForumsGetFeedOptionsResponse> {
 		return this.http.request({
 			method: "GET",
@@ -367,6 +468,14 @@ class ForumsApi {
 		});
 	}
 
+	/**
+	 * Edit Feed Options
+	 *
+	 * Edit feed options.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async editFeedOptions(body?: ForumsEditFeedOptionsBody): Promise<ForumsEditFeedOptionsResponse> {
 		return this.http.request({
 			method: "PUT",
@@ -380,6 +489,14 @@ class ForumsApi {
 class LinksApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Links Forum
+	 *
+	 * List of all link forums.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async list(): Promise<LinksListResponse> {
 		return this.http.request({
 			method: "GET",
@@ -387,6 +504,15 @@ class LinksApi {
 		});
 	}
 
+	/**
+	 * Get Link Forum
+	 *
+	 * Detail information of a link forum.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param link_id - Id of link forum.
+	 */
 	async get(link_id: number): Promise<LinksGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -398,6 +524,14 @@ class LinksApi {
 class PagesApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Pages
+	 *
+	 * List of all pages in the system.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async list(params?: PagesListParams): Promise<PagesListResponse> {
 		validateEnum("order", params?.order, ["natural", "list"]);
 		return this.http.request({
@@ -407,6 +541,15 @@ class PagesApi {
 		});
 	}
 
+	/**
+	 * Get Page
+	 *
+	 * Detail information of a page.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param page_id - Id of page.
+	 */
 	async get(page_id: number): Promise<PagesGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -418,6 +561,14 @@ class PagesApi {
 class NavigationApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Navigation
+	 *
+	 * List of navigation elements within the system.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async list(params?: NavigationListParams): Promise<NavigationListResponse> {
 		return this.http.request({
 			method: "GET",
@@ -430,6 +581,14 @@ class NavigationApi {
 class ThreadsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Threads
+	 *
+	 * List of threads in a forum (with pagination).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async list(params?: ThreadsListParams): Promise<ThreadsListResponse> {
 		validateEnum("state", params?.state, ["active", "closed"]);
 		validateEnum("period", params?.period, ["day", "week", "month", "year"]);
@@ -449,6 +608,14 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Create Thread
+	 *
+	 * Create a new thread.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async create(body?: ThreadsCreateBody): Promise<ThreadsCreateResponse> {
 		return this.http.request({
 			method: "POST",
@@ -458,6 +625,14 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Create Contest
+	 *
+	 * Create a new contest.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async createContest(body: ThreadsCreateContestBody): Promise<ThreadsCreateContestResponse> {
 		if (body && "contest_type" in body)
 			validateEnum("contest_type", body.contest_type, ["by_finish_date"]);
@@ -473,6 +648,14 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Create Claim
+	 *
+	 * Create a Claim.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async claim(body?: ThreadsClaimBody): Promise<ThreadsClaimResponse> {
 		if (body && "currency" in body)
 			validateEnum("currency", body.currency, [
@@ -497,6 +680,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Get Thread
+	 *
+	 * Detail information of a thread.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param thread_id - Id of thread.
+	 */
 	async get(thread_id: number, params?: ThreadsGetParams): Promise<ThreadsGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -505,6 +697,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Edit thread
+	 *
+	 * Edit a thread.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async edit(thread_id: number, body?: ThreadsEditBody): Promise<ThreadsEditResponse> {
 		return this.http.request({
 			method: "PUT",
@@ -514,6 +715,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Delete Thread
+	 *
+	 * Delete a thread.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async delete(thread_id: number, body?: ThreadsDeleteBody): Promise<ThreadsDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -523,6 +733,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Move Thread
+	 *
+	 * Move a thread to another forum.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async move(thread_id: number, body?: ThreadsMoveBody): Promise<ThreadsMoveResponse> {
 		return this.http.request({
 			method: "POST",
@@ -532,6 +751,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Bump Thread
+	 *
+	 * Bump a thread.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async bump(thread_id: number): Promise<ThreadsBumpResponse> {
 		return this.http.request({
 			method: "POST",
@@ -539,6 +767,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Hide Thread
+	 *
+	 * Hide a thread from your feed.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async hide(thread_id: number): Promise<ThreadsHideResponse> {
 		return this.http.request({
 			method: "POST",
@@ -546,6 +783,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Bookmark Thread
+	 *
+	 * Bookmark a thread.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async star(thread_id: number): Promise<ThreadsStarResponse> {
 		return this.http.request({
 			method: "POST",
@@ -553,6 +799,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Unbookmark Thread
+	 *
+	 * Unbookmark a thread.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async unstar(thread_id: number): Promise<ThreadsUnstarResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -560,6 +815,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Get Thread Followers
+	 *
+	 * List of a thread's followers. For privacy reason, only the current user will be included in the list.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param thread_id - Id of thread.
+	 */
 	async followers(thread_id: number): Promise<ThreadsFollowersResponse> {
 		return this.http.request({
 			method: "GET",
@@ -567,6 +831,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Follow Thread
+	 *
+	 * Follow a thread.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async follow(thread_id: number, body?: ThreadsFollowBody): Promise<ThreadsFollowResponse> {
 		return this.http.request({
 			method: "POST",
@@ -576,6 +849,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Unfollow Thread
+	 *
+	 * Unfollow a thread.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async unfollow(thread_id: number): Promise<ThreadsUnfollowResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -583,6 +865,14 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Get Followed Threads
+	 *
+	 * List of followed threads by current user.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async followed(params?: ThreadsFollowedParams): Promise<ThreadsFollowedResponse> {
 		return this.http.request({
 			method: "GET",
@@ -591,6 +881,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Get Navigation Elements
+	 *
+	 * List of navigation elements to reach the specified thread.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param thread_id - Id of thread.
+	 */
 	async navigation(thread_id: number): Promise<ThreadsNavigationResponse> {
 		return this.http.request({
 			method: "GET",
@@ -598,6 +897,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Get Poll
+	 *
+	 * Detail information of a poll.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param thread_id - Id of thread.
+	 */
 	async pollGet(thread_id: number): Promise<ThreadsPollGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -605,6 +913,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Vote Poll
+	 *
+	 * Vote on a thread poll.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async pollVote(thread_id: number, body?: ThreadsPollVoteBody): Promise<ThreadsPollVoteResponse> {
 		return this.http.request({
 			method: "POST",
@@ -614,6 +931,14 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Get Unread Threads
+	 *
+	 * List of unread threads (must be logged in).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async unread(params?: ThreadsUnreadParams): Promise<ThreadsUnreadResponse> {
 		return this.http.request({
 			method: "GET",
@@ -622,6 +947,14 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Get Recent Threads
+	 *
+	 * List of recent threads.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async recent(params?: ThreadsRecentParams): Promise<ThreadsRecentResponse> {
 		return this.http.request({
 			method: "GET",
@@ -630,6 +963,15 @@ class ThreadsApi {
 		});
 	}
 
+	/**
+	 * Finish Contest
+	 *
+	 * Finishes a contest.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param thread_id - Id of thread.
+	 */
 	async finish(thread_id: number): Promise<ThreadsFinishResponse> {
 		return this.http.request({
 			method: "POST",
@@ -641,6 +983,14 @@ class ThreadsApi {
 class PostsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Posts
+	 *
+	 * List of posts in a thread (with pagination).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async list(params?: PostsListParams): Promise<PostsListResponse> {
 		validateEnum("order", params?.order, [
 			"natural",
@@ -655,6 +1005,14 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Create Post
+	 *
+	 * Create a new post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async create(body?: PostsCreateBody): Promise<PostsCreateResponse> {
 		return this.http.request({
 			method: "POST",
@@ -664,6 +1022,15 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Get Post
+	 *
+	 * Detail information of a post.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param post_id - Id of post.
+	 */
 	async get(post_id: number): Promise<PostsGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -671,6 +1038,15 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Edit Post
+	 *
+	 * Edit a post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param post_id - Id of post.
+	 */
 	async edit(post_id: number, body?: PostsEditBody): Promise<PostsEditResponse> {
 		return this.http.request({
 			method: "PUT",
@@ -680,6 +1056,15 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Delete Post
+	 *
+	 * Delete a post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param post_id - Id of post.
+	 */
 	async delete(post_id: number, body?: PostsDeleteBody): Promise<PostsDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -689,6 +1074,15 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Get Post Likes
+	 *
+	 * List of users who liked a post.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param post_id - Id of post.
+	 */
 	async likes(post_id: number, params?: PostsLikesParams): Promise<PostsLikesResponse> {
 		return this.http.request({
 			method: "GET",
@@ -697,6 +1091,15 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Like Post
+	 *
+	 * Like a post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param post_id - Id of post.
+	 */
 	async like(post_id: number): Promise<PostsLikeResponse> {
 		return this.http.request({
 			method: "POST",
@@ -704,6 +1107,15 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Unlike Post
+	 *
+	 * Unlike a post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param post_id - Id of post.
+	 */
 	async unlike(post_id: number): Promise<PostsUnlikeResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -711,6 +1123,15 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Get Post Report Reasons
+	 *
+	 * Get post report reasons.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param post_id - Id of post.
+	 */
 	async reportReasons(post_id: number): Promise<PostsReportReasonsResponse> {
 		return this.http.request({
 			method: "GET",
@@ -718,6 +1139,15 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Report Post
+	 *
+	 * Report a post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param post_id - Id of post.
+	 */
 	async report(post_id: number, body?: PostsReportBody): Promise<PostsReportResponse> {
 		return this.http.request({
 			method: "POST",
@@ -727,6 +1157,14 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Get Post Comments
+	 *
+	 * List of post comments in a thread.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async commentsGet(params?: PostsCommentsGetParams): Promise<PostsCommentsGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -735,6 +1173,14 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Create Post Comment
+	 *
+	 * Create a post comment.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async commentsCreate(body?: PostsCommentsCreateBody): Promise<PostsCommentsCreateResponse> {
 		return this.http.request({
 			method: "POST",
@@ -744,6 +1190,14 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Edit Post Comment
+	 *
+	 * Edit a post comment.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async commentsEdit(body?: PostsCommentsEditBody): Promise<PostsCommentsEditResponse> {
 		return this.http.request({
 			method: "PUT",
@@ -753,6 +1207,14 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Delete Post Comment
+	 *
+	 * Delete a post comment.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async commentsDelete(body?: PostsCommentsDeleteBody): Promise<PostsCommentsDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -762,6 +1224,14 @@ class PostsApi {
 		});
 	}
 
+	/**
+	 * Report Post Comment
+	 *
+	 * Report a post comment.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async commentsReport(body?: PostsCommentsReportBody): Promise<PostsCommentsReportResponse> {
 		return this.http.request({
 			method: "POST",
@@ -775,6 +1245,14 @@ class PostsApi {
 class UsersApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Users
+	 *
+	 * List of users (with pagination).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async list(params?: UsersListParams): Promise<UsersListResponse> {
 		return this.http.request({
 			method: "GET",
@@ -783,6 +1261,14 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Get User Fields
+	 *
+	 * List of user fields.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async fields(): Promise<UsersFieldsResponse> {
 		return this.http.request({
 			method: "GET",
@@ -790,6 +1276,14 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Find Users
+	 *
+	 * List of users filtered by username, email or custom fields.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async find(params?: UsersFindParams): Promise<UsersFindResponse> {
 		return this.http.request({
 			method: "GET",
@@ -798,6 +1292,17 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Get User
+	 *
+	 * Detail information of a user.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * + **basic**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async get(user_id: UserIDModel, params?: UsersGetParams): Promise<UsersGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -806,6 +1311,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Edit User
+	 *
+	 * Edit a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async edit(user_id: UserIDModel, body?: UsersEditBody): Promise<UsersEditResponse> {
 		if (body && "gender" in body) validateEnum("gender", body.gender, ["", "male", "female"]);
 		if (body && "timezone" in body)
@@ -930,6 +1445,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Get User Claims
+	 *
+	 * Get user claims.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async claims(user_id: UserIDModel, params?: UsersClaimsParams): Promise<UsersClaimsResponse> {
 		validateEnum("type", params?.type, ["market", "nomarket"]);
 		validateEnum("claim_state", params?.claim_state, ["active", "solved", "rejected", "settled"]);
@@ -940,6 +1465,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Upload Avatar
+	 *
+	 * Upload avatar for a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async avatarUpload(
 		user_id: UserIDModel,
 		body?: UsersAvatarUploadBody,
@@ -952,6 +1487,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Delete Avatar
+	 *
+	 * Delete avatar for a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async avatarDelete(user_id: UserIDModel): Promise<UsersAvatarDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -959,6 +1504,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Crop Avatar
+	 *
+	 * Crop avatar for a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async avatarCrop(
 		user_id: UserIDModel,
 		body?: UsersAvatarCropBody,
@@ -971,6 +1526,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Upload Background
+	 *
+	 * Upload background for a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async backgroundUpload(
 		user_id: UserIDModel,
 		body?: UsersBackgroundUploadBody,
@@ -983,6 +1548,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Delete Background
+	 *
+	 * Delete background for a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async backgroundDelete(user_id: UserIDModel): Promise<UsersBackgroundDeleteResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -990,6 +1565,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Crop Background
+	 *
+	 * Crop background for a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async backgroundCrop(
 		user_id: UserIDModel,
 		body: UsersBackgroundCropBody,
@@ -1002,6 +1587,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Get User Followers
+	 *
+	 * List of a user's followers.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async followers(
 		user_id: UserIDModel,
 		params?: UsersFollowersParams,
@@ -1014,6 +1609,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Follow User
+	 *
+	 * Follow a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async follow(user_id: UserIDModel): Promise<UsersFollowResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1021,6 +1626,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Unfollow User
+	 *
+	 * Unfollow a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async unfollow(user_id: UserIDModel): Promise<UsersUnfollowResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1028,6 +1643,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Get Followed Users By User
+	 *
+	 * List of users whom are followed by a user.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async followings(
 		user_id: UserIDModel,
 		params?: UsersFollowingsParams,
@@ -1040,6 +1665,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Get User Likes
+	 *
+	 * Get information about user likes.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async likes(user_id: UserIDModel, params?: UsersLikesParams): Promise<UsersLikesResponse> {
 		validateEnum("like_type", params?.like_type, ["like", "like2"]);
 		validateEnum("type", params?.type, ["gotten", "given"]);
@@ -1056,6 +1691,14 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Get Ignored Users
+	 *
+	 * List of ignored users of current user.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async ignored(params?: UsersIgnoredParams): Promise<UsersIgnoredResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1064,6 +1707,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Ignore User
+	 *
+	 * Ignore a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async ignore(user_id: UserIDModel): Promise<UsersIgnoreResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1071,6 +1724,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Edit Ignoring Options
+	 *
+	 * Edit ignoring options.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async ignoreEdit(
 		user_id: UserIDModel,
 		params?: UsersIgnoreEditParams,
@@ -1082,6 +1745,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Unignore User
+	 *
+	 * Stop ignoring a user.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async unignore(user_id: UserIDModel): Promise<UsersUnignoreResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1089,6 +1762,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Get Contents
+	 *
+	 * List of contents created by user (with pagination).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async contents(
 		user_id: UserIDModel,
 		params?: UsersContentsParams,
@@ -1100,6 +1783,16 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Get Trophies
+	 *
+	 * List of user trophies.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async trophies(user_id: UserIDModel): Promise<UsersTrophiesResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1107,6 +1800,14 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Get Secret Answer Types
+	 *
+	 * Get available secret answer types for user account security.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async secretAnswerTypes(): Promise<UsersSecretAnswerTypesResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1114,6 +1815,14 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Reset Secret Answer
+	 *
+	 * Request a reset of the secret answer for the account.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async saReset(): Promise<UsersSaResetResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1121,6 +1830,14 @@ class UsersApi {
 		});
 	}
 
+	/**
+	 * Cancel Secret Answer Reset
+	 *
+	 * Cancel a pending secret answer reset request for the account.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async saCancelReset(): Promise<UsersSaCancelResetResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1132,6 +1849,16 @@ class UsersApi {
 class ProfilePostsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Profile Posts
+	 *
+	 * List of profile posts (with pagination).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param user_id - User ID.
+> You can use shortlink `me` to interact with your profile.
+	 */
 	async list(
 		user_id: UserIDModel,
 		params?: ProfilePostsListParams,
@@ -1143,6 +1870,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Get Profile Post
+	 *
+	 * Detail information of a profile post.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param profile_post_id - Id of profile post.
+	 */
 	async get(profile_post_id: number): Promise<ProfilePostsGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1150,6 +1886,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Edit Profile Post
+	 *
+	 * Edit a profile post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param profile_post_id - Id of profile post.
+	 */
 	async edit(
 		profile_post_id: number,
 		body?: ProfilePostsEditBody,
@@ -1162,6 +1907,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Delete Profile Post
+	 *
+	 * Delete a profile post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param profile_post_id - Id of profile post.
+	 */
 	async delete(
 		profile_post_id: number,
 		params?: ProfilePostsDeleteParams,
@@ -1173,6 +1927,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Get Profile Post Report Reasons
+	 *
+	 * Get Profile Post Report Reasons.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param profile_post_id - Id of profile post.
+	 */
 	async reportReasons(profile_post_id: number): Promise<ProfilePostsReportReasonsResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1180,6 +1943,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Report a Profile Post
+	 *
+	 * Report a profile post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param profile_post_id - Id of profile post.
+	 */
 	async report(
 		profile_post_id: number,
 		body?: ProfilePostsReportBody,
@@ -1192,6 +1964,14 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Create Profile Post
+	 *
+	 * Create a profile post on a user profile.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async create(body?: ProfilePostsCreateBody): Promise<ProfilePostsCreateResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1201,6 +1981,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Stick Profile Post
+	 *
+	 * Stick a profile post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param profile_post_id - Id of profile post.
+	 */
 	async stick(profile_post_id: number): Promise<ProfilePostsStickResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1208,6 +1997,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Unstick Profile Post
+	 *
+	 * Unstick a profile post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param profile_post_id - Id of profile post.
+	 */
 	async unstick(profile_post_id: number): Promise<ProfilePostsUnstickResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1215,6 +2013,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Get Profile Post Likes
+	 *
+	 * List of users who liked a profile post.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param profile_post_id - Id of profile post.
+	 */
 	async likes(profile_post_id: number): Promise<ProfilePostsLikesResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1222,6 +2029,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Like Profile Post
+	 *
+	 * Like a profile post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param profile_post_id - Id of profile post.
+	 */
 	async like(profile_post_id: number): Promise<ProfilePostsLikeResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1229,6 +2045,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Unlike Profile Post
+	 *
+	 * Unlike a profile post.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param profile_post_id - Id of profile post.
+	 */
 	async unlike(profile_post_id: number): Promise<ProfilePostsUnlikeResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1236,6 +2061,14 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Get Profile Post Comments
+	 *
+	 * List of comments of a profile post.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async commentsList(
 		params?: ProfilePostsCommentsListParams,
 	): Promise<ProfilePostsCommentsListResponse> {
@@ -1246,6 +2079,14 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Create Profile Post Comment
+	 *
+	 * Create a new profile post comment.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async commentsCreate(
 		body?: ProfilePostsCommentsCreateBody,
 	): Promise<ProfilePostsCommentsCreateResponse> {
@@ -1257,6 +2098,14 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Edit Profile Post Comment
+	 *
+	 * Edit a profile post comment.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async commentsEdit(
 		body?: ProfilePostsCommentsEditBody,
 	): Promise<ProfilePostsCommentsEditResponse> {
@@ -1268,6 +2117,14 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Delete Profile Post Comment
+	 *
+	 * Delete a profile post comment.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async commentsDelete(
 		body?: ProfilePostsCommentsDeleteBody,
 	): Promise<ProfilePostsCommentsDeleteResponse> {
@@ -1279,6 +2136,16 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Get Profile Post Comment
+	 *
+	 * Detail information of a profile post comment.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param profile_post_id - Id of profile post.
+	 * @param comment_id - Id of profile post comment.
+	 */
 	async commentsGet(
 		profile_post_id: number,
 		comment_id: number,
@@ -1289,6 +2156,15 @@ class ProfilePostsApi {
 		});
 	}
 
+	/**
+	 * Report a Profile Post Comment
+	 *
+	 * Report a profile post comment.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * @param comment_id - Id of profile post comment.
+	 */
 	async commentsReport(
 		comment_id: number,
 		body?: ProfilePostsCommentsReportBody,
@@ -1305,6 +2181,15 @@ class ProfilePostsApi {
 class ConversationsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Conversations
+	 *
+	 * List of conversations (with pagination).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * + **conversate**
+	 */
 	async list(params?: ConversationsListParams): Promise<ConversationsListResponse> {
 		validateEnum("folder", params?.folder, [
 			"all",
@@ -1323,6 +2208,15 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Create Conversation
+	 *
+	 * Create a new conversation.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * + **conversate**
+	 */
 	async create(body?: ConversationsCreateBody): Promise<ConversationsCreateResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1332,6 +2226,14 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Edit Conversation
+	 *
+	 * Edit conversation.
+	 *
+	 * Required scopes:
+	 * + **conversate**
+	 */
 	async update(body?: ConversationsUpdateBody): Promise<ConversationsUpdateResponse> {
 		return this.http.request({
 			method: "PUT",
@@ -1341,6 +2243,15 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Leave Conversation
+	 *
+	 * Leave the conversation.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * + **conversate**
+	 */
 	async delete(body?: ConversationsDeleteBody): Promise<ConversationsDeleteResponse> {
 		if (body && "delete_type" in body)
 			validateEnum("delete_type", body.delete_type, ["delete", "delete_ignore"]);
@@ -1352,6 +2263,14 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Start Conversation
+	 *
+	 * Start a new conversation with a user.
+	 *
+	 * Required scopes:
+	 * + **conversate**
+	 */
 	async start(body?: ConversationsStartBody): Promise<ConversationsStartResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1361,6 +2280,14 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Send Content To Saved Messages
+	 *
+	 * Send content to Saved Messages.
+	 *
+	 * Required scopes:
+	 * + **conversate**
+	 */
 	async save(body?: ConversationsSaveBody): Promise<ConversationsSaveResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1370,6 +2297,16 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Get Conversation
+	 *
+	 * Detail information of a conversation.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 */
 	async get(conversation_id: number): Promise<ConversationsGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1377,6 +2314,16 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Get Conversation Messages
+	 *
+	 * List of messages in a conversation (with pagination).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 */
 	async messagesList(
 		conversation_id: number,
 		params?: ConversationsMessagesListParams,
@@ -1389,6 +2336,16 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Create Conversation Message
+	 *
+	 * Create a new conversation message.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 */
 	async messagesCreate(
 		conversation_id: number,
 		body?: ConversationsMessagesCreateBody,
@@ -1401,6 +2358,15 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Search Conversations Messages
+	 *
+	 * Search for conversations messages or recipients.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * + **conversate**
+	 */
 	async search(body?: ConversationsSearchBody): Promise<ConversationsSearchResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1410,6 +2376,16 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Get Conversation Message
+	 *
+	 * Detail information of a message.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * + **conversate**
+	 * @param message_id - Id of message.
+	 */
 	async messagesGet(message_id: number): Promise<ConversationsMessagesGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1417,6 +2393,17 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Edit Conversation Message
+	 *
+	 * Edit a message.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 * @param message_id - Id of message.
+	 */
 	async messagesEdit(
 		conversation_id: number,
 		message_id: number,
@@ -1430,6 +2417,16 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Delete Conversation Message
+	 *
+	 * Deletes a message from a conversation.
+	 *
+	 * Required scopes:
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 * @param message_id - Id of message.
+	 */
 	async messagesDelete(
 		conversation_id: number,
 		message_id: number,
@@ -1440,6 +2437,16 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Invite Users to Conversation
+	 *
+	 * Invite one or more users to an existing conversation.
+	 *
+	 * Required scopes:
+	 * + **conversate**
+	 * + **post**
+	 * @param conversation_id - Id of conversation.
+	 */
 	async invite(
 		conversation_id: number,
 		body?: ConversationsInviteBody,
@@ -1452,6 +2459,15 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Kick User from Conversation
+	 *
+	 * Kicks a user from a conversation.
+	 *
+	 * Required scopes:
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 */
 	async kick(
 		conversation_id: number,
 		body?: ConversationsKickBody,
@@ -1464,6 +2480,15 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Read a Conversation
+	 *
+	 * Read a specific conversation.
+	 *
+	 * Required scopes:
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 */
 	async read(conversation_id: number): Promise<ConversationsReadResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1471,6 +2496,15 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Read All Conversations
+	 *
+	 * Mark all conversations as read.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * + **conversate**
+	 */
 	async readAll(): Promise<ConversationsReadAllResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1478,6 +2512,17 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Stick Conversation Message
+	 *
+	 * Stick a message in a conversation.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 * @param message_id - Id of message.
+	 */
 	async messagesStick(
 		conversation_id: number,
 		message_id: number,
@@ -1488,6 +2533,17 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Unstick Conversation Message
+	 *
+	 * Unstick a message in a conversation.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 * @param message_id - Id of message.
+	 */
 	async messagesUnstick(
 		conversation_id: number,
 		message_id: number,
@@ -1498,6 +2554,16 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Star Conversation
+	 *
+	 * Star conversation.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 */
 	async star(conversation_id: number): Promise<ConversationsStarResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1505,6 +2571,16 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Unstar Conversation
+	 *
+	 * Unstar conversation.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 */
 	async unstar(conversation_id: number): Promise<ConversationsUnstarResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1512,6 +2588,16 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Enable Conversation Alerts
+	 *
+	 * Enable alerts for conversation.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 */
 	async alertsEnable(conversation_id: number): Promise<ConversationsAlertsEnableResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1519,6 +2605,16 @@ class ConversationsApi {
 		});
 	}
 
+	/**
+	 * Disable Conversation Alerts
+	 *
+	 * Disable alerts for conversation.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 * + **conversate**
+	 * @param conversation_id - Id of conversation.
+	 */
 	async alertsDisable(conversation_id: number): Promise<ConversationsAlertsDisableResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1530,6 +2626,14 @@ class ConversationsApi {
 class NotificationsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Notifications
+	 *
+	 * List of notifications (both read and unread).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async list(params?: NotificationsListParams): Promise<NotificationsListResponse> {
 		validateEnum("type", params?.type, ["market", "nomarket"]);
 		return this.http.request({
@@ -1539,6 +2643,15 @@ class NotificationsApi {
 		});
 	}
 
+	/**
+	 * Get Notification
+	 *
+	 * Get associated content of notification. The response depends on the content type.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param notification_id - Id of notification.
+	 */
 	async get(notification_id: number): Promise<NotificationsGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1546,6 +2659,14 @@ class NotificationsApi {
 		});
 	}
 
+	/**
+	 * Mark Notification Read
+	 *
+	 * Mark single notification or all existing notifications read.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async read(body?: NotificationsReadBody): Promise<NotificationsReadResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1559,6 +2680,14 @@ class NotificationsApi {
 class TagsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Popular Tags
+	 *
+	 * List of popular tags (no pagination).
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async popular(): Promise<TagsPopularResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1566,6 +2695,14 @@ class TagsApi {
 		});
 	}
 
+	/**
+	 * Get Tags
+	 *
+	 * List of tags.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async list(params?: TagsListParams): Promise<TagsListResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1574,6 +2711,15 @@ class TagsApi {
 		});
 	}
 
+	/**
+	 * Get Tagged Content
+	 *
+	 * List of tagged contents.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 * @param tag_id - Id of tag.
+	 */
 	async get(tag_id: number, params?: TagsGetParams): Promise<TagsGetResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1582,6 +2728,14 @@ class TagsApi {
 		});
 	}
 
+	/**
+	 * Get Filtered Content
+	 *
+	 * Filtered list of tags.
+	 *
+	 * Required scopes:
+	 * + **read**
+	 */
 	async find(params?: TagsFindParams): Promise<TagsFindResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1594,6 +2748,14 @@ class TagsApi {
 class SearchApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Search
+	 *
+	 * Search for all supported contents.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async all(body?: SearchAllBody): Promise<SearchAllResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1603,6 +2765,14 @@ class SearchApi {
 		});
 	}
 
+	/**
+	 * Search Thread
+	 *
+	 * Search for threads.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async threads(body?: SearchThreadsBody): Promise<SearchThreadsResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1612,6 +2782,14 @@ class SearchApi {
 		});
 	}
 
+	/**
+	 * Search Post
+	 *
+	 * Search for posts.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async posts(body?: SearchPostsBody): Promise<SearchPostsResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1621,6 +2799,14 @@ class SearchApi {
 		});
 	}
 
+	/**
+	 * Search Users
+	 *
+	 * Search for users.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async users(body?: SearchUsersBody): Promise<SearchUsersResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1630,6 +2816,14 @@ class SearchApi {
 		});
 	}
 
+	/**
+	 * Search Profile Posts
+	 *
+	 * Search for profile posts.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async profilePosts(body?: SearchProfilePostsBody): Promise<SearchProfilePostsResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1639,6 +2833,14 @@ class SearchApi {
 		});
 	}
 
+	/**
+	 * Search Tagged
+	 *
+	 * Search for tagged contents.
+	 *
+	 * Required scopes:
+	 * + **post**
+	 */
 	async tagged(body?: SearchTaggedBody): Promise<SearchTaggedResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1648,6 +2850,15 @@ class SearchApi {
 		});
 	}
 
+	/**
+	 * Get Search Results
+	 *
+	 * List of search results (with pagination).
+	 *
+	 * Required scopes:
+	 * + **get**
+	 * @param search_id - Search ID.
+	 */
 	async results(
 		search_id: string | number,
 		params?: SearchResultsParams,
@@ -1663,6 +2874,14 @@ class SearchApi {
 class BatchApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Batch
+	 *
+	 * Execute multiple API requests at once (Separated by comma). Maximum batch jobs is 10.
+	 *
+	 * Required scopes:
+	 * + Same as called API requests.
+	 */
 	async execute(body?: BatchExecuteBody): Promise<BatchExecuteResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1676,6 +2895,14 @@ class BatchApi {
 class ChatboxApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Chats
+	 *
+	 * Get chat rooms.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async index(params?: ChatboxIndexParams): Promise<ChatboxIndexResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1684,6 +2911,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Get Chat Messages
+	 *
+	 * Get chat messages.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async getMessages(params?: ChatboxGetMessagesParams): Promise<ChatboxGetMessagesResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1692,6 +2927,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Create Chat Message
+	 *
+	 * Create chat message.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async postMessage(body?: ChatboxPostMessageBody): Promise<ChatboxPostMessageResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1701,6 +2944,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Edit Chat Message
+	 *
+	 * Edit chat message.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async editMessage(body?: ChatboxEditMessageBody): Promise<ChatboxEditMessageResponse> {
 		return this.http.request({
 			method: "PUT",
@@ -1710,6 +2961,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Delete Chat Message
+	 *
+	 * Delete chat message.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async deleteMessage(body?: ChatboxDeleteMessageBody): Promise<ChatboxDeleteMessageResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1719,6 +2978,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Get Chat Online
+	 *
+	 * Get chat Online Users.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async online(params?: ChatboxOnlineParams): Promise<ChatboxOnlineResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1727,6 +2994,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Get Chat Message Report Reasons
+	 *
+	 * Report chat message.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async reportReasons(params?: ChatboxReportReasonsParams): Promise<ChatboxReportReasonsResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1735,6 +3010,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Report Chat Message
+	 *
+	 * Report chat message.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async report(body?: ChatboxReportBody): Promise<ChatboxReportResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1744,6 +3027,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Get Chat Leaderboard
+	 *
+	 * Get chat leaderboard.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async getLeaderboard(
 		params?: ChatboxGetLeaderboardParams,
 	): Promise<ChatboxGetLeaderboardResponse> {
@@ -1755,6 +3046,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Get Ignored Chat Users
+	 *
+	 * Get list of ignored chat users.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async getIgnore(): Promise<ChatboxGetIgnoreResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1762,6 +3061,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Ignore Chat User
+	 *
+	 * Ignore chat user.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async postIgnore(body?: ChatboxPostIgnoreBody): Promise<ChatboxPostIgnoreResponse> {
 		return this.http.request({
 			method: "POST",
@@ -1771,6 +3078,14 @@ class ChatboxApi {
 		});
 	}
 
+	/**
+	 * Unignore Chat User
+	 *
+	 * Unignore chat user.
+	 *
+	 * Required scopes:
+	 * + **chatbox**
+	 */
 	async deleteIgnore(body?: ChatboxDeleteIgnoreBody): Promise<ChatboxDeleteIgnoreResponse> {
 		return this.http.request({
 			method: "DELETE",
@@ -1784,6 +3099,11 @@ class ChatboxApi {
 class FormsApi {
 	constructor(private readonly http: HttpClient) {}
 
+	/**
+	 * Get Forms List
+	 *
+	 * Get Forms List
+	 */
 	async list(params?: FormsListParams): Promise<FormsListResponse> {
 		return this.http.request({
 			method: "GET",
@@ -1792,6 +3112,11 @@ class FormsApi {
 		});
 	}
 
+	/**
+	 * Create Form
+	 *
+	 * Create Form.
+	 */
 	async create(body?: FormsCreateBody): Promise<FormsCreateResponse> {
 		return this.http.request({
 			method: "POST",

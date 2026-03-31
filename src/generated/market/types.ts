@@ -2,6 +2,17 @@
 
 // ─── Component Schemas ────────────────────────────────────────
 
+export type ItemOriginModel =
+	| "brute"
+	| "phishing"
+	| "stealer"
+	| "autoreg"
+	| "personal"
+	| "resale"
+	| "dummy"
+	| "self_registration"
+	| "retrieve_via_support";
+
 export interface DiscountModel {
 	category_id: number;
 	discount_id: number;
@@ -560,10 +571,15 @@ export interface Resp_SystemInfo {
 // ─── CategoryApi Types ────────────────────────────────────────
 
 export interface CategoryAllParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -575,55 +591,54 @@ export interface CategoryAllParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
 }
 
 export type CategoryAllResponse = ItemListModel;
 
 export interface CategorySteamParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -635,82 +650,111 @@ export interface CategorySteamParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no" | "no_market">;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** List of games. */
 	"game[]"?: Array<number>;
+	/** List of minimum hours played by game. */
 	hours_played?: Record<string, number>;
+	/** List of maximum hours played by game. */
 	hours_played_max?: Record<string, number>;
+	/** Guarantee type. */
 	eg?: -1 | 0 | 1;
+	/** List of VAC bans by game. */
 	"vac[]"?: Array<number>;
+	/** Don't check game existence while checking for vac. */
 	vac_skip_game_check?: boolean;
-	/** @default "no" */
+	/** Has community ban. @default "no" */
 	rt?: "yes" | "no" | "nomatter";
+	/** Has lifetime trade ban. */
 	trade_ban?: YesNoNoMatterScheme;
+	/** Has temporary trade limit. */
 	trade_limit?: YesNoNoMatterScheme;
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** Has 5 $ limit. */
 	limit?: YesNoNoMatterScheme;
+	/** Has .mafile (Steam Guard Authenticator). */
 	mafile?: YesNoNoMatterScheme;
+	/** How old is the account. */
 	reg?: number;
+	/** In what notation is time measured. */
 	reg_period?: "day" | "month" | "year";
+	/** Minimum level. */
 	lmin?: number;
+	/** Maximum level. */
 	lmax?: number;
+	/** Minimum rank in CS2 Matchmaking. */
 	rmin?: number;
+	/** Maximum rank in CS2 Matchmaking. */
 	rmax?: number;
+	/** Minimum rank in CS2 Wingman. */
 	wingman_rmin?: number;
+	/** Maximum rank in CS2 Wingman. */
 	wingman_rmax?: number;
+	/** Has no VAC ban. */
 	no_vac?: boolean;
+	/** Has CS2 Matchmaking ban. */
 	mm_ban?: YesNoNoMatterScheme;
+	/** Minimum balance. */
 	balance_min?: number;
+	/** Maximum balance. */
 	balance_max?: number;
+	/** Game ID to check inventory price. */
 	inv_game?: number;
+	/** Minimum inventory price for game. */
 	inv_min?: number;
+	/** Maximum inventory price for game. */
 	inv_max?: number;
+	/** Minimum number of friends. */
 	friends_min?: number;
+	/** Maximum number of friends. */
 	friends_max?: number;
+	/** Minimum number of games. */
 	gmin?: number;
+	/** Maximum number of games. */
 	gmax?: number;
+	/** Minimum number of wins. */
 	win_count_min?: number;
+	/** Maximum number of wins. */
 	win_count_max?: number;
+	/** List of medal IDs. */
 	"medal_id[]"?: Array<
 		| 1
 		| 2
@@ -896,9 +940,13 @@ export interface CategorySteamParams {
 		| 342
 		| 344
 	>;
+	/** Search for medals using "OR" instead of "AND". */
 	medal_operator_or?: boolean;
+	/** Minimum number of medals. */
 	medal_min?: number;
+	/** Maximum number of medals. */
 	medal_max?: number;
+	/** List of gifts. */
 	"gift[]"?: Array<
 		| "//N.P.P.D. RUSH//- The milk of Ultraviolet_cis"
 		| "1... 2... 3... KICK IT! (Drop That Beat Like an Ugly Baby)"
@@ -4522,63 +4570,121 @@ export interface CategorySteamParams {
 		| "怕不怕趴喵霸霸 Ghost Party Nyanbaba"
 		| "拯救大魔王重生 Falsemen: Demon Rebirth"
 	>;
+	/** Minimum number of gifts. */
 	gift_min?: number;
+	/** Maximum number of gifts. */
 	gift_max?: number;
+	/** Minimum number of recently played hours. */
 	recently_hours_min?: number;
+	/** Maximum number of recently played hours. */
 	recently_hours_max?: number;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
+	/** Minimum CS2 rank. */
 	cs2_profile_rank_min?: number;
+	/** Maximum CS2 rank. */
 	cs2_profile_rank_max?: number;
+	/** Minimum number of Dota 2 MMR. */
 	solommr_min?: number;
+	/** Maximum number of Dota 2 MMR. */
 	solommr_max?: number;
+	/** Minimum number of Dota 2 games. */
 	d2_game_count_min?: number;
+	/** Maximum number of Dota 2 games. */
 	d2_game_count_max?: number;
+	/** Minimum number of Dota 2 wins. */
 	d2_win_count_min?: number;
+	/** Maximum number of Dota 2 wins. */
 	d2_win_count_max?: number;
+	/** Minimum number of Dota 2 behavior. */
 	d2_behavior_min?: number;
+	/** Maximum number of Dota 2 behavior. */
 	d2_behavior_max?: number;
+	/** Minimum FACEIT level. */
 	faceit_lvl_min?: number;
+	/** Maximum FACEIT level. */
 	faceit_lvl_max?: number;
+	/** Minimum number of Steam points. */
 	points_min?: number;
+	/** Maximum number of Steam points. */
 	points_max?: number;
+	/** Minimum number of relevant games. */
 	relevant_gmin?: number;
+	/** Maximum number of relevant games. */
 	relevant_gmax?: number;
+	/** How old is last transaction. */
 	last_trans_date?: number;
+	/** In what notation is time measured. */
 	last_trans_date_period?: "day" | "month" | "year";
+	/** How new is last transaction. */
 	last_trans_date_later?: number;
+	/** In what notation is time measured. */
 	last_trans_date_period_later?: DatePeriodModel;
+	/** Has no transactions. */
 	no_trans?: boolean;
+	/** Has transactions. */
 	trans?: boolean;
+	/** Minimum amount spent on gifts. */
 	gifts_purchase_min?: number;
+	/** Maximum amount spent on gifts. */
 	gifts_purchase_max?: number;
+	/** Minimum amount of refunds. */
 	refunds_purchase_min?: number;
+	/** Minimum amount of refunds. */
 	refunds_purchase_max?: number;
+	/** Minimum spend amount on in-game purchases. */
 	ingame_purchase_min?: number;
+	/** Maximum spend amount on in-game purchases. */
 	ingame_purchase_max?: number;
+	/** Minimum spend amount on all purchases. */
 	games_purchase_min?: number;
+	/** Maximum spend amount on all purchases. */
 	games_purchase_max?: number;
+	/** Minimum spend amount on all purchases. */
 	purchase_min?: number;
+	/** Maximum spend amount on all purchases. */
 	purchase_max?: number;
+	/** Has activated keys. */
 	has_activated_keys?: YesNoNoMatterScheme;
+	/** Minimum Premier ELO in CS2. */
 	elo_min?: number;
+	/** Maximum Premier ELO in CS2. */
 	elo_max?: number;
+	/** Map for rank in CS2. */
 	cs2_map_rank?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
+	/** Minimum rank in CS2 on a certain map. */
 	cs2_map_rmin?: number;
+	/** Maximum rank in CS2 on a certain map. */
 	cs2_map_rmax?: number;
+	/** Has FACEIT account. */
 	has_faceit?: YesNoNoMatterScheme;
+	/** Minimum FACEIT level. */
 	faceit_csgo_lvl_min?: number;
+	/** Maximum FACEIT level. */
 	faceit_csgo_lvl_max?: number;
+	/** Minimum number of Rust deaths */
 	rust_deaths_min?: number;
+	/** Maximum number of Rust deaths */
 	rust_deaths_max?: number;
+	/** Minimum number of Rust kills */
 	rust_kills_min?: number;
+	/** Maximum number of Rust kills */
 	rust_kills_max?: number;
+	/** How old is last match of Dota 2. */
 	d2_last_match_date?: number;
+	/** In what notation is time measured. */
 	d2_last_match_date_period?: "day" | "month" | "year";
+	/** Minimum number of available to collect trading cards. */
 	cards_min?: number;
+	/** Maximum number of available to collect trading cards. */
 	cards_max?: number;
+	/** Minimum number of available games with available to collect trading cards. */
 	cards_games_min?: number;
+	/** Maximum number of available games with available to collect trading cards. */
 	cards_games_max?: number;
+	/** Ignore inventory value if game has VAC ban. */
 	skip_vac_inv?: boolean;
 }
 
@@ -4789,10 +4895,15 @@ export type CategorySteamResponse = {
 };
 
 export interface CategoryFortniteParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -4804,54 +4915,57 @@ export interface CategoryFortniteParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email type. */
 	"email_type[]"?: Array<"market" | "autoreg" | "native" | "no">;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Access to market temp mail. */
 	temp_email?: "yes" | "no" | "nomatter";
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Guarantee type. */
 	eg?: -1 | 0 | 1 | 2;
+	/** Minimum number of skins. */
 	smin?: number;
+	/** Maximum number of skins. */
 	smax?: number;
+	/** Minimum number of V-Bucks. */
 	vbmin?: number;
+	/** Maximum number of V-Bucks. */
 	vbmax?: number;
+	/** Skins. */
 	"skin[]"?: Array<
 		| "001_athena_commando_f_default"
 		| "001_mole_m_defaulta"
@@ -7753,6 +7867,7 @@ export interface CategoryFortniteParams {
 		| "vip_athena_commando_m_galileogondola_sg"
 		| "vip_athena_commando_m_galileojumper_sg"
 	>;
+	/** Pickaxes. */
 	"pickaxe[]"?: Array<
 		| "boltonpickaxe"
 		| "defaultpickaxe"
@@ -9809,6 +9924,7 @@ export interface CategoryFortniteParams {
 		| "skiicepickaxe"
 		| "spikypickaxe"
 	>;
+	/** Gliders. */
 	"glider[]"?: Array<
 		| "defaultglider"
 		| "defaultgliderdownloading"
@@ -10519,6 +10635,7 @@ export interface CategoryFortniteParams {
 		| "umbrella_unhinged"
 		| "umbrella_vendetta"
 	>;
+	/** Dances. */
 	"dance[]"?: Array<
 		| "abstractmirror"
 		| "accentwall"
@@ -12502,7 +12619,9 @@ export interface CategoryFortniteParams {
 		| "zombieelastic"
 		| "zombiewalk"
 	>;
+	/** Can change email. */
 	change_email?: "yes" | "no" | "nomatter";
+	/** Platform. */
 	"platform[]"?: Array<
 		| "Epic"
 		| "EpicAndroid"
@@ -12517,45 +12636,85 @@ export interface CategoryFortniteParams {
 		| "PSN"
 		| "Samsung"
 	>;
+	/** Minimum number of shop skins. */
 	skins_shop_min?: number;
+	/** Maximum number of shop skins. */
 	skins_shop_max?: number;
+	/** Minimum number of shop pickaxes. */
 	pickaxes_shop_min?: number;
+	/** Maximum number of shop pickaxes. */
 	pickaxes_shop_max?: number;
+	/** Minimum number of shop dances. */
 	dances_shop_min?: number;
+	/** Maximum number of shop dances. */
 	dances_shop_max?: number;
+	/** Minimum number of shop gliders. */
 	gliders_shop_min?: number;
+	/** Maximum number of shop gliders. */
 	gliders_shop_max?: number;
+	/** Minimum total cost of all skins in the shop in V-Bucks. */
 	skins_shop_vbmin?: number;
+	/** Maximum total cost of all skins in the shop in V-Bucks. */
 	skins_shop_vbmax?: number;
+	/** Minimum total cost of all pickaxes in the shop in V-Bucks. */
 	pickaxes_shop_vbmin?: number;
+	/** Maximum total cost of all pickaxes in the shop in V-Bucks. */
 	pickaxes_shop_vbmax?: number;
+	/** Minimum total cost of all dances in the shop in V-Bucks. */
 	dances_shop_vbmin?: number;
+	/** Maximum total cost of all dances in the shop in V-Bucks. */
 	dances_shop_vbmax?: number;
+	/** Minimum total cost of all gliders in the shop in V-Bucks. */
 	gliders_shop_vbmin?: number;
+	/** Maximum total cost of all gliders in the shop in V-Bucks. */
 	gliders_shop_vbmax?: number;
+	/** Has Battle Pass. */
 	bp?: YesNoNoMatterScheme;
+	/** Minimum level. */
 	lmin?: number;
+	/** Maximum level. */
 	lmax?: number;
+	/** Minimum level of Battle Pass. */
 	bp_lmin?: number;
+	/** Maximum level of Battle Pass. */
 	bp_lmax?: number;
+	/** How old is last transaction. */
 	last_trans_date?: number;
+	/** In what notation is time measured. */
 	last_trans_date_period?: "day" | "month" | "year";
+	/** Has no transactions. */
 	no_trans?: boolean;
+	/** Can be linked to Xbox. */
 	xbox_linkable?: YesNoNoMatterScheme;
+	/** Can be linked to PSN. */
 	psn_linkable?: YesNoNoMatterScheme;
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** Has Rocket League purchases. */
 	rl_purchases?: boolean;
+	/** How old is the account. */
 	reg?: number;
+	/** In what notation is time measured. */
 	reg_period?: "day" | "month" | "year";
+	/** Minimum number of available refund credits. */
 	refund_credits_min?: number;
+	/** Maximum number of available refund credits. */
 	refund_credits_max?: number;
+	/** Minimum number of pickaxes. */
 	pickaxe_min?: number;
+	/** Maximum number of pickaxes. */
 	pickaxe_max?: number;
+	/** Minimum number of dances. */
 	dmin?: number;
+	/** Maximum number of dances. */
 	dmax?: number;
+	/** Minimum number of gliders. */
 	gmin?: number;
+	/** Maximum number of gliders. */
 	gmax?: number;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
 }
 
@@ -12731,10 +12890,15 @@ export type CategoryFortniteResponse = {
 };
 
 export interface CategoryMihoyoParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -12746,52 +12910,53 @@ export interface CategoryMihoyoParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Has linked email. */
 	email?: "yes" | "no" | "nomatter";
+	/** Has linked external accounts. */
 	ea?: YesNoNoMatterScheme;
+	/** Region. */
 	region?: Array<"asia" | "cht" | "eu" | "usa">;
+	/** List of disallowed regions. */
 	not_region?: Array<"asia" | "cht" | "eu" | "usa">;
+	/** List of characters. */
 	"genshin_character[]"?: Array<
 		| 10000002
 		| 10000003
@@ -12908,8 +13073,11 @@ export interface CategoryMihoyoParams {
 		| 10000126
 		| 10000127
 	>;
+	/** List of minimum constellations on characters. */
 	genshin_character_constellations?: Record<string, number>;
+	/** List of maximum constellations on characters. */
 	genshin_character_constellations_max?: Record<string, number>;
+	/** List of weapons. */
 	"genshin_weapon[]"?: Array<
 		| 11101
 		| 11201
@@ -13141,20 +13309,35 @@ export interface CategoryMihoyoParams {
 		| 15514
 		| 15515
 	>;
+	/** Minimum number of characters. */
 	genshin_char_min?: number;
+	/** Maximum number of characters. */
 	genshin_char_max?: number;
+	/** Minimum number of legendary characters. */
 	genshin_legendary_min?: number;
+	/** Maximum number of legendary characters. */
 	genshin_legendary_max?: number;
+	/** Minimum level. */
 	genshin_level_min?: number;
+	/** Maximum level. */
 	genshin_level_max?: number;
+	/** Minimum number of legendary weapon characters. */
 	genshin_legendary_weapon_min?: number;
+	/** Maximum number of legendary weapon characters. */
 	genshin_legendary_weapon_max?: number;
+	/** Minimum number of constellations on legendary characters. */
 	constellations_min?: number;
+	/** Maximum number of constellations on legendary characters. */
 	constellations_max?: number;
+	/** Minimum number of achievements. */
 	genshin_achievement_min?: number;
+	/** Maximum number of achievements. */
 	genshin_achievement_max?: number;
+	/** Minimum number of primogems. */
 	genshin_currency_min?: number;
+	/** Maximum number of primogems. */
 	genshin_currency_max?: number;
+	/** List of characters. */
 	"honkai_character[]"?: Array<
 		| 1001
 		| 1002
@@ -13242,8 +13425,11 @@ export interface CategoryMihoyoParams {
 		| 8007
 		| 8008
 	>;
+	/** List of minimum eidolons on characters. */
 	honkai_character_eidolons?: Record<string, number>;
+	/** List of maximum eidolons on characters. */
 	honkai_character_eidolons_max?: Record<string, number>;
+	/** List of weapons. */
 	"honkai_weapon[]"?: Array<
 		| 20000
 		| 20001
@@ -13395,20 +13581,35 @@ export interface CategoryMihoyoParams {
 		| 24004
 		| 24005
 	>;
+	/** Minimum number of characters. */
 	honkai_char_min?: number;
+	/** Maximum number of characters. */
 	honkai_char_max?: number;
+	/** Minimum number of legendary characters. */
 	honkai_legendary_min?: number;
+	/** Maximum number of legendary characters. */
 	honkai_legendary_max?: number;
+	/** Minimum level. */
 	honkai_level_min?: number;
+	/** Maximum level. */
 	honkai_level_max?: number;
+	/** Minimum number of legendary weapon characters. */
 	honkai_legendary_weapon_min?: number;
+	/** Maximum number of legendary weapon characters. */
 	honkai_legendary_weapon_max?: number;
+	/** Minimum number of constellations on Honkai: Star Rail legendary characters. */
 	eidolons_min?: number;
+	/** Maximum number of legendary Honkai: Star Rail weapon characters. */
 	eidolons_max?: number;
+	/** Minimum number of achievements. */
 	honkai_achievement_min?: number;
+	/** Maximum number of achievements. */
 	honkai_achievement_max?: number;
+	/** Minimum number of Stellar Jade. */
 	honkai_currency_min?: number;
+	/** Maximum number of Stellar Jade. */
 	honkai_currency_max?: number;
+	/** List of Zenless Zone Zero characters. */
 	"zenless_character[]"?: Array<
 		| 1011
 		| 1021
@@ -13459,8 +13660,11 @@ export interface CategoryMihoyoParams {
 		| 1481
 		| 1491
 	>;
+	/** List of minimum cinemas on characters. */
 	zenless_character_cinemas?: Record<string, number>;
+	/** List of maximum cinemas on characters. */
 	zenless_character_cinemas_max?: Record<string, number>;
+	/** List of Zenless Zone Zero weapons. */
 	"zenless_weapon[]"?: Array<
 		| 12001
 		| 12002
@@ -13545,20 +13749,35 @@ export interface CategoryMihoyoParams {
 		| 14147
 		| 14148
 	>;
+	/** Minimum number of Zenless Zone Zero legendary characters. */
 	zenless_legendary_min?: number;
+	/** Maximum number of Zenless Zone Zero legendary characters. */
 	zenless_legendary_max?: number;
+	/** Minimum number of cinemas on Zenless Zone Zero characters. */
 	cinemas_min?: number;
+	/** Maximum number of cinemas on Zenless Zone Zero characters. */
 	cinemas_max?: number;
+	/** Minimum number of legendary Zenless Zone Zero weapon characters. */
 	zenless_legendary_weapon_min?: number;
+	/** Maximum number of legendary Zenless Zone Zero weapon characters. */
 	zenless_legendary_weapon_max?: number;
+	/** Minimum number of Zenless Zone Zero characters. */
 	zenless_char_min?: number;
+	/** Maximum number of Zenless Zone Zero characters. */
 	zenless_char_max?: number;
+	/** Minimum Zenless Zone Zero level. */
 	zenless_level_min?: number;
+	/** Maximum Zenless Zone Zero level. */
 	zenless_level_max?: number;
+	/** Minimum count of Zenless Zone Zero achievements. */
 	zenless_achievement_min?: number;
+	/** Maximum count of Zenless Zone Zero achievements. */
 	zenless_achievement_max?: number;
+	/** Minimum count of Zenless Zone Zero polychrome. */
 	zenless_currency_min?: number;
+	/** Maximum count of Zenless Zone Zero polychrome. */
 	zenless_currency_max?: number;
+	/** Number of days the account has been offline. */
 	daybreak?: number;
 }
 
@@ -13831,10 +14050,15 @@ export type CategoryMihoyoResponse = {
 };
 
 export interface CategoryRiotParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -13846,102 +14070,153 @@ export interface CategoryRiotParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Minimum valorant rank. */
 	rmin?: number;
+	/** Maximum valorant rank. */
 	rmax?: number;
+	/** Last minimum valorant rank. */
 	last_rmin?: number;
+	/** Last maximum valorant rank. */
 	last_rmax?: number;
+	/** Previous minimum rank. */
 	previous_rmin?: number;
+	/** Previous maximum rank. */
 	previous_rmax?: number;
+	/** List of weapon skins. */
 	"weaponSkin[]"?: Array<string>;
+	/** List of buddies. */
 	"buddy[]"?: Array<string>;
+	/** List of agents. */
 	"agent[]"?: Array<string>;
+	/** List of champions. */
 	"champion[]"?: Array<string>;
+	/** List of LoL skins. */
 	"skin[]"?: Array<string>;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** Minimum level in Valorant. */
 	valorant_level_min?: number;
+	/** Maximum level in Valorant. */
 	valorant_level_max?: number;
+	/** Minimum level in LoL. */
 	lol_level_min?: number;
+	/** Maximum level in LoL. */
 	lol_level_max?: number;
+	/** Minimum inventory value. */
 	inv_min?: number;
+	/** Maximum inventory value. */
 	inv_max?: number;
+	/** Minimum number of Valorant points. */
 	vp_min?: number;
+	/** Maximum number of Valorant points. */
 	vp_max?: number;
+	/** Minimum number of skins. */
 	valorant_smin?: number;
+	/** Maximum number of skins. */
 	valorant_smax?: number;
+	/** List of allowed rank types. */
 	"valorant_rank_type[]"?: Array<"ranked" | "ranked_ready" | "unrated">;
+	/** Minimum amount of agents. */
 	amin?: number;
+	/** Maximum amount of agents. */
 	amax?: number;
+	/** List of allowed regions in Valorant. */
 	"valorant_region[]"?: Array<string>;
+	/** List of disallowed regions in Valorant. */
 	"valorant_not_region[]"?: Array<string>;
+	/** List of allowed regions in LoL. */
 	"lol_region[]"?: Array<string>;
+	/** List of disallowed regions in LoL. */
 	"lol_not_region[]"?: Array<string>;
+	/** Has any knife. */
 	knife?: boolean;
+	/** Minimum number of skins in LoL. */
 	lol_smin?: number;
+	/** Maximum number of skins in LoL. */
 	lol_smax?: number;
+	/** Minimum number of champions. */
 	champion_min?: number;
+	/** Maximum number of champions. */
 	champion_max?: number;
+	/** Minimum win-rate. */
 	win_rate_min?: number;
+	/** Maximum win-rate. */
 	win_rate_max?: number;
+	/** Minimum wallet blue balance. */
 	blue_min?: number;
+	/** Maximum wallet blue balance. */
 	blue_max?: number;
+	/** Minimum wallet orange balance. */
 	orange_min?: number;
+	/** Maximum wallet orange balance. */
 	orange_max?: number;
+	/** Minimum wallet mythic balance. */
 	mythic_min?: number;
+	/** Maximum wallet mythic balance. */
 	mythic_max?: number;
+	/** Minimum wallet riot balance. */
 	riot_min?: number;
+	/** Maximum wallet riot balance. */
 	riot_max?: number;
+	/** Has linked email. */
 	email?: "yes" | "no" | "nomatter";
+	/** Has linked mobile. */
 	tel?: "yes" | "no" | "nomatter";
+	/** Minimum knifes in Valorant. */
 	valorant_knife_min?: number;
+	/** Maximum knifes in Valorant. */
 	valorant_knife_max?: number;
+	/** Minimum number of Valorant Radiant Points. */
 	rp_min?: number;
+	/** Maximum number of Valorant Radiant Points. */
 	rp_max?: number;
+	/** Minimum number of Valorant free agents. */
 	fa_min?: number;
+	/** Maximum number of Valorant free agents. */
 	fa_max?: number;
+	/** List of allowed ranks in LoL. */
 	"lol_rank[]"?: Array<
 		| "Unranked"
 		| "IRON IV"
@@ -14124,10 +14399,15 @@ export type CategoryRiotResponse = {
 };
 
 export interface CategoryTelegramParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -14139,87 +14419,131 @@ export interface CategoryTelegramParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "dummy"
-		| "self_registration"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "dummy"
-		| "self_registration"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Has a spam ban. */
 	spam?: YesNoNoMatterScheme;
+	/** Has a cloud password. */
 	password?: YesNoNoMatterScheme;
+	/** Has a premium subscription. */
 	premium?: "yes" | "no" | "nomatter";
+	/** When premium subscription will be active */
 	premium_expiration?: number;
+	/** In what notation is time measured */
 	premium_expiration_period?: "day" | "month" | "year";
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** Minimum number of channels. */
 	min_channels?: number;
+	/** Maximum number of channels. */
 	max_channels?: number;
+	/** Minimum number of chats. */
 	min_chats?: number;
+	/** Maximum number of chats. */
 	max_chats?: number;
+	/** Minimum number of conversations. */
 	min_conversations?: number;
+	/** Maximum number of conversations. */
 	max_conversations?: number;
+	/** Minimum number of channels, where account is administrator/owner. */
 	min_admin?: number;
+	/** Maximum number of channels, where account is administrator/owner. */
 	max_admin?: number;
+	/** Minimum number of subscribers in channel, where account is administrator/owner. */
 	min_admin_sub?: number;
+	/** Maximum number of subscribers in channel, where account is administrator/owner. */
 	max_admin_sub?: number;
+	/** Minimum number of digits in ID. */
 	dig_min?: number;
+	/** Maximum number of digits in ID. */
 	dig_max?: number;
+	/** Minimum number of contacts. */
 	min_contacts?: number;
+	/** Maximum number of contacts. */
 	max_contacts?: number;
+	/** Minimum number of Telegram Stars. */
 	min_stars?: number;
+	/** Maximum number of Telegram Stars. */
 	max_stars?: number;
+	/** Birthday was X time before. */
 	birthday?: number;
+	/** In what notation is time measured. */
 	birthday_period?: "day" | "month" | "year";
+	/** Birthday was X time after. */
 	birthday_after?: number;
+	/** In what notation is time measured. */
 	birthday_after_period?: "day" | "month" | "year";
+	/** Minimum ID of account, will be rounded down till nearest 10k. Available if your balance is higher than 100000 RUB. */
 	min_id?: number;
+	/** Maximum ID of account, will be rounded down till nearest 10k. Available if your balance is higher than 100000 RUB. */
 	max_id?: number;
+	/** Allow geo spam block in search with spam=no. */
 	allow_geo_spamblock?: boolean;
+	/** Minimum number of Telegram gifts on account. */
 	min_gifts?: number;
+	/** Maximum number of Telegram gifts on account. */
 	max_gifts?: number;
+	/** Minimum number of Telegram NFT gifts on account. */
 	min_nft_gifts?: number;
+	/** Maximum number of Telegram NFT gifts on account. */
 	max_nft_gifts?: number;
+	/** Minimum value of all Stars gifts. */
 	min_gifts_stars?: number;
+	/** Maximum value of all Stars gifts. */
 	max_gifts_stars?: number;
+	/** Minimum value of all Stars gifts after convert. */
 	min_gifts_convert_stars?: number;
+	/** Maximum value of all Stars gifts after convert. */
 	max_gifts_convert_stars?: number;
+	/** List of allowed DC ID. */
 	"dc_id[]"?: Array<number>;
+	/** List of disallowed DC ID. */
 	"not_dc_id[]"?: Array<number>;
+	/** Has linked email. */
 	email?: "yes" | "no" | "nomatter";
+	/** Minimum number of bots. */
 	min_bots?: number;
+	/** Maximum number of bots. */
 	max_bots?: number;
+	/** Minimum active users in bot. */
 	min_bot_active_users?: number;
+	/** Maximum active users in bot. */
 	max_bot_active_users?: number;
 }
 
@@ -14334,10 +14658,15 @@ export type CategoryTelegramResponse = {
 };
 
 export interface CategorySupercellParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -14349,58 +14678,65 @@ export interface CategorySupercellParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Guarantee type. */
 	eg?: -1 | 0 | 1 | 2;
+	/** Has linked mobile. */
 	tel?: YesNoNoMatterScheme;
+	/** Minimum Brawl Stars level. */
 	brawl_level_min?: number;
+	/** Maximum Brawl Stars level. */
 	brawl_level_max?: number;
+	/** Minimum number of Brawl Stars trophies. */
 	brawl_cup_min?: number;
+	/** Maximum number of Brawl Stars trophies. */
 	brawl_cup_max?: number;
+	/** Minimum number of Brawl Stars wins. */
 	brawl_wins_min?: number;
+	/** Maximum number of Brawl Stars wins. */
 	brawl_wins_max?: number;
+	/** Has Brawl Pass. */
 	brawl_pass?: YesNoNoMatterScheme;
+	/** List of brawlers. */
 	"brawler[]"?: Array<
 		| "8-BIT"
 		| "ALLI"
@@ -14503,43 +14839,81 @@ export interface CategorySupercellParams {
 		| "WILLOW"
 		| "ZIGGY"
 	>;
+	/** Minimum number of brawlers. */
 	brawlers_min?: number;
+	/** Maximum number of brawlers. */
 	brawlers_max?: number;
+	/** Minimum number of legendary brawlers. */
 	legendary_brawlers_min?: number;
+	/** Maximum number of legendary brawlers. */
 	legendary_brawlers_max?: number;
+	/** Minimum Clash Royale level. */
 	royale_level_min?: number;
+	/** Maximum Clash Royale level. */
 	royale_level_max?: number;
+	/** Minimum number of Clash Royale trophies. */
 	royale_cup_min?: number;
+	/** Maximum number of Clash Royale trophies. */
 	royale_cup_max?: number;
+	/** Minimum number of Clash Royale wins. */
 	royale_wins_min?: number;
+	/** Maximum number of Clash Royale wins. */
 	royale_wins_max?: number;
+	/** Minimum King level in Clash Royale. */
 	king_level_min?: number;
+	/** Maximum King level in Clash Royale. */
 	king_level_max?: number;
+	/** Has Royale Pass. */
 	royale_pass?: YesNoNoMatterScheme;
+	/** Minimum Clash of Clans level. */
 	clash_level_min?: number;
+	/** Maximum Clash of Clans level. */
 	clash_level_max?: number;
+	/** Minimum number of Clash of Clans trophies. */
 	clash_cup_min?: number;
+	/** Maximum number of Clash of Clans trophies. */
 	clash_cup_max?: number;
+	/** Minimum number of Clash of Clans wins. */
 	clash_wins_min?: number;
+	/** Maximum number of Clash of Clans wins. */
 	clash_wins_max?: number;
+	/** Has Battle Pass. */
 	clash_pass?: YesNoNoMatterScheme;
+	/** Minimum total heroes level count in Clash of Clans. */
 	total_heroes_level_min?: number;
+	/** Maximum total heroes level count in Clash of Clans. */
 	total_heroes_level_max?: number;
+	/** Minimum total troops level count in Clash of Clans. */
 	total_troops_level_min?: number;
+	/** Maximum total troops level count in Clash of Clans. */
 	total_troops_level_max?: number;
+	/** Minimum total spells level count in Clash of Clans. */
 	total_spells_level_min?: number;
+	/** Maximum total spells level count in Clash of Clans. */
 	total_spells_level_max?: number;
+	/** Minimum total builder village heroes level count in Clash of Clans. */
 	total_builder_heroes_level_min?: number;
+	/** Maximum total builder village heroes level count in Clash of Clans. */
 	total_builder_heroes_level_max?: number;
+	/** Minimum total builder village troops level count in Clash of Clans. */
 	total_builder_troops_level_min?: number;
+	/** Maximum total builder village troops level count in Clash of Clans. */
 	total_builder_troops_level_max?: number;
+	/** Minimum level of town hall. */
 	town_hall_level_min?: number;
+	/** Maximum level of town hall. */
 	town_hall_level_max?: number;
+	/** Minimum level of builder hall. */
 	builder_hall_level_min?: number;
+	/** Maximum level of builder hall. */
 	builder_hall_level_max?: number;
+	/** Minimum number of builder hall cups. */
 	builder_hall_cup_min?: number;
+	/** Maximum number of builder hall cups. */
 	builder_hall_cup_max?: number;
+	/** Minimum account creation year (e.g. 2023). */
 	creation_year_min?: number;
+	/** Maximum account creation year (e.g. 2024). */
 	creation_year_max?: number;
 }
 
@@ -14669,10 +15043,15 @@ export type CategorySupercellResponse = {
 };
 
 export interface CategoryEaParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -14684,66 +15063,81 @@ export interface CategoryEaParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** List of games. */
 	"game[]"?: Array<string>;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
+	/** Minimum count of games. */
 	gmin?: number;
+	/** Maximum count of games. */
 	gmax?: number;
+	/** Minimum rank points in Apex Legends. */
 	al_rank_min?: number;
+	/** Maximum rank points in Apex Legends. */
 	al_rank_max?: number;
+	/** Minimum level in Apex Legends. */
 	al_level_min?: number;
+	/** Maximum level in Apex Legends. */
 	al_level_max?: number;
+	/** Has a ban in any game. */
 	has_ban?: YesNoNoMatterScheme;
+	/** Xbox connected to account. */
 	xbox_connected?: YesNoNoMatterScheme;
+	/** Steam connected to account. */
 	steam_connected?: YesNoNoMatterScheme;
+	/** PSN connected to account. */
 	psn_connected?: YesNoNoMatterScheme;
+	/** Name of subscription. */
 	subscription?: "EA Play" | "EA Play Pro";
+	/** Length of subscription. */
 	subscription_length?: number;
+	/** In what notation is time measured. */
 	subscription_period?: "day" | "month" | "year";
+	/** List of minimum hours played by game. */
 	hours_played?: Record<string, number>;
+	/** List of maximum hours played by game. */
 	hours_played_max?: Record<string, number>;
+	/** Has transactions. */
 	transactions?: YesNoNoMatterScheme;
 }
 
@@ -14868,10 +15262,15 @@ export type CategoryEaResponse = {
 };
 
 export interface CategoryWotParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -14883,71 +15282,91 @@ export interface CategoryWotParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Has linked mobile. */
 	tel?: "yes" | "no" | "nomatter";
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** Minimum number of battles. */
 	battles_min?: number;
+	/** Maximum number of battles. */
 	battles_max?: number;
+	/** Minimum number of gold. */
 	gold_min?: number;
+	/** Maximum number of gold. */
 	gold_max?: number;
+	/** Minimum number of silver. */
 	silver_min?: number;
+	/** Maximum number of silver. */
 	silver_max?: number;
+	/** Minimum number of top tanks. */
 	top_min?: number;
+	/** Maximum number of top tanks. */
 	top_max?: number;
+	/** Minimum number of premium tanks. */
 	prem_min?: number;
+	/** Maximum number of premium tanks. */
 	prem_max?: number;
+	/** Minimum number of top premium tanks. */
 	top_prem_min?: number;
+	/** Maximum number of top premium tanks. */
 	top_prem_max?: number;
+	/** Minimum number of wins. */
 	win_pmin?: number;
+	/** Maximum number of wins. */
 	win_pmax?: number;
+	/** List of tanks. */
 	"tank[]"?: Array<number>;
+	/** Region. */
 	"region[]"?: Array<"asia" | "eu" | "na" | "ru">;
+	/** Exclude region. */
 	"not_region[]"?: Array<"asia" | "eu" | "na" | "ru">;
+	/** Has a premium subscription. */
 	premium?: "yes" | "no" | "nomatter";
+	/** When premium subscription will be active */
 	premium_expiration?: number;
+	/** In what notation is time measured */
 	premium_expiration_period?: "day" | "month" | "year";
+	/** Has clan. */
 	clan?: "yes" | "no" | "nomatter";
+	/** List of allowed clan role. */
 	"clan_role[]"?: Array<
 		| "commander"
 		| "executive_officer"
@@ -14961,6 +15380,7 @@ export interface CategoryWotParams {
 		| "recruit"
 		| "reservist"
 	>;
+	/** List of disallowed clan role. */
 	"not_clan_role[]"?: Array<
 		| "commander"
 		| "executive_officer"
@@ -14974,13 +15394,21 @@ export interface CategoryWotParams {
 		| "recruit"
 		| "reservist"
 	>;
+	/** Minimum number of gold in clan treasure. */
 	clan_gold_min?: number;
+	/** Maximum number of gold in clan treasure. */
 	clan_gold_max?: number;
+	/** Minimum number of credits in clan treasure. */
 	clan_credits_min?: number;
+	/** Maximum number of credits in clan treasure. */
 	clan_credits_max?: number;
+	/** Minimum number of crystal in clan treasure. */
 	clan_crystal_min?: number;
+	/** Maximum number of crystal in clan treasure. */
 	clan_crystal_max?: number;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
 }
 
@@ -15227,10 +15655,15 @@ export type CategoryWotResponse = {
 };
 
 export interface CategoryWotBlitzParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -15242,71 +15675,91 @@ export interface CategoryWotBlitzParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Has linked mobile. */
 	tel?: "yes" | "no" | "nomatter";
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** Minimum number of battles. */
 	battles_min?: number;
+	/** Maximum number of battles. */
 	battles_max?: number;
+	/** Minimum number of gold. */
 	gold_min?: number;
+	/** Maximum number of gold. */
 	gold_max?: number;
+	/** Minimum number of silver. */
 	silver_min?: number;
+	/** Maximum number of silver. */
 	silver_max?: number;
+	/** Minimum number of top tanks. */
 	top_min?: number;
+	/** Maximum number of top tanks. */
 	top_max?: number;
+	/** Minimum number of premium tanks. */
 	prem_min?: number;
+	/** Maximum number of premium tanks. */
 	prem_max?: number;
+	/** Minimum number of top premium tanks. */
 	top_prem_min?: number;
+	/** Maximum number of top premium tanks. */
 	top_prem_max?: number;
+	/** Minimum number of wins. */
 	win_pmin?: number;
+	/** Maximum number of wins. */
 	win_pmax?: number;
+	/** List of tanks. */
 	"tank[]"?: Array<number>;
+	/** Region. */
 	"region[]"?: Array<"asia" | "eu" | "na" | "ru">;
+	/** Exclude region. */
 	"not_region[]"?: Array<"asia" | "eu" | "na" | "ru">;
+	/** Has a premium subscription. */
 	premium?: "yes" | "no" | "nomatter";
+	/** When premium subscription will be active */
 	premium_expiration?: number;
+	/** In what notation is time measured */
 	premium_expiration_period?: "day" | "month" | "year";
+	/** Has clan. */
 	clan?: "yes" | "no" | "nomatter";
+	/** List of allowed clan role. */
 	"clan_role[]"?: Array<
 		| "commander"
 		| "executive_officer"
@@ -15320,6 +15773,7 @@ export interface CategoryWotBlitzParams {
 		| "recruit"
 		| "reservist"
 	>;
+	/** List of disallowed clan role. */
 	"not_clan_role[]"?: Array<
 		| "commander"
 		| "executive_officer"
@@ -15333,13 +15787,21 @@ export interface CategoryWotBlitzParams {
 		| "recruit"
 		| "reservist"
 	>;
+	/** Minimum number of gold in clan treasure. */
 	clan_gold_min?: number;
+	/** Maximum number of gold in clan treasure. */
 	clan_gold_max?: number;
+	/** Minimum number of credits in clan treasure. */
 	clan_credits_min?: number;
+	/** Maximum number of credits in clan treasure. */
 	clan_credits_max?: number;
+	/** Minimum number of crystal in clan treasure. */
 	clan_crystal_min?: number;
+	/** Maximum number of crystal in clan treasure. */
 	clan_crystal_max?: number;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
 }
 
@@ -17437,10 +17899,15 @@ export type CategoryWotBlitzResponse = {
 };
 
 export interface CategoryGiftsParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -17452,52 +17919,49 @@ export interface CategoryGiftsParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Name of subscription. */
 	subscription?:
 		| "discord_nitro"
 		| "discord_nitro_basic"
 		| "discord_nitro_trial"
 		| "telegram_premium";
+	/** Length of subscription. */
 	subscription_length?: number;
+	/** In what notation is time measured. */
 	subscription_period?: "day" | "month" | "year";
 }
 
@@ -17595,10 +18059,15 @@ export type CategoryGiftsResponse = {
 };
 
 export interface CategoryEpicGamesParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -17610,62 +18079,73 @@ export interface CategoryEpicGamesParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"market" | "autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Guarantee type. */
 	eg?: -1 | 0 | 1 | 2;
+	/** List of games. */
 	"game[]"?: Array<string>;
+	/** Can change email. */
 	change_email?: "yes" | "no" | "nomatter";
+	/** Has Rocket League purchases. */
 	rl_purchases?: boolean;
+	/** Minimum epic wallet balance. */
 	balance_min?: number;
+	/** Maximum epic wallet balance. */
 	balance_max?: number;
+	/** Minimum rewards balance. */
 	rewards_balance_min?: number;
+	/** Maximum rewards balance. */
 	rewards_balance_max?: number;
+	/** Minimum number of games. */
 	gmin?: number;
+	/** Maximum number of games. */
 	gmax?: number;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** List of minimum hours played by game. */
 	hours_played?: Record<string, number>;
+	/** List of maximum hours played by game. */
 	hours_played_max?: Record<string, number>;
 }
 
@@ -17798,10 +18278,15 @@ export type CategoryEpicGamesResponse = {
 };
 
 export interface CategoryEscapeFromTarkovParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -17813,57 +18298,61 @@ export interface CategoryEscapeFromTarkovParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Region. */
 	region?: "af" | "as" | "cis" | "eu" | "me" | "oc" | "us";
+	/** List of versions. */
 	"version[]"?: Array<
 		"edge_of_darkness" | "left_behind" | "prepare_for_escape" | "standard" | "unheard_edition"
 	>;
+	/** How old is the account. */
 	reg?: number;
+	/** In what notation is time measured. */
 	reg_period?: "day" | "month" | "year";
+	/** Minimum level. */
 	level_min?: number;
+	/** Maximum level. */
 	level_max?: number;
+	/** Access to pve. */
 	pve?: YesNoNoMatterScheme;
+	/** Side in current wipe. */
 	side?: "Bear" | "Savage";
 }
 
@@ -17983,10 +18472,15 @@ export type CategoryEscapeFromTarkovResponse = {
 };
 
 export interface CategorySocialClubParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -17998,53 +18492,55 @@ export interface CategorySocialClubParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** Minimum number of Social Club level. */
 	level_min?: number;
+	/** Maximum number of Social Club level. */
 	level_max?: number;
+	/** Minimum number of GTA V cash */
 	cash_min?: number;
+	/** Maximum number of GTA V cash */
 	cash_max?: number;
+	/** Minimum number of GTA V bank cash */
 	bank_cash_min?: number;
+	/** Maximum number of GTA V bank cash */
 	bank_cash_max?: number;
+	/** List of games. */
 	"game[]"?: Array<string>;
 }
 
@@ -18162,10 +18658,15 @@ export type CategorySocialClubResponse = {
 };
 
 export interface CategoryUplayParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -18177,75 +18678,99 @@ export interface CategoryUplayParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** List of games. */
 	"game[]"?: Array<string>;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** Minimum count of games. */
 	gmin?: number;
+	/** Maximum count of games. */
 	gmax?: number;
+	/** Name of subscription. */
 	subscription?: "basic" | "premium" | "premiumAnywhere";
+	/** Length of subscription. */
 	subscription_length?: number;
+	/** In what notation is time measured. */
 	subscription_period?: "day" | "month" | "year";
+	/** Minimum level in Tom Clancy's Rainbow Six Siege. */
 	r6_level_min?: number;
+	/** Maximum level in Tom Clancy's Rainbow Six Siege. */
 	r6_level_max?: number;
+	/** Minimum rank points in Tom Clancy's Rainbow Six Siege. */
 	r6_rank_min?: number;
+	/** Maximum rank points in Tom Clancy's Rainbow Six Siege. */
 	r6_rank_max?: number;
+	/** Minimum count of operators in Tom Clancy's Rainbow Six Siege. */
 	r6_operators_min?: number;
+	/** Maximum count of operators in Tom Clancy's Rainbow Six Siege. */
 	r6_operators_max?: number;
+	/** Is account banned in Tom Clancy's Rainbow Six Siege */
 	r6_ban?: YesNoNoMatterScheme;
+	/** Minimum number of skins in Tom Clancy's Rainbow Six Siege. */
 	r6_smin?: number;
+	/** Maximum number of skins in Tom Clancy's Rainbow Six Siege. */
 	r6_smax?: number;
+	/** List of weapon skins in Tom Clancy's Rainbow Six Siege. */
 	"r6_skin[]"?: Array<string>;
+	/** List of operators in Tom Clancy's Rainbow Six Siege. */
 	"r6_operator[]"?: Array<string>;
+	/** Xbox connected to account. */
 	xbox_connected?: YesNoNoMatterScheme;
+	/** PSN connected to account. */
 	psn_connected?: YesNoNoMatterScheme;
+	/** Steam connected to account. */
 	steam_connected?: YesNoNoMatterScheme;
+	/** Minimum balance. */
 	balance_min?: number;
+	/** Maximum balance. */
 	balance_max?: number;
+	/** Has transactions. */
 	transactions?: YesNoNoMatterScheme;
+	/** How old is the account. */
 	reg?: number;
+	/** In what notation is time measured. */
 	reg_period?: "day" | "month" | "year";
 }
 
@@ -18381,10 +18906,15 @@ export type CategoryUplayResponse = {
 };
 
 export interface CategoryDiscordParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -18396,58 +18926,65 @@ export interface CategoryDiscordParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Has linked mobile. */
 	tel?: "yes" | "no" | "nomatter";
+	/** Has nitro. */
 	nitro?: YesNoNoMatterScheme;
+	/** Nitro type. */
 	"nitro_type[]"?: Array<"basic" | "classic" | "full" | "none" | "trial">;
+	/** Length of nitro. */
 	nitro_length?: number;
+	/** In what notation is time measured. */
 	nitro_period?: "day" | "month" | "year";
+	/** Minimum number of boosts. */
 	boosts_min?: number;
+	/** Maximum number of boosts. */
 	boosts_max?: number;
+	/** Has billing. */
 	billing?: YesNoNoMatterScheme;
+	/** Has gifts. */
 	gifts?: YesNoNoMatterScheme;
+	/** Has transactions. */
 	transactions?: YesNoNoMatterScheme;
+	/** List of badges. */
 	"badge[]"?: Array<
 		| "bug_hunter"
 		| "bug_hunter_level_2"
@@ -18458,32 +18995,59 @@ export interface CategoryDiscordParams {
 		| "staff"
 		| "verified_developer"
 	>;
+	/** List of account conditions. */
 	"condition[]"?: Array<"cleaned" | "empty" | "nospam" | "spam">;
+	/** Minimum number of chats. */
 	chat_min?: number;
+	/** Maximum number of chats. */
 	chat_max?: number;
+	/** Minimum number of subscribers in server, where account is administrator/owner. */
 	min_admin_members?: number;
+	/** Maximum number of subscribers in server, where account is administrator/owner. */
 	max_admin_members?: number;
+	/** Minimum number of servers, where account is administrator/owner. */
 	min_admin?: number;
+	/** Maximum number of servers, where account is administrator/owner. */
 	max_admin?: number;
+	/** How old is the account. */
 	reg?: number;
+	/** In what notation is time measured. */
 	reg_period?: "day" | "month" | "year";
+	/** List of languages. */
 	"language[]"?: Array<string>;
+	/** List of languages that won't be included. */
 	"not_language[]"?: Array<string>;
+	/** Has clans. */
 	clans?: YesNoNoMatterScheme;
+	/** Minimum number of clans, where account is administrator. */
 	min_admin_clans?: number;
+	/** Maximum number of clans, where account is administrator. */
 	max_admin_clans?: number;
+	/** Minimum number of clans, where account is owner. */
 	min_owner_clans?: number;
+	/** Maximum number of clans, where account is owner. */
 	max_owner_clans?: number;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
+	/** Minimum count of servers. */
 	min_servers?: number;
+	/** Maximum count of servers. */
 	max_servers?: number;
+	/** Has two-factor authentication. */
 	"2fa"?: YesNoNoMatterScheme;
+	/** Minimum number of Nitro full credits. */
 	min_full_credits?: number;
+	/** Maximum number of Nitro full credits. */
 	max_full_credits?: number;
+	/** Minimum number of Nitro basic credits. */
 	min_basic_credits?: number;
+	/** Maximum number of Nitro basic credits. */
 	max_basic_credits?: number;
+	/** Minimum number of Discord Orbs. */
 	min_orbs?: number;
+	/** Maximum number of Discord Orbs. */
 	max_orbs?: number;
 }
 
@@ -18593,10 +19157,15 @@ export type CategoryDiscordResponse = {
 };
 
 export interface CategoryTikTokParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -18608,61 +19177,71 @@ export interface CategoryTikTokParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Has linked mobile. */
 	tel?: "yes" | "no" | "nomatter";
+	/** How old is the account. */
 	reg?: number;
+	/** In what notation is time measured. */
 	reg_period?: "day" | "month" | "year";
+	/** Minimum number of followers. */
 	followers_min?: number;
+	/** Maximum number of followers. */
 	followers_max?: number;
+	/** Minimum number of posts. */
 	post_min?: number;
+	/** Maximum number of posts. */
 	post_max?: number;
+	/** Minimum number of likes. */
 	like_min?: number;
+	/** Maximum number of likes. */
 	like_max?: number;
+	/** Minimum number of coins. */
 	coins_min?: number;
+	/** Maximum number of coins. */
 	coins_max?: number;
+	/** Login by cookies. */
 	cookie_login?: YesNoNoMatterScheme;
+	/** Has verified. */
 	verified?: "yes" | "no" | "nomatter";
+	/** Has linked email. */
 	email?: "yes" | "no" | "nomatter";
 }
 
@@ -18781,10 +19360,15 @@ export type CategoryTikTokResponse = {
 };
 
 export interface CategoryInstagramParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -18796,58 +19380,65 @@ export interface CategoryInstagramParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"autoreg" | "native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Has linked mobile. */
 	tel?: "yes" | "no" | "nomatter";
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
+	/** Login by cookies. */
 	cookies?: "yes" | "no" | "nomatter";
+	/** Login without cookies. */
 	login_without_cookies?: YesNoNoMatterScheme;
+	/** Minimum number of followers. */
 	followers_min?: number;
+	/** Maximum number of followers. */
 	followers_max?: number;
+	/** Minimum number of posts. */
 	post_min?: number;
+	/** Maximum number of posts. */
 	post_max?: number;
+	/** How old is the account. */
 	reg?: number;
+	/** In what notation is time measured. */
 	reg_period?: "day" | "month" | "year";
 }
 
@@ -18957,10 +19548,15 @@ export type CategoryInstagramResponse = {
 };
 
 export interface CategoryBattleNetParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -18972,60 +19568,69 @@ export interface CategoryBattleNetParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** Guarantee type. */
 	eg?: 0 | 1;
+	/** List of games. */
 	"game[]"?: Array<number>;
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
+	/** Has linked mobile. */
 	tel?: "yes" | "no" | "nomatter";
+	/** Can edit BattleTag. */
 	edit_btag?: YesNoNoMatterScheme;
+	/** Can edit full name. */
 	changeable_fn?: YesNoNoMatterScheme;
+	/** Real id. */
 	real_id?: YesNoNoMatterScheme;
+	/** Has disabled parent control. */
 	parent_control?: YesNoNoMatterScheme;
+	/** Has no bans. */
 	no_bans?: YesNoNoMatterScheme;
+	/** Minimum balance. */
 	balance_min?: number;
+	/** Maximum balance. */
 	balance_max?: number;
 }
 
@@ -19163,10 +19768,15 @@ export type CategoryBattleNetResponse = {
 };
 
 export interface CategoryChatGPTParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -19178,48 +19788,45 @@ export interface CategoryChatGPTParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Email type. */
 	"email_type[]"?: Array<"native" | "no">;
+	/** Domain of native/autoreg email. */
 	item_domain?: string;
+	/** List of allowed subscriptions. */
 	"subscription[]"?: Array<
 		| "chatgptplusplan"
 		| "chatgptpro"
@@ -19228,15 +19835,25 @@ export interface CategoryChatGPTParams {
 		| "chatgpteduplan"
 		| "chatgptquorumplan"
 	>;
+	/** Length of subscription. */
 	subscription_length?: number;
+	/** In what notation is time measured. */
 	subscription_period?: "day" | "month" | "year";
+	/** Is auto renewal enabled. */
 	autorenewal?: "yes" | "no" | "nomatter";
+	/** Has linked mobile. */
 	tel?: "yes" | "no" | "nomatter";
+	/** Has transactions. */
 	transactions?: YesNoNoMatterScheme;
+	/** How old is the account. */
 	reg?: number;
+	/** In what notation is time measured. */
 	reg_period?: "day" | "month" | "year";
+	/** List of allowed tiers. */
 	"openai_tier[]"?: Array<"tier1" | "tier2" | "tier3" | "tier4" | "tier5">;
+	/** Minimum OpenAI credit balance. */
 	openai_balance_min?: number;
+	/** Maximum OpenAI credit balance. */
 	openai_balance_max?: number;
 }
 
@@ -19345,10 +19962,15 @@ export type CategoryChatGPTResponse = {
 };
 
 export interface CategoryVpnParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -19360,46 +19982,41 @@ export interface CategoryVpnParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** List of allowed VPN services. */
 	"service[]"?: Array<
 		| "AdguardVPN"
 		| "PIAVPN"
@@ -19414,8 +20031,11 @@ export interface CategoryVpnParams {
 		| "vyprVPN"
 		| "windscribeVPN"
 	>;
+	/** Length of subscription. */
 	subscription_length?: number;
+	/** In what notation is time measured. */
 	subscription_period?: "day" | "month" | "year";
+	/** Is auto renewal enabled. */
 	autorenewal?: "yes" | "no" | "nomatter";
 }
 
@@ -19514,10 +20134,15 @@ export type CategoryVpnResponse = {
 };
 
 export interface CategoryRobloxParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -19529,57 +20154,63 @@ export interface CategoryRobloxParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Has verified email. */
 	email?: YesNoNoMatterScheme;
+	/** Minimum robux. */
 	robux_min?: number;
+	/** Maximum robux. */
 	robux_max?: number;
+	/** Minimum friends. */
 	friends_min?: number;
+	/** Maximum friends. */
 	friends_max?: number;
+	/** Minimum number of followers. */
 	followers_min?: number;
+	/** Maximum number of followers. */
 	followers_max?: number;
+	/** List of allowed countries. */
 	country?: Array<string>;
+	/** List of disallowed countries. */
 	not_country?: Array<string>;
+	/** How old is the account. */
 	reg?: number;
+	/** In what notation is time measured. */
 	reg_period?: "day" | "month" | "year";
+	/** Name of subscription. */
 	subscription?:
 		| "RobloxPremium1000"
 		| "RobloxPremium100012Months"
@@ -19588,30 +20219,55 @@ export interface CategoryRobloxParams {
 		| "RobloxPremium2200OneMonth"
 		| "RobloxPremium450"
 		| "RobloxPremium450OneMonth";
+	/** Length of subscription. */
 	subscription_length?: number;
+	/** In what notation is time measured. */
 	subscription_period?: "day" | "month" | "year";
+	/** Is auto renewal enabled. */
 	autorenewal?: "yes" | "no" | "nomatter";
+	/** Xbox connected to account. */
 	xbox_connected?: YesNoNoMatterScheme;
+	/** PSN connected to account. */
 	psn_connected?: YesNoNoMatterScheme;
+	/** Has verified. */
 	verified?: "yes" | "no" | "nomatter";
+	/** Account is age verified via documents. */
 	age_verified?: YesNoNoMatterScheme;
+	/** Minimum amount of incoming robux. */
 	incoming_robux_total_min?: number;
+	/** Maximum amount of incoming robux. */
 	incoming_robux_total_max?: number;
+	/** Minimum limited items value. */
 	limited_price_min?: number;
+	/** Maximum limited items value. */
 	limited_price_max?: number;
+	/** Minimum total Robux cost of all game passes in popular Roblox games.. */
 	gamepass_min?: number;
+	/** Maximum total Robux cost of all game passes in popular Roblox games.. */
 	gamepass_max?: number;
+	/** Has game donations. */
 	game_donations?: YesNoNoMatterScheme;
+	/** Minimum inventory value. */
 	inv_min?: number;
+	/** Maximum inventory value. */
 	inv_max?: number;
+	/** Minimum UGC limited items value. */
 	ugc_limited_price_min?: number;
+	/** Maximum UGC limited items value. */
 	ugc_limited_price_max?: number;
+	/** Minimum credit balance. */
 	credit_balance_min?: number;
+	/** Maximum credit balance. */
 	credit_balance_max?: number;
+	/** Minimum offsale items count. */
 	offsale_min?: number;
+	/** Maximum offsale items count. */
 	offsale_max?: number;
+	/** Voice chat is available. */
 	voice?: YesNoNoMatterScheme;
+	/** List of allowed age groups. */
 	"age_group[]"?: Array<string>;
+	/** List of disallowed age groups. */
 	"not_age_group[]"?: Array<string>;
 }
 
@@ -19747,10 +20403,15 @@ export type CategoryRobloxResponse = {
 };
 
 export interface CategoryWarfaceParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -19762,55 +20423,59 @@ export interface CategoryWarfaceParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Minimum rank. */
 	rank_min?: number;
+	/** Maximum rank. */
 	rank_max?: number;
+	/** Minimum bonus rank. */
 	bonus_rank_min?: number;
+	/** Maximum bonus rank. */
 	bonus_rank_max?: number;
+	/** Has linked mobile. */
 	tel?: "yes" | "no" | "nomatter";
+	/** Number of days the account has been offline. */
 	daybreak?: number;
+	/** Minimum amount of Kredits. */
 	kredits_min?: number;
+	/** Maximum amount of Kredits. */
 	kredits_max?: number;
+	/** Minimum total donated Kredits. */
 	total_kredits_min?: number;
+	/** Maximum total donated Kredits. */
 	total_kredits_max?: number;
 }
 
@@ -19924,10 +20589,15 @@ export type CategoryWarfaceResponse = {
 };
 
 export interface CategoryMinecraftParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -19939,80 +20609,109 @@ export interface CategoryMinecraftParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** Name of subscription. */
 	subscription?: "PC Game Pass" | "Xbox Game Pass Ultimate";
+	/** Length of subscription. */
 	subscription_length?: number;
+	/** In what notation is time measured. */
 	subscription_period?: "day" | "month" | "year";
+	/** Is auto renewal enabled. */
 	autorenewal?: "yes" | "no" | "nomatter";
+	/** Has java edition. */
 	java?: YesNoNoMatterScheme;
+	/** Has bedrock edition. */
 	bedrock?: YesNoNoMatterScheme;
+	/** Has Minecraft Dungeons. */
 	dungeons?: YesNoNoMatterScheme;
+	/** Has Minecraft Legends. */
 	legends?: YesNoNoMatterScheme;
+	/** Can change nickname. */
 	change_nickname?: YesNoNoMatterScheme;
+	/** List of capes. */
 	"capes[]"?: Array<string>;
+	/** Minimum number of capes. */
 	capes_min?: number;
+	/** Maximum number of capes. */
 	capes_max?: number;
+	/** List of allowed countries. */
 	"country[]"?: Array<string>;
+	/** List of disallowed countries. */
 	"not_country[]"?: Array<string>;
+	/** Has active Hypixel ban. */
 	hypixel_ban?: YesNoNoMatterScheme;
+	/** Is API enabled in Hypixel Skyblock. */
 	hypixel_skyblock_api_enabled?: YesNoNoMatterScheme;
+	/** Rank on hypixel. */
 	"rank_hypixel[]"?: Array<"MVP" | "MVP+" | "MVP++" | "VIP" | "VIP+" | "YOUTUBE">;
+	/** Minimum number of level hypixel. */
 	level_hypixel_min?: number;
+	/** Maximum number of level hypixel. */
 	level_hypixel_max?: number;
+	/** Minimum number of achievement hypixel. */
 	achievement_hypixel_min?: number;
+	/** Maximum number of achievement hypixel. */
 	achievement_hypixel_max?: number;
+	/** Minimum level on Hypixel SkyBlock. */
 	level_hypixel_skyblock_min?: number;
+	/** Maximum level on Hypixel SkyBlock. */
 	level_hypixel_skyblock_max?: number;
+	/** Minimum net worth on Hypixel SkyBlock. */
 	net_worth_hypixel_skyblock_min?: number;
+	/** Maximum net worth on Hypixel SkyBlock. */
 	net_worth_hypixel_skyblock_max?: number;
+	/** How old is the account. */
 	reg?: number;
+	/** In what notation is time measured. */
 	reg_period?: "day" | "month" | "year";
+	/** How old is the last login account. */
 	last_login_hypixel?: number;
+	/** In what notation is time measured. */
 	last_login_hypixel_period?: "day" | "month" | "year";
+	/** Can change details. */
 	can_change_details?: YesNoNoMatterScheme;
+	/** Minimum number of characters in nickname. */
 	nickname_length_min?: number;
+	/** Maximum number of characters in nickname. */
 	nickname_length_max?: number;
+	/** Was Hypixel ban parsed by Market. */
 	hypixel_ban_parsed?: YesNoNoMatterScheme;
+	/** Minimum number of Minecoins. */
 	minecoins_min?: number;
+	/** Maximum number of Minecoins. */
 	minecoins_max?: number;
 }
 
@@ -20137,10 +20836,15 @@ export type CategoryMinecraftResponse = {
 };
 
 export interface CategoryHytaleParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -20152,48 +20856,45 @@ export interface CategoryHytaleParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
+	/** List of allowed editions. */
 	"edition[]"?: Array<"base" | "deluxe" | "founder">;
+	/** Minimum number of profiles with game. */
 	profiles_min?: number;
+	/** Maximum number of profiles with game. */
 	profiles_max?: number;
 }
 
@@ -20307,6 +21008,7 @@ export type CategoryHytaleResponse = {
 };
 
 export interface CategoryListParams {
+	/** Display top queries for per category. */
 	top_queries?: boolean;
 }
 
@@ -20395,9 +21097,13 @@ export type CategoryGamesResponse = {
 // ─── ListApi Types ────────────────────────────────────────
 
 export interface ListUserParams {
+	/** User id. */
 	user_id?: number;
+	/** Accounts category. */
 	category_id?: CategoryIDModel;
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Account status. */
 	show?:
 		| "active"
 		| "paid"
@@ -20407,35 +21113,21 @@ export interface ListUserParams {
 		| "discount_request"
 		| "stickied"
 		| "pre_active";
+	/** Delete reason. (Only if **show** is set to **deleted**) */
 	delete_reason?: string;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** Login. */
 	login?: string;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -20447,28 +21139,46 @@ export interface ListUserParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** Sold before. */
 	sb?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Username of buyer. (If **show** is **paid**) */
 	username?: string;
+	/** Start date for filtering by publication date. */
 	published_startDate?: string;
+	/** End date for filtering by publication date. */
 	published_endDate?: string;
+	/** Enable filtering by publication date. */
 	filter_by_published_date?: boolean;
+	/** Start date for filtering by buyer operation date. */
 	paid_startDate?: string;
+	/** End date for filtering by buyer operation date. */
 	paid_endDate?: string;
+	/** Enable filtering by buyer operation date. */
 	filter_by_buyer_operation_date?: boolean;
+	/** Start date for filtering by deletion date. */
 	delete_startDate?: string;
+	/** End date for filtering by deletion date. */
 	delete_endDate?: string;
+	/** Enable filtering by deletion date. */
 	filter_by_delete_date?: boolean;
 }
 
 export type ListUserResponse = ItemListModel;
 
 export interface ListOrdersParams {
+	/** User id. */
 	user_id?: number;
+	/** Accounts category. */
 	category_id?: CategoryIDModel;
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Account status. */
 	show?:
 		| "active"
 		| "paid"
@@ -20478,34 +21188,19 @@ export interface ListOrdersParams {
 		| "discount_request"
 		| "stickied"
 		| "pre_active";
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** Login. */
 	login?: string;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -20517,15 +21212,20 @@ export interface ListOrdersParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** Sold before. */
 	sb?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
 }
 
 export type ListOrdersResponse = ItemListModel;
 
 export interface ListStatesParams {
+	/** User ID. */
 	user_id?: number | string;
 }
 
@@ -20602,10 +21302,15 @@ export type ListStatesResponse = {
 };
 
 export interface ListDownloadParams {
+	/** Format of the downloaded accounts. */
 	format?: "short" | "custom" | "mfa_file_steam_id" | "mfa_file_login";
+	/** Custom format string for download. (Required if **format** is set to **custom**) */
 	custom_format?: string;
+	/** Accounts category. */
 	category_id?: CategoryIDModel;
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Account status. */
 	show?:
 		| "active"
 		| "paid"
@@ -20615,34 +21320,19 @@ export interface ListDownloadParams {
 		| "discount_request"
 		| "stickied"
 		| "pre_active";
+	/** Delete reason. (Only if **show** is set to **deleted**) */
 	delete_reason?: string;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -20654,26 +21344,42 @@ export interface ListDownloadParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** Sold before. */
 	sb?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Username of buyer. (If **show** is **paid**) */
 	username?: string;
+	/** Start date for filtering by publication date. */
 	published_startDate?: string;
+	/** End date for filtering by publication date. */
 	published_endDate?: string;
+	/** Enable filtering by publication date. */
 	filter_by_published_date?: boolean;
+	/** Start date for filtering by buyer operation date. */
 	paid_startDate?: string;
+	/** End date for filtering by buyer operation date. */
 	paid_endDate?: string;
+	/** Enable filtering by buyer operation date. */
 	filter_by_buyer_operation_date?: boolean;
+	/** Start date for filtering by deletion date. */
 	delete_startDate?: string;
+	/** End date for filtering by deletion date. */
 	delete_endDate?: string;
+	/** Enable filtering by deletion date. */
 	filter_by_delete_date?: boolean;
 }
 
 export type ListDownloadResponse = string;
 
 export interface ListFavoritesParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Account status. */
 	show?:
 		| "active"
 		| "paid"
@@ -20683,33 +21389,17 @@ export interface ListFavoritesParams {
 		| "discount_request"
 		| "stickied"
 		| "pre_active";
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -20721,16 +21411,22 @@ export interface ListFavoritesParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** Sold before. */
 	sb?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
 }
 
 export type ListFavoritesResponse = ItemListModel;
 
 export interface ListViewedParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Account status. */
 	show?:
 		| "active"
 		| "paid"
@@ -20740,33 +21436,17 @@ export interface ListViewedParams {
 		| "discount_request"
 		| "stickied"
 		| "pre_active";
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -20778,9 +21458,13 @@ export interface ListViewedParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** Sold before. */
 	sb?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
 }
 
@@ -20789,6 +21473,7 @@ export type ListViewedResponse = ItemListModel;
 // ─── ManagingApi Types ────────────────────────────────────────
 
 export interface ManagingGetParams {
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
 }
 
@@ -20817,6 +21502,7 @@ export type ManagingGetResponse = {
 };
 
 export interface ManagingDeleteBody {
+	/** Delete reason. */
 	reason: string;
 }
 
@@ -20828,6 +21514,13 @@ export type ManagingDeleteResponse = {
 
 export interface ManagingCreateClaimBody {
 	item_id: ItemIDModel;
+	/** You should describe what's happened.
+- describe the situation in a nutshell. If you wish, you can describe the situation in more detail using the "Spoiler" function.
+- attach screenshots of correspondence. You must upload to the site [Imgur](https://imgur.com/upload)
+- other evidence;
+- notify the respondent about the complaint you created, familiarize him with hidden content
+
+Describe the situation in as much detail as possible. */
 	post_body: string;
 }
 
@@ -20957,7 +21650,9 @@ export type ManagingCreateClaimResponse = {
 };
 
 export interface ManagingBulkGetBody {
+	/** Item id. */
 	item_id?: Array<ItemIDModel>;
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
 }
 
@@ -20970,8 +21665,11 @@ export type ManagingBulkGetResponse = {
 };
 
 export interface ManagingSteamInventoryValueParams {
+	/** Application id. */
 	app_id?: 730 | 578080 | 753 | 570 | 440 | 252490 | 304930 | 232090 | 322330;
+	/** Currency in which the inventory value will be returned */
 	currency?: CurrencyModel;
+	/** Ignore cache. */
 	ignore_cache?: boolean;
 }
 
@@ -21014,9 +21712,13 @@ export type ManagingSteamInventoryValueResponse = {
 };
 
 export interface ManagingSteamValueParams {
+	/** Link or id of account. Can be [**https://lzt.market/{item-id}/**, **https://steamcommunity.com/id/{steam-name}**, **https://steamcommunity.com/profiles/{steam-id}**, **{steam-id}**]. */
 	link: string;
+	/** Application id. */
 	app_id?: 730 | 578080 | 753 | 570 | 440 | 252490 | 304930 | 232090 | 322330;
+	/** Currency in which the inventory value will be returned */
 	currency?: CurrencyModel;
+	/** Ignore cache. */
 	ignore_cache?: boolean;
 }
 
@@ -21059,22 +21761,33 @@ export type ManagingSteamValueResponse = {
 };
 
 export interface ManagingSteamPreviewParams {
+	/** Type of page. */
 	type?: "profiles" | "games";
 }
 
 export type ManagingSteamPreviewResponse = string;
 
 export interface ManagingEditBody {
+	/** Title of account. If **title** specified and **title_en** is empty, **title_en** will be automatically translated to English language. */
 	title?: string;
+	/** English title of account. If **title_en** specified and **title** is empty, **title** will be automatically translated to Russian language. */
 	title_en?: string;
+	/** Current price of account in your currency. */
 	price?: number;
+	/** Using currency for amount. Required if you are trying to change price field. */
 	currency?: CurrencyModel;
-	item_origin?: "brute" | "phishing" | "stealer" | "personal" | "resale" | "autoreg" | "dummy";
+	item_origin?: ItemOriginModel;
+	/** Email login data (email:password format). */
 	email_login_data?: string;
+	/** Email type. */
 	email_type?: "native" | "autoreg";
+	/** Allow users to ask discount for this account. */
 	allow_ask_discount?: boolean;
+	/** Using proxy id for account checking. See GET or POST /proxy to get or edit proxy list. */
 	proxy_id?: number;
+	/** Account public description. */
 	description?: string;
+	/** Account private information (visible only for buyer). */
 	information?: string;
 }
 
@@ -21095,6 +21808,7 @@ export type ManagingAutoBuyPriceResponse = {
 };
 
 export interface ManagingNoteBody {
+	/** Text of note. */
 	text?: string;
 }
 
@@ -21105,8 +21819,11 @@ export type ManagingNoteResponse = {
 };
 
 export interface ManagingSteamUpdateValueBody {
+	/** Update the entire Steam inventory. */
 	all?: boolean;
+	/** Application id. */
 	app_id?: 730 | 578080 | 753 | 570 | 440 | 252490 | 304930 | 232090 | 322330;
+	/** Parse inventory when authorized (Parse trade banned items). */
 	authorize?: boolean;
 }
 
@@ -21123,6 +21840,7 @@ export type ManagingBumpResponse = {
 };
 
 export interface ManagingAutoBumpBody {
+	/** Interval in hours */
 	hour: number;
 }
 
@@ -21151,6 +21869,7 @@ export type ManagingCloseResponse = {
 };
 
 export interface ManagingImageParams {
+	/** Type of image. */
 	type: "skins" | "pickaxes" | "dances" | "gliders" | "weapons" | "agents" | "buddies";
 }
 
@@ -21162,9 +21881,13 @@ export type ManagingImageResponse = {
 export type ManagingEmailCodeResponse = ConfirmationCodeModel;
 
 export interface ManagingGetLetters2Params {
+	/** Email login data (email:password format). Required if both *email* and *password* are not provided. */
 	email_password?: string;
+	/** Email. Required if *email_password* is not provided. */
 	email?: string;
+	/** Password. Required if *email_password* is not provided. */
 	password?: string;
+	/** Number of letters to return. */
 	limit?: number;
 }
 
@@ -21219,7 +21942,9 @@ export type ManagingSteamRemoveMafileResponse = {
 export type ManagingSteamMafileCodeResponse = ConfirmationCodeModel;
 
 export interface ManagingSteamSDABody {
+	/** Confirmation id. (Required along with **nonce** if you want to confirm action). */
 	id?: number;
+	/** Confirmation nonce. (Required along with **id** if you want to confirm action). */
 	nonce?: number;
 }
 
@@ -21250,6 +21975,7 @@ export type ManagingRefuseGuaranteeResponse = {
 };
 
 export interface ManagingDeclineVideoRecordingBody {
+	/** You voluntarily and with full awareness of your actions waive any claims regarding this account. */
 	i_voluntarily_and_with_full_awareness_of_my_actions_waive_any_claims_regarding_this_item: boolean;
 }
 
@@ -21265,6 +21991,7 @@ export type ManagingCheckGuaranteeResponse = {
 };
 
 export interface ManagingChangePasswordBody {
+	/** Cancel change password recommendation. It will be helpful, if you don't want to change password and get login data. */
 	_cancel?: 1;
 }
 
@@ -21281,6 +22008,7 @@ export type ManagingTempEmailPasswordResponse = {
 };
 
 export interface ManagingTagBody {
+	/** Tag ID. */
 	tag_id: number;
 }
 
@@ -21299,6 +22027,7 @@ export type ManagingTagResponse = {
 };
 
 export interface ManagingUntagBody {
+	/** Tag ID. */
 	tag_id: number;
 }
 
@@ -21317,6 +22046,7 @@ export type ManagingUntagResponse = {
 };
 
 export interface ManagingPublicTagBody {
+	/** Tag ID. */
 	tag_id: number;
 }
 
@@ -21335,6 +22065,7 @@ export type ManagingPublicTagResponse = {
 };
 
 export interface ManagingPublicUntagBody {
+	/** Tag ID. */
 	tag_id: number;
 }
 
@@ -21377,7 +22108,9 @@ export type ManagingUnstickResponse = {
 };
 
 export interface ManagingTransferBody {
+	/** The username of the new account owner. */
 	username: string;
+	/** Secret answer of your account. */
 	secret_answer: string;
 }
 
@@ -21390,7 +22123,9 @@ export type ManagingTransferResponse = {
 // ─── ProfileApi Types ────────────────────────────────────────
 
 export interface ProfileClaimsParams {
+	/** Filter claims by their type. */
 	type?: "market" | "nomarket";
+	/** Filter claims by their state. */
 	claim_state?: "active" | "solved" | "rejected" | "settled";
 }
 
@@ -21465,6 +22200,7 @@ export type ProfileClaimsResponse = {
 };
 
 export interface ProfileGetParams {
+	/** List of hidden fields to include. */
 	fields_include?: Array<"*" | "searchHistory" | "savedSearch">;
 }
 
@@ -21487,15 +22223,25 @@ export interface ProfileEditBody {
 		hide_favourites?: boolean;
 		show_too_low_price_change_warning?: boolean;
 	};
+	/** Usernames who can transfer market accounts to you. Separate values with a comma. */
 	allow_accept_accounts?: Array<string>;
+	/** Telegram api id. */
 	telegram_api_id?: string;
+	/** Telegram api hash. */
 	telegram_api_hash?: string;
+	/** Telegram device model. */
 	telegram_device_model?: string;
+	/** Telegram system version. */
 	telegram_system_version?: string;
+	/** Telegram app version. */
 	telegram_app_version?: string;
+	/** Telegram lang pack. */
 	telegram_lang_pack?: string;
+	/** Telegram lang code. */
 	telegram_lang_code?: string;
+	/** Telegram system lang code. */
 	telegram_system_lang_code?: string;
+	/** Clear Telegram data. */
 	clear_telegram_client?: boolean;
 }
 
@@ -21508,11 +22254,17 @@ export type ProfileEditResponse = {
 // ─── CartApi Types ────────────────────────────────────────
 
 export interface CartGetParams {
+	/** Accounts category. */
 	category_id?: CategoryIDModel;
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** The word or words contained in the account title. */
 	title?: string;
+	/** Order by. */
 	order_by?:
 		| "price_to_up"
 		| "price_to_down"
@@ -21524,45 +22276,39 @@ export interface CartGetParams {
 		| "edate_to_down"
 		| "ddate_to_up"
 		| "ddate_to_down";
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_tag_id[]"?: Array<number>;
+	/** List of tag ids (Tag list is available via **GET /me**). */
 	"public_tag_id[]"?: Array<number>;
+	/** List of tag ids that won't be included (Tag list is available via **GET /me**). */
 	"not_public_tag_id[]"?: Array<number>;
-	"origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
-	"not_origin[]"?: Array<
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "self_registration"
-		| "retrieve"
-		| "retrieve_via_support"
-		| "dummy"
-	>;
+	/** List of account origins. */
+	"origin[]"?: ItemOriginModel;
+	/** List of account origins that won't be included. */
+	"not_origin[]"?: Array<ItemOriginModel>;
+	/** Search accounts of user. */
 	user_id?: number;
+	/** Not sold before. */
 	nsb?: boolean;
+	/** Sold before. */
 	sb?: boolean;
+	/** Not sold by me before. */
 	nsb_by_me?: boolean;
+	/** Sold by me before. */
 	sb_by_me?: boolean;
+	/** Currency in which the cost of the account will be searched. */
 	currency?: "rub" | "uah" | "kzt" | "byn" | "usd" | "eur" | "gbp" | "cny" | "try" | "jpy" | "brl";
+	/** Has email login data. */
 	email_login_data?: boolean;
+	/** Email provider. */
 	"email_provider[]"?: Array<
 		"other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru"
 	>;
+	/** Email provider. */
 	"not_email_provider[]"?: "other" | "rambler" | "outlook" | "firstmail" | "notletters" | "mail_ru";
+	/** Parse same item ids. */
 	parse_same_item_ids?: boolean;
 }
 
@@ -21589,7 +22335,9 @@ export type CartDeleteResponse = {
 // ─── PurchasingApi Types ────────────────────────────────────────
 
 export interface PurchasingFastBuyBody {
+	/** Current price of account in your currency. */
 	price?: number;
+	/** Balance ID that will be used to purchase specified item. */
 	balance_id?: number;
 }
 
@@ -21870,7 +22618,9 @@ export type PurchasingCheckResponse = {
 };
 
 export interface PurchasingConfirmBody {
+	/** Current price of account in your currency. */
 	price?: number;
+	/** Balance ID that will be used to purchase specified item. */
 	balance_id?: number;
 }
 
@@ -21892,7 +22642,9 @@ export type PurchasingConfirmResponse = {
 };
 
 export interface PurchasingDiscountRequestBody {
+	/** Requested discounted price. */
 	discount_price: number;
+	/** Message to the seller. */
 	message?: string;
 }
 
@@ -21917,10 +22669,14 @@ export type CustomDiscountsGetResponse = {
 };
 
 export interface CustomDiscountsCreateBody {
+	/** User ID. */
 	user_id: number;
 	category_id: CategoryIDModel;
+	/** Discount percent to apply. */
 	discount_percent: number;
+	/** Minimum accounts price for which the discount applies. */
 	min_price: number;
+	/** Maximum accounts price for which the discount applies. */
 	max_price?: number;
 	currency?: CurrencyModel;
 }
@@ -21932,9 +22688,13 @@ export type CustomDiscountsCreateResponse = {
 };
 
 export interface CustomDiscountsEditBody {
+	/** ID of the discount to edit. */
 	discount_id: number;
+	/** Discount percent to apply. */
 	discount_percent?: number;
+	/** Minimum price for which the discount applies. */
 	min_price?: number;
+	/** Maximum price for which the discount applies. */
 	max_price?: number;
 }
 
@@ -21945,6 +22705,7 @@ export type CustomDiscountsEditResponse = {
 };
 
 export interface CustomDiscountsDeleteBody {
+	/** ID of the discount to delete. */
 	discount_id: number;
 }
 
@@ -21957,9 +22718,13 @@ export type CustomDiscountsDeleteResponse = {
 // ─── PublishingApi Types ────────────────────────────────────────
 
 export interface PublishingFastSellBody {
+	/** Title of account. If **title** specified and **title_en** is empty, **title_en** will be automatically translated to English language. */
 	title?: string;
+	/** English title of account. If **title_en** specified and **title** is empty, **title** will be automatically translated to Russian language. */
 	title_en?: string;
+	/** Current price of account in your currency. */
 	price: number;
+	/** Accounts category. */
 	category_id:
 		| 1
 		| 3
@@ -21985,27 +22750,34 @@ export interface PublishingFastSellBody {
 		| 28
 		| 30
 		| 31;
+	/** Using currency. */
 	currency: CurrencyModel;
-	item_origin:
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "dummy"
-		| "self_registration";
+	item_origin: ItemOriginModel;
+	/** Guarantee type. */
 	extended_guarantee?: -1 | 0 | 1;
+	/** Allow users to ask discount for this account. */
 	allow_ask_discount?: boolean;
+	/** Proxy id that will be used to check account. */
 	proxy_id?: number;
+	/** Set this parameter to **true** so that the Market will take a random proxy from its pool for each of your requests.
+Otherwise, if this parameter is set to **false** or not set, the Market will take a specific proxy from its pool, which is predefined for each item.
+> This parameter only works with proxies from the Market pool. If you want to use your own proxies, use the proxy_id or extra[proxy] parameter. */
 	random_proxy?: boolean;
+	/** Account public description. */
 	description?: string;
+	/** Account private information (visible only for buyer). */
 	information?: string;
+	/** Account login (or email). */
 	login?: string;
+	/** Account password. */
 	password?: string;
+	/** Account login data (login:password format). */
 	login_password?: string;
+	/** Required if a **category** is one of list of Required email login data categories. */
 	has_email_login_data?: boolean;
+	/** Required if a **category** is one of list of Required email login data categories. Email login data (email:password format). */
 	email_login_data?: string;
+	/** Email type. */
 	email_type?: "native" | "autoreg";
 	extra?: ExtraModel;
 }
@@ -22017,9 +22789,13 @@ export type PublishingFastSellResponse = {
 };
 
 export interface PublishingAddBody {
+	/** Title of account. If **title** specified and **title_en** is empty, **title_en** will be automatically translated to English language. */
 	title?: string;
+	/** English title of account. If **title_en** specified and **title** is empty, **title** will be automatically translated to Russian language. */
 	title_en?: string;
+	/** Current price of account in your currency. */
 	price: number;
+	/** Accounts category. */
 	category_id:
 		| 1
 		| 3
@@ -22046,25 +22822,30 @@ export interface PublishingAddBody {
 		| 30
 		| 31;
 	currency: CurrencyModel;
-	item_origin:
-		| "brute"
-		| "phishing"
-		| "stealer"
-		| "personal"
-		| "resale"
-		| "autoreg"
-		| "dummy"
-		| "self_registration";
+	item_origin: ItemOriginModel;
+	/** Guarantee type. */
 	extended_guarantee?: -1 | 0 | 1;
+	/** Account public description. */
 	description?: string;
+	/** Account private information (visible only for buyer). */
 	information?: string;
+	/** Get temporary email if not required by category. Available for Supercell, Fortnite and Epic Games categories. */
 	forceTempEmail?: boolean;
+	/** Put item id, if you are trying to resell item. This is useful to pass temporary email from reselling item to new item. You will get same temporary email from reselling account. */
 	resell_item_id?: number;
+	/** Required if a **category** is one of list of Required email login data categories. */
 	has_email_login_data?: boolean;
+	/** Required if a **category** is one of list of Required email login data categories. Email login data (email:password format). */
 	email_login_data?: string;
+	/** Email type. */
 	email_type?: "native" | "autoreg";
+	/** Allow users to ask discount for this account. */
 	allow_ask_discount?: boolean;
+	/** Proxy id that will be used to check account. */
 	proxy_id?: number;
+	/** Set this parameter to **true** so that the Market will take a random proxy from its pool for each of your requests.
+Otherwise, if this parameter is set to **false** or not set, the Market will take a specific proxy from its pool, which is predefined for each item.
+> This parameter only works with proxies from the Market pool. If you want to use your own proxies, use the proxy_id or extra[proxy] parameter. */
 	random_proxy?: boolean;
 }
 
@@ -22075,13 +22856,23 @@ export type PublishingAddResponse = {
 };
 
 export interface PublishingCheckBody {
+	/** Put if you are trying to resell an account. */
 	resell_item_id?: number;
+	/** Set this parameter to **true** so that the Market will take a random proxy from its pool for each of your requests.
+Otherwise, if this parameter is set to **false** or not set, the Market will take a specific proxy from its pool, which is predefined for each item.
+> This parameter only works with proxies from the Market pool. If you want to use your own proxies, use the proxy_id or extra[proxy] parameter. */
 	random_proxy?: boolean;
+	/** Account login (or email). */
 	login?: string;
+	/** Account password. */
 	password?: string;
+	/** Account login data (login:password format). */
 	login_password?: string;
+	/** Required if a **category** is one of list of Required email login data categories. */
 	has_email_login_data?: boolean;
+	/** Required if a **category** is one of list of Required email login data categories. Email login data (email:password format). */
 	email_login_data?: string;
+	/** Email type. */
 	email_type?: "native" | "autoreg";
 	extra?: ExtraModel;
 }
@@ -22237,9 +23028,13 @@ export type PublishingCheckResponse = {
 };
 
 export interface PublishingExternalBody {
+	/** External account type. */
 	type: "socialclub";
+	/** Account login data (login:password format). */
 	login?: string;
+	/** Email login data (email:password format). */
 	email_login_data?: string;
+	/** Cookies. */
 	cookies?: string;
 }
 
@@ -22252,7 +23047,9 @@ export type PublishingExternalResponse = {
 // ─── PaymentsApi Types ────────────────────────────────────────
 
 export interface PaymentsInvoiceGetParams {
+	/** Invoice ID. */
 	invoice_id?: number;
+	/** Payment ID. */
 	payment_id?: string;
 }
 
@@ -22262,18 +23059,29 @@ export type PaymentsInvoiceGetResponse = {
 };
 
 export interface PaymentsInvoiceCreateBody {
+	/** Currency that will be used to create the invoice. */
 	currency: CurrencyModel;
+	/** Invoice amount. */
 	amount: number;
+	/** Payment ID in your system (must be unique within the merchant / invoices). */
 	payment_id: string;
+	/** Comment to the invoice. */
 	comment: string;
+	/** URL to redirect to after successful payment. */
 	url_success: string;
+	/** Callback url. */
 	url_callback?: string;
+	/** Merchant ID. */
 	merchant_id: number;
+	/** Telegram User ID for which the invoice was created. */
 	required_telegram_id?: number;
+	/** Telegram Username (including @) for which the invoice was created (if any). */
 	required_telegram_username?: string;
-	/** @default 3600 */
+	/** Invoice lifetime. @default 3600 */
 	lifetime?: number;
+	/** Additional information for you. */
 	additional_data?: string;
+	/** Create a test invoice. */
 	is_test?: boolean;
 }
 
@@ -22283,10 +23091,15 @@ export type PaymentsInvoiceCreateResponse = {
 };
 
 export interface PaymentsInvoiceListParams {
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Currency of the created invoice. */
 	currency?: CurrencyModel;
+	/** Status of the invoice. */
 	status?: "paid" | "not_paid";
+	/** Invoice amount. */
 	amount?: number;
+	/** Merchant ID. */
 	merchant_id?: number;
 }
 
@@ -22684,8 +23497,11 @@ export type PaymentsBalanceListResponse = {
 };
 
 export interface PaymentsBalanceExchangeBody {
+	/** Source balance type */
 	from_balance: string;
+	/** Target balance type */
 	to_balance: string;
+	/** Amount to exchange */
 	amount: number;
 }
 
@@ -22707,15 +23523,25 @@ export type PaymentsBalanceExchangeResponse = {
 };
 
 export interface PaymentsTransferBody {
+	/** User id of receiver. If **user_id** specified, **username** is not required. */
 	user_id?: number;
+	/** Username of receiver. If **username** specified, **user_id** is not required. */
 	username?: string;
+	/** Amount to send in your currency. */
 	amount: number;
+	/** Using currency for amount. */
 	currency: CurrencyModel;
+	/** Transfer comment. */
 	comment?: string;
+	/** Is the deal happening on Telegram?  */
 	telegram_deal?: boolean;
+	/** Telegram username of the user you are dialoguing with. */
 	telegram_username?: string;
+	/** Hold transfer or not. */
 	transfer_hold?: boolean;
+	/** Hold length value. */
 	hold_length_value?: number;
+	/** Hold length option. */
 	hold_length_option?: "hour" | "day" | "week" | "month" | "year";
 }
 
@@ -22726,6 +23552,7 @@ export type PaymentsTransferResponse = {
 };
 
 export interface PaymentsFeeParams {
+	/** Amount you want to send in your currency. */
 	amount?: number;
 }
 
@@ -22741,6 +23568,7 @@ export type PaymentsFeeResponse = {
 };
 
 export interface PaymentsCancelBody {
+	/** Payment id. */
 	payment_id: number;
 }
 
@@ -22751,6 +23579,7 @@ export type PaymentsCancelResponse = {
 };
 
 export interface PaymentsHistoryParams {
+	/** Type of operation. */
 	type?:
 		| "paid_item"
 		| "sold_item"
@@ -22765,19 +23594,33 @@ export interface PaymentsHistoryParams {
 		| "contest"
 		| "invoice"
 		| "balance_exchange";
+	/** Minimal price of account (Inclusive). */
 	pmin?: number;
+	/** Maximum price of account (Inclusive). */
 	pmax?: number;
+	/** Currency. */
 	currency?: CurrencyModel;
+	/** The number of the page to display results from. */
 	page?: number;
+	/** Id of the operation from which the result begins. */
 	operation_id_lt?: number;
+	/** Username of user, which receive money from you. */
 	receiver?: string;
+	/** Username of user, which sent money to you. */
 	sender?: string;
+	/** Returns payments that are done via API. */
 	is_api?: boolean;
+	/** Start date of operation (RFC 3339 date format). */
 	startDate?: string;
+	/** End date of operation (RFC 3339 date format). */
 	endDate?: string;
+	/** Wallet, which used for money payouts. */
 	wallet?: string;
+	/** Comment for money transfers. */
 	comment?: string;
+	/** Display hold operations. */
 	is_hold?: boolean;
+	/** Display payment stats for selected period (outgoing value, incoming value). */
 	show_payment_stats?: boolean;
 }
 
@@ -23039,8 +23882,11 @@ export type AutoPaymentsListResponse = {
 };
 
 export interface AutoPaymentsCreateBody {
+	/** Secret answer. */
 	secret_answer?: string;
+	/** Username of the payment receiver. */
 	username_receiver: string;
+	/** Day of the month for the payment. (Use "0" for the last day of the month) */
 	day:
 		| 0
 		| 1
@@ -23071,8 +23917,11 @@ export interface AutoPaymentsCreateBody {
 		| 26
 		| 27
 		| 28;
+	/** Amount to be transferred. */
 	amount: number;
+	/** Currency for the payment. */
 	currency?: CurrencyModel;
+	/** Payment description. */
 	description?: string;
 }
 
@@ -23084,6 +23933,7 @@ export type AutoPaymentsCreateResponse = {
 };
 
 export interface AutoPaymentsDeleteBody {
+	/** Auto payment ID. */
 	auto_payment_id: number;
 }
 
@@ -23111,10 +23961,15 @@ export type ProxyGetResponse = {
 };
 
 export interface ProxyAddBody {
+	/** Proxy ip or host. Required if **proxy_row** is not specified. */
 	proxy_ip?: string;
+	/** Proxy port. Required if **proxy_row** is not specified. */
 	proxy_port?: number;
+	/** Proxy username. Required if **proxy_row** is not specified. */
 	proxy_user?: string;
+	/** Proxy password. Required if **proxy_row** is not specified. */
 	proxy_pass?: string;
+	/** Proxy list in String format ip:port:user:pass. Each proxy must be start with new line (use \r\n separator) */
 	proxy_row?: string;
 }
 
@@ -23125,7 +23980,9 @@ export type ProxyAddResponse = {
 };
 
 export interface ProxyDeleteBody {
+	/** Id of an existing proxy. */
 	proxy_id?: number;
+	/** Delete all proxies. */
 	delete_all?: boolean;
 }
 
@@ -23138,9 +23995,13 @@ export type ProxyDeleteResponse = {
 // ─── ImapApi Types ────────────────────────────────────────
 
 export interface ImapCreateBody {
+	/** Domain to delete IMAP configuration for. */
 	domain: string;
+	/** IMAP server address. */
 	imap_server: string;
+	/** IMAP server port. */
 	port: number;
+	/** Whether to use a secure connection. */
 	secure: boolean;
 }
 
@@ -23151,6 +24012,7 @@ export type ImapCreateResponse = {
 };
 
 export interface ImapDeleteBody {
+	/** Domain to delete IMAP configuration for. */
 	domain: string;
 }
 
