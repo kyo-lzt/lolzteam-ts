@@ -3155,6 +3155,7 @@ export class ForumClient {
 			baseUrl: config.baseUrl ?? "https://prod-api.lolz.live",
 			rateLimit: config.rateLimit ?? { requestsPerMinute: 300 },
 			timeout: config.timeout ?? 30_000,
+			retry: config.retry ?? {},
 		});
 		this.oAuth = new OAuthApi(this.http);
 		this.assets = new AssetsApi(this.http);

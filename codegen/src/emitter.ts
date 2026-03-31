@@ -443,6 +443,7 @@ export function emitCombinedIndexFile(
 		);
 	}
 	lines.push("\t\t\ttimeout: config.timeout ?? 30_000,");
+	lines.push("\t\t\tretry: config.retry ?? {},");
 	lines.push("\t\t});");
 
 	for (const group of groups) {

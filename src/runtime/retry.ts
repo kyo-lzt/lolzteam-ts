@@ -29,7 +29,7 @@ interface ResolvedConfig {
 
 function computeDelay(attempt: number, config: ResolvedConfig, error: unknown): number {
 	if (error instanceof RateLimitError && error.retryAfter !== undefined) {
-		return Math.min(error.retryAfter, config.maxDelay);
+		return error.retryAfter;
 	}
 	const exponential = config.baseDelay * 2 ** attempt;
 	const jitter = Math.random() * config.baseDelay;

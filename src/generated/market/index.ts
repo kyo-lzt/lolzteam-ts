@@ -3152,6 +3152,7 @@ export class MarketClient {
 			rateLimit: config.rateLimit ?? { requestsPerMinute: 120 },
 			searchRateLimit: config.searchRateLimit ?? { requestsPerMinute: 20 },
 			timeout: config.timeout ?? 30_000,
+			retry: config.retry ?? {},
 		});
 		this.category = new CategoryApi(this.http);
 		this.list = new ListApi(this.http);
