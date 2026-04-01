@@ -20,9 +20,6 @@
 		}
 	},
 	"sideEffects": false,
-	"browser": {
-		"undici": false
-	},
 	"files": ["dist"],
 	"scripts": {
 		"build": "tsc",
@@ -42,15 +39,6 @@
 		"@types/node": "^22.0.0",
 		"tsx": "^4.0.0",
 		"typescript": "^5.7.0",
-		"undici": "^7.0.0",
 		"vitest": "^3.0.0"
-	},
-	"peerDependencies": {
-		"undici": ""
-	},
-	"peerDependenciesMeta": {
-		"undici": {
-			"optional": true
-		}
 	}
 }
