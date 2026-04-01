@@ -1,10 +1,16 @@
 import { ConfigError, LolzteamError, NetworkError } from "./errors.js";
 
+/**
+ * A fetch-compatible function that routes requests through a proxy.
+ * Uses undici's ProxyAgent for HTTP/HTTPS and custom SOCKS5 via node:net.
+ */
+export type ProxyFetch = (input: string | URL, init?: RequestInit) => Promise<Response>;
+
 const isBrowser =
 	typeof globalThis.document !== "undefined" ||
 	(typeof globalThis.navigator !== "undefined" && globalThis.navigator.product === "ReactNative");
 
-export async function createProxyDispatcher(proxyUrl: string): Promise<unknown> {
+export async function createProxyFetch(proxyUrl: string): Promise<ProxyFetch> {
 	if (isBrowser) {
 		throw new ConfigError(
 			"Proxy is not supported in browser environments. Remove the proxy option or use a server-side runtime.",
@@ -14,63 +20,147 @@ export async function createProxyDispatcher(proxyUrl: string): Promise<unknown> 
 	const parsed = new URL(proxyUrl);
 
 	if (parsed.protocol === "socks5:") {
-		return createSocks5Dispatcher(parsed);
+		return createSocks5Fetch(parsed);
 	}
 
+	return createHttpProxyFetch(parsed);
+}
+
+/* ---------- HTTP/HTTPS proxy via undici ProxyAgent ---------- */
+
+async function createHttpProxyFetch(parsed: URL): Promise<ProxyFetch> {
+	void parsed; // validated upstream
+
 	try {
-		const { ProxyAgent } = await import("undici");
-		return new ProxyAgent(proxyUrl);
+		const undici = await import("undici");
+		const dispatcher = new undici.ProxyAgent(parsed.toString());
+		const undiciFetch = undici.fetch;
+
+		return async (input, init = {}) => {
+			const url = typeof input === "string" ? input : input.toString();
+			const signal = init.signal ?? undefined;
+			return undiciFetch(url, {
+				method: (init.method ?? "GET") as "GET",
+				headers: init.headers as Record<string, string>,
+				body: init.body as string | undefined,
+				dispatcher,
+				signal,
+			}) as Promise<Response>;
+		};
 	} catch {
 		throw new LolzteamError(
-			`Proxy configured (${proxyUrl}) but "undici" is not installed. Run: npm install undici`,
+			'Proxy configured but "undici" is not installed. Run: npm install undici',
 		);
 	}
 }
 
-async function createSocks5Dispatcher(parsed: URL): Promise<unknown> {
+/* ---------- SOCKS5 proxy via node:net ---------- */
+
+async function createSocks5Fetch(parsed: URL): Promise<ProxyFetch> {
+	const net = await import("node:net");
+	const tls = await import("node:tls");
+	const http = await import("node:http");
+
 	const proxyHost = parsed.hostname;
 	const proxyPort = parsed.port ? Number.parseInt(parsed.port, 10) : 1080;
 	const username = parsed.username ? decodeURIComponent(parsed.username) : undefined;
 	const password = parsed.password ? decodeURIComponent(parsed.password) : undefined;
+	const encoder = new TextEncoder();
 
-	try {
-		const { Agent } = await import("undici");
-		const net = await import("node:net");
-		const tls = await import("node:tls");
-		const encoder = new TextEncoder();
+	return async (input, init = {}) => {
+		const url = typeof input === "string" ? input : input.toString();
+		const target = new URL(url);
+		const isHttps = target.protocol === "https:";
+		const targetPort = Number.parseInt(target.port || (isHttps ? "443" : "80"), 10);
 
-		return new Agent({
-			connect(options, callback) {
-				const targetHost = options.hostname;
-				const targetPort = Number.parseInt(options.port, 10);
-
-				const socket = net.connect(proxyPort, proxyHost, () => {
-					performSocks5Handshake(socket, targetHost, targetPort, username, password, encoder)
-						.then(() => {
-							if (options.protocol === "https:") {
-								const tlsSocket = tls.connect(
-									{ socket, servername: options.servername ?? options.hostname },
-									() => callback(null, tlsSocket),
-								);
-								tlsSocket.on("error", (err: unknown) => {
-									callback(err instanceof Error ? err : new Error(String(err)), null);
-								});
-							} else {
-								callback(null, socket);
-							}
-						})
-						.catch((err: Error) => callback(err, null));
-				});
-				socket.on("error", (err: unknown) => {
-					callback(err instanceof Error ? err : new Error(String(err)), null);
-				});
-			},
+		const socket = await new Promise<import("node:net").Socket>((resolve, reject) => {
+			const s = net.connect(proxyPort, proxyHost, () => resolve(s));
+			s.on("error", (err: unknown) => reject(new NetworkError(err)));
 		});
-	} catch {
-		throw new LolzteamError(
-			`SOCKS5 proxy configured but "undici" is not installed. Run: npm install undici`,
-		);
-	}
+
+		await performSocks5Handshake(socket, target.hostname, targetPort, username, password, encoder);
+
+		let tunnelSocket: import("node:net").Socket | import("node:tls").TLSSocket = socket;
+		if (isHttps) {
+			const tlsSocket = tls.connect({ socket, servername: target.hostname });
+			await new Promise<void>((resolve, reject) => {
+				tlsSocket.on("secureConnect", () => resolve());
+				tlsSocket.on("error", (err: unknown) => reject(err));
+			});
+			tunnelSocket = tlsSocket;
+		}
+
+		const reqHeaders: Record<string, string> = {};
+		if (init.headers) {
+			if (init.headers instanceof Headers) {
+				init.headers.forEach((v, k) => {
+					reqHeaders[k] = v;
+				});
+			} else if (!Array.isArray(init.headers)) {
+				Object.assign(reqHeaders, init.headers);
+			}
+		}
+		reqHeaders.Host = target.host;
+
+		const path = target.pathname + target.search;
+
+		return new Promise<Response>((resolve, reject) => {
+			const req = http.request(
+				{
+					method: init.method ?? "GET",
+					path,
+					headers: reqHeaders,
+					createConnection: () => tunnelSocket,
+				},
+				(res) => {
+					const chunks: Buffer[] = [];
+					res.on("data", (chunk: Buffer) => chunks.push(chunk));
+					res.on("end", () => {
+						const body = Buffer.concat(chunks);
+						const headers = new Headers();
+						for (const [key, value] of Object.entries(res.headers)) {
+							if (value !== undefined) {
+								if (Array.isArray(value)) {
+									for (const v of value) {
+										headers.append(key, v);
+									}
+								} else {
+									headers.set(key, value);
+								}
+							}
+						}
+						resolve(
+							new Response(body, {
+								status: res.statusCode ?? 200,
+								statusText: res.statusMessage ?? "",
+								headers,
+							}),
+						);
+					});
+					res.on("error", (err: Error) => reject(new NetworkError(err)));
+				},
+			);
+
+			req.on("error", (err: unknown) => reject(new NetworkError(err)));
+
+			if (init.signal) {
+				const onAbort = (): void => {
+					req.destroy();
+					reject(new Error("Request aborted"));
+				};
+				if (init.signal.aborted) {
+					onAbort();
+					return;
+				}
+				init.signal.addEventListener("abort", onAbort, { once: true });
+			}
+
+			if (init.body && typeof init.body === "string") {
+				req.write(init.body);
+			}
+			req.end();
+		});
+	};
 }
 
 /* ---------- SOCKS5 protocol implementation (RFC 1928 / 1929) ---------- */
@@ -92,7 +182,6 @@ async function performSocks5Handshake(
 ): Promise<void> {
 	const hasAuth = username !== undefined && password !== undefined;
 
-	// Greeting: version, number of methods, methods
 	const greeting = hasAuth
 		? new Uint8Array([0x05, 0x02, 0x00, 0x02])
 		: new Uint8Array([0x05, 0x01, 0x00]);
@@ -130,7 +219,6 @@ async function performSocks5Handshake(
 		);
 	}
 
-	// Connect request: version, cmd=connect, reserved, addr_type=domain, len, host, port
 	const hostBuf = encoder.encode(targetHost);
 	const connectReq = new Uint8Array(7 + hostBuf.length);
 	connectReq[0] = 0x05;
@@ -166,15 +254,14 @@ async function performSocks5Handshake(
 		throw new NetworkError(new Error(`SOCKS5 connect failed: ${reason}`));
 	}
 
-	// Consume bound address so socket is ready for data
 	const addrType = connectResponse[3];
 	if (addrType === 0x01) {
-		await readExact(socket, 6); // IPv4 (4) + port (2)
+		await readExact(socket, 6);
 	} else if (addrType === 0x04) {
-		await readExact(socket, 18); // IPv6 (16) + port (2)
+		await readExact(socket, 18);
 	} else if (addrType === 0x03) {
 		const lenBuf = await readExact(socket, 1);
-		await readExact(socket, (lenBuf[0] ?? 0) + 2); // domain + port
+		await readExact(socket, (lenBuf[0] ?? 0) + 2);
 	}
 }
 

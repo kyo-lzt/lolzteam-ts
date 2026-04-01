@@ -4,7 +4,8 @@
 
 import { execSync } from "node:child_process";
 import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { emitCombinedIndexFile, emitTypesFile } from "./emitter.js";
 import { parseSpec } from "./parser.js";
 
@@ -17,7 +18,7 @@ interface ApiConfig {
 	defaultSearchRateLimit?: number;
 }
 
-const ROOT = join(import.meta.dir, "../..");
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "../..");
 
 const apis: ApiConfig[] = [
 	{
@@ -98,4 +99,4 @@ for (const api of apis) {
 // Format generated code with biome to fix long imports and sort them
 const generatedDir = join(ROOT, "src/generated");
 console.log("Formatting generated code with biome...");
-execSync(`bunx biome check --write ${generatedDir}`, { stdio: "inherit" });
+execSync(`pnpm exec biome check --write ${generatedDir}`, { stdio: "inherit" });

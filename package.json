@@ -29,18 +29,23 @@
 		"typecheck": "tsc --noEmit",
 		"lint": "biome check --fix .",
 		"lint:check": "biome check .",
-		"test": "bun test",
-		"codegen": "bun codegen/src/index.ts",
-		"prepublishOnly": "bun run build"
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"codegen": "tsx codegen/src/index.ts",
+		"prepublishOnly": "pnpm run build"
 	},
 	"keywords": ["lolzteam", "lolz", "zelenka", "api", "wrapper"],
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.0",
-		"typescript": "^5.7.0"
+		"@types/node": "^22.0.0",
+		"tsx": "^4.0.0",
+		"typescript": "^5.7.0",
+		"undici": "^7.0.0",
+		"vitest": "^3.0.0"
 	},
 	"peerDependencies": {
-		"undici": "^7.0.0"
+		"undici": ""
 	},
 	"peerDependenciesMeta": {
 		"undici": {

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it } from "vitest";
 import { RateLimiter } from "../../src/runtime/rate-limiter.js";
 
 describe("RateLimiter", () => {

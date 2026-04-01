@@ -1,6 +1,6 @@
 import { applyAuth } from "./auth.js";
 import { ConfigError, LolzteamError, NetworkError, createHttpError } from "./errors.js";
-import { createProxyDispatcher } from "./proxy.js";
+import { type ProxyFetch, createProxyFetch } from "./proxy.js";
 import { RateLimiter } from "./rate-limiter.js";
 import { withRetry } from "./retry.js";
 import type { ClientConfig, RequestOptions, RetryConfig, RetryInfo } from "./types.js";
@@ -61,8 +61,8 @@ export class HttpClient {
 	private readonly timeout: number | undefined;
 	private readonly rateLimiter: RateLimiter | undefined;
 	private readonly searchRateLimiter: RateLimiter | undefined;
-	private dispatcher: unknown | undefined;
-	private dispatcherReady: Promise<void> | undefined;
+	private proxyFetch: ProxyFetch | undefined;
+	private proxyReady: Promise<void> | undefined;
 
 	constructor(config: ClientConfig) {
 		this.token = config.token;
@@ -92,26 +92,17 @@ export class HttpClient {
 			if (!parsed.hostname) {
 				throw new ConfigError("proxy URL has no host");
 			}
-			this.dispatcherReady = createProxyDispatcher(config.proxy.url).then((d) => {
-				this.dispatcher = d;
+			this.proxyReady = createProxyFetch(config.proxy.url).then((fn) => {
+				this.proxyFetch = fn;
 			});
 		}
 	}
 
 	async close(): Promise<void> {
-		if (this.dispatcherReady) {
-			await this.dispatcherReady;
+		if (this.proxyReady) {
+			await this.proxyReady;
 		}
-		if (
-			this.dispatcher !== undefined &&
-			typeof this.dispatcher === "object" &&
-			this.dispatcher !== null &&
-			"close" in this.dispatcher &&
-			typeof this.dispatcher.close === "function"
-		) {
-			await this.dispatcher.close();
-		}
-		this.dispatcher = undefined;
+		this.proxyFetch = undefined;
 	}
 
 	async request<T = unknown>(options: RequestOptions): Promise<T> {
@@ -136,8 +127,8 @@ export class HttpClient {
 	}
 
 	private async execute<T = unknown>(options: RequestOptions): Promise<T> {
-		if (this.dispatcherReady) {
-			await this.dispatcherReady;
+		if (this.proxyReady) {
+			await this.proxyReady;
 		}
 
 		let url = `${this.baseUrl}${options.path}`;
@@ -186,23 +177,21 @@ export class HttpClient {
 			}
 		}
 
-		const fetchOptions: RequestInit & { dispatcher?: unknown } = {
+		const fetchOptions: RequestInit = {
 			method: options.method,
 			headers,
 			body: fetchBody,
 		};
 
-		if (this.dispatcher) {
-			fetchOptions.dispatcher = this.dispatcher;
-		}
-
 		if (this.timeout !== undefined) {
 			fetchOptions.signal = AbortSignal.timeout(this.timeout);
 		}
 
+		const fetchFn = this.proxyFetch ?? fetch;
+
 		let response: Response;
 		try {
-			response = await fetch(url, fetchOptions);
+			response = await fetchFn(url, fetchOptions);
 		} catch (error) {
 			throw new NetworkError(error);
 		}

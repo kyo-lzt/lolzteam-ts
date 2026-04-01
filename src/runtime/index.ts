@@ -3,6 +3,7 @@ export {
 	HttpError,
 	RateLimitError,
 	AuthError,
+	ForbiddenError,
 	NotFoundError,
 	ServerError,
 	NetworkError,
@@ -25,6 +26,7 @@ export type {
 export { withRetry } from "./retry.js";
 export { RateLimiter } from "./rate-limiter.js";
 export { applyAuth } from "./auth.js";
-export { createProxyDispatcher } from "./proxy.js";
+export { createProxyFetch } from "./proxy.js";
+export type { ProxyFetch } from "./proxy.js";
 export { HttpClient } from "./http-client.js";
 export { validateEnum } from "./validation.js";

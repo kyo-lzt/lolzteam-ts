@@ -64,6 +64,13 @@ export class AuthError extends HttpError {
 	}
 }
 
+export class ForbiddenError extends HttpError {
+	constructor(body: unknown, headers: Headers, parseError?: unknown) {
+		super(403, body, headers, parseError);
+		this.name = "ForbiddenError";
+	}
+}
+
 export class NotFoundError extends HttpError {
 	constructor(body: unknown, headers: Headers, parseError?: unknown) {
 		super(404, body, headers, parseError);
@@ -165,8 +172,11 @@ export function createHttpError(
 	if (status === 429) {
 		return new RateLimitError(body, headers, parseError);
 	}
-	if (status === 401 || status === 403) {
+	if (status === 401) {
 		return new AuthError(status, body, headers, parseError);
+	}
+	if (status === 403) {
+		return new ForbiddenError(body, headers, parseError);
 	}
 	if (status === 404) {
 		return new NotFoundError(body, headers, parseError);

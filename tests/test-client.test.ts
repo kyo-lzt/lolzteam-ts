@@ -1,9 +1,10 @@
-import { afterAll, beforeEach, describe, expect, it, mock } from "bun:test";
+import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { ForumClient } from "../src/generated/forum/index.js";
 import { MarketClient } from "../src/generated/market/index.js";
 import {
 	AuthError,
 	ConfigError,
+	ForbiddenError,
 	HttpError,
 	LolzteamError,
 	NetworkError,
@@ -25,10 +26,10 @@ function makeResponse(status: number, body: unknown, headers?: Record<string, st
 // ─── Base Client Behavior ────────────────────────────────────────────────────
 
 describe("Base client behavior", () => {
-	let mockFetch: ReturnType<typeof mock>;
+	let mockFetch: ReturnType<typeof vi.fn>;
 
 	beforeEach(() => {
-		mockFetch = mock(() => Promise.resolve(makeResponse(200, { ok: true })));
+		mockFetch = vi.fn(() => Promise.resolve(makeResponse(200, { ok: true })));
 		globalThis.fetch = mockFetch;
 	});
 
@@ -71,10 +72,10 @@ describe("Base client behavior", () => {
 		await expect(client.threads.list()).rejects.toBeInstanceOf(AuthError);
 	});
 
-	it("throws AuthError on 403", async () => {
+	it("throws ForbiddenError on 403", async () => {
 		mockFetch.mockImplementation(() => Promise.resolve(makeResponse(403, { error: "forbidden" })));
 		const client = createForum();
-		await expect(client.threads.list()).rejects.toBeInstanceOf(AuthError);
+		await expect(client.threads.list()).rejects.toBeInstanceOf(ForbiddenError);
 	});
 
 	it("throws NotFoundError on 404", async () => {
@@ -177,10 +178,10 @@ describe("Base client behavior", () => {
 // ─── ForumClient ─────────────────────────────────────────────────────────────
 
 describe("ForumClient", () => {
-	let mockFetch: ReturnType<typeof mock>;
+	let mockFetch: ReturnType<typeof vi.fn>;
 
 	beforeEach(() => {
-		mockFetch = mock(() => Promise.resolve(makeResponse(200, { ok: true })));
+		mockFetch = vi.fn(() => Promise.resolve(makeResponse(200, { ok: true })));
 		globalThis.fetch = mockFetch;
 	});
 
@@ -265,17 +266,17 @@ describe("ForumClient", () => {
 		});
 		await client.threads.list();
 		const url = mockFetch.mock.calls[0]?.[0] as string;
-		expect(url).toStartWith("https://prod-api.lolz.live/threads");
+		expect(url.startsWith("https://prod-api.lolz.live/threads")).toBe(true);
 	});
 });
 
 // ─── MarketClient ────────────────────────────────────────────────────────────
 
 describe("MarketClient", () => {
-	let mockFetch: ReturnType<typeof mock>;
+	let mockFetch: ReturnType<typeof vi.fn>;
 
 	beforeEach(() => {
-		mockFetch = mock(() => Promise.resolve(makeResponse(200, { ok: true })));
+		mockFetch = vi.fn(() => Promise.resolve(makeResponse(200, { ok: true })));
 		globalThis.fetch = mockFetch;
 	});
 
@@ -328,7 +329,7 @@ describe("MarketClient", () => {
 		});
 		await client.category.all();
 		const url = mockFetch.mock.calls[0]?.[0] as string;
-		expect(url).toStartWith("https://custom.market.api/");
+		expect(url.startsWith("https://custom.market.api/")).toBe(true);
 	});
 
 	it("uses default base URL https://prod-api.lzt.market when not specified", async () => {
@@ -339,7 +340,7 @@ describe("MarketClient", () => {
 		});
 		await client.category.all();
 		const url = mockFetch.mock.calls[0]?.[0] as string;
-		expect(url).toStartWith("https://prod-api.lzt.market/");
+		expect(url.startsWith("https://prod-api.lzt.market/")).toBe(true);
 	});
 
 	it("sends Authorization: Bearer with market token", async () => {
@@ -358,10 +359,10 @@ describe("MarketClient", () => {
 		await expect(client.category.all()).rejects.toBeInstanceOf(AuthError);
 	});
 
-	it("throws AuthError on 403", async () => {
+	it("throws ForbiddenError on 403", async () => {
 		mockFetch.mockImplementation(() => Promise.resolve(makeResponse(403, { error: "forbidden" })));
 		const client = createMarket();
-		await expect(client.category.all()).rejects.toBeInstanceOf(AuthError);
+		await expect(client.category.all()).rejects.toBeInstanceOf(ForbiddenError);
 	});
 
 	it("throws NotFoundError on 404", async () => {

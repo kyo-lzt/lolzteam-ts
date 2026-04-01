@@ -8,6 +8,7 @@ export {
 	HttpError,
 	RateLimitError,
 	AuthError,
+	ForbiddenError,
 	NotFoundError,
 	ServerError,
 	NetworkError,
@@ -22,7 +23,7 @@ export {
 	withRetry,
 	RateLimiter,
 	applyAuth,
-	createProxyDispatcher,
+	createProxyFetch,
 	HttpClient,
 } from "./runtime/index.js";
 
@@ -30,6 +31,7 @@ export {
 export type {
 	ClientConfig,
 	ProxyConfig,
+	ProxyFetch,
 	RetryConfig,
 	RetryInfo,
 	RateLimitConfig,

@@ -1,4 +1,4 @@
-import { afterAll, beforeEach, describe, expect, it, mock } from "bun:test";
+import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { HttpError, NetworkError, RetryExhaustedError } from "../../src/runtime/errors.js";
 import { HttpClient } from "../../src/runtime/http-client.js";
 
@@ -12,10 +12,10 @@ function makeResponse(status: number, body: unknown, headers?: Record<string, st
 }
 
 describe("HttpClient", () => {
-	let mockFetch: ReturnType<typeof mock>;
+	let mockFetch: ReturnType<typeof vi.fn>;
 
 	beforeEach(() => {
-		mockFetch = mock(() => Promise.resolve(makeResponse(200, { ok: true })));
+		mockFetch = vi.fn(() => Promise.resolve(makeResponse(200, { ok: true })));
 		globalThis.fetch = mockFetch;
 	});
 

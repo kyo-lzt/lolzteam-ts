@@ -1,7 +1,8 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it } from "vitest";
 import {
 	AuthError,
 	ConfigError,
+	ForbiddenError,
 	HttpError,
 	LolzteamError,
 	NetworkError,
@@ -21,9 +22,9 @@ describe("createHttpError", () => {
 		expect(err.status).toBe(401);
 	});
 
-	it("returns AuthError for 403", () => {
+	it("returns ForbiddenError for 403", () => {
 		const err = createHttpError(403, body, headers);
-		expect(err).toBeInstanceOf(AuthError);
+		expect(err).toBeInstanceOf(ForbiddenError);
 		expect(err.status).toBe(403);
 	});
 

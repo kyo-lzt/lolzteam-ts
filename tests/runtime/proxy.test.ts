@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it } from "vitest";
 import { ConfigError } from "../../src/runtime/errors.js";
 import { HttpClient } from "../../src/runtime/http-client.js";
 

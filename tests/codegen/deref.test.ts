@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it } from "vitest";
 import { deref, resolveRef } from "../../codegen/src/utils/deref.js";
 
 describe("resolveRef", () => {
