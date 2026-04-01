@@ -3,7 +3,6 @@ dist/
 
 # Other package managers' lockfiles
 package-lock.json
-pnpm-lock.yaml
 
 # IDE
 .idea/
